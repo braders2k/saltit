@@ -30,26 +30,34 @@ python3 -m http.server 8080 --directory site
 
 ## Before launch
 
-Run the checks. They fail until every launch blocker is resolved:
+Run the checks before every deploy:
 
 ```sh
 node scripts/check.mjs
 ```
 
-Brad still needs to supply or confirm:
+Live contact details (keep identical on the site, Google Business Profile, Nextdoor, Bing and Apple):
 
-1. **Phone number.** Replace every `REPLACE_WITH_PHONE` with the E.164 number
-   (e.g. `+441273000000`) — this covers the `tel:` links and JSON-LD `telephone`. Then replace every
-   `<span class="ph">Add phone before launch</span>` with the number as people should read it
-   (e.g. `01273 000 000`).
-2. **Hours** (How it works section). Once confirmed, add `openingHoursSpecification` to the JSON-LD
-   with the same hours, and remove the "Before launch" tag.
-3. **Payment methods** (Prices small print).
-4. **Bio** (Who you'll get): 20+ years, EPOS background, lives in Saltdean.
-5. Confirm: the 14-day free return (it appears in Prices *and* the promises, so change both or neither),
+| Item | Value |
+| --- | --- |
+| Phone (display) | `07843 468904` |
+| Phone (`tel:` and JSON-LD) | `+447843468904` |
+| Email | `hello@saltit.co.uk` |
+| Hours | Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can. |
+
+The JSON-LD `openingHoursSpecification` lists only the fixed Mon–Fri 09:00–18:00 block, because
+evenings and Saturdays are by arrangement. If the hours change, update the page, the JSON-LD and
+the Google Business Profile together.
+
+Still open with Brad:
+
+1. **Payment methods.** Not listed yet; add a line to the Prices small print once confirmed.
+2. **Bio** (Who you'll get): 20+ years, EPOS background, lives in Saltdean. Uses the brief's wording.
+3. Confirm: the 14-day free return (it appears in Prices *and* the promises, so change both or neither),
    no travel supplement elsewhere in Brighton & Hove, and "ring you back as soon as I can".
-6. Optional: WhatsApp on the same number (the sticky bar's **Message** button can then link to
-   `https://wa.me/44…`), a real photo of Brad, and a Google review link once the Business Profile exists.
+4. Optional: WhatsApp on the same number (the sticky bar's **Message** button can then link to
+   `https://wa.me/447843468904`), a real photo of Brad, and a Google review link once the Business
+   Profile exists.
 
 ## Deploy (Cloudflare Pages)
 

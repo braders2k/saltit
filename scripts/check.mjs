@@ -58,6 +58,10 @@ if (!desc || desc[1].length >= 160) errors.push("Meta description missing or 160
 try {
   const ld = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   if (ld.name !== "Salt IT" || ld.areaServed.length !== 5 || !ld.priceRange) errors.push("JSON-LD fields incomplete");
+  if (!/^\+44\d{10}$/.test(ld.telephone)) errors.push(`JSON-LD telephone "${ld.telephone}" is not E.164`);
+  for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
+    if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
+  }
 } catch {
   errors.push("JSON-LD missing or invalid");
 }
