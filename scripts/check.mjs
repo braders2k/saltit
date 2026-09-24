@@ -27,10 +27,12 @@ const visible = html
 const errors = [];
 const blockers = [];
 
-const spelling = [/SaltIT/, /Salt Dean/i, /Salt-dean/i, /Southend/i, /\bAI\b/, /01x{3}/i];
+const spelling = [/SaltIT/, /Salt Dean/i, /Salt-dean/i, /Southend/i, /01x{3}/i];
 for (const f of files) {
   const src = read(f);
   for (const re of spelling) if (re.test(src)) errors.push(`${f.replace(root, "")}: forbidden "${re.source}"`);
+  const visibleSrc = src.replace(/<!--[\s\S]*?-->/g, " ");
+  if (/\bAI\b/.test(visibleSrc)) errors.push(`${f.replace(root, "")}: forbidden "AI" in visible text`);
 }
 
 const count = (needle) => visible.split(needle).length - 1;
