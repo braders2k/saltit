@@ -13,11 +13,15 @@ site/                 ← the deployable site (publish this folder)
   script.js           mailto form handoff, footer year, sticky call-bar toggle
   robots.txt, sitemap.xml
   _headers            Cloudflare Pages security headers; noindex on *.pages.dev previews
-  assets/             favicon.svg, icon-192.png, apple-touch-icon.png, og-image.png
+  assets/
+    mark.svg          the Salt IT mark (header, favicon)
+    mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
+    lido-640.webp     hero backdrop, phones (13 KB)
+    lido-1024.webp    hero backdrop, tablet and desktop (24 KB)
+    og-image.jpg      1200×630 share image
 scripts/
-  check.mjs           pre-launch checks (spelling, SEO phrases, prices, placeholders)
-  og-image.html       source for assets/og-image.png (1200×630)
-  icon.html           source for the PNG icons
+  check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, placeholders)
+  og-image.html       source for assets/og-image.jpg (screenshot at 1200×630)
 docs/                 design brief and market research (not deployed)
 ```
 
@@ -74,15 +78,29 @@ and are not part of this repo.
 
 ## Visual system
 
-Near-black and white, one signal-orange accent, 1px rules instead of cards, square buttons,
-monospace micro-labels, and large tight sans-serif headings (system fonts only).
+A light salt-white page with a soft Saltdean Lido backdrop behind the hero, lido blues for rules,
+labels, outlines and focus, and one soft-charcoal band for contact and the footer. Rules instead
+of cards, square buttons, monospace micro-labels, large tight sans-serif headings (system fonts only).
 
 | Token | Hex | Use | Contrast |
 | --- | --- | --- | --- |
-| Ink | `#0A0B0D` | Text on white; hero, contact and footer bands | 19.7:1 on white |
-| Paper | `#FFFFFF` | Page background; text on ink | — |
-| Muted | `#52575D` | Secondary text on white | 7.3:1 |
-| Muted on ink | `#B7BCC2` | Secondary text on ink | 10.3:1 |
-| Signal | `#C2410C` | Labels, index numbers and focus ring on white | 5.2:1 |
-| Signal on ink | `#FF6B35` | Labels, placeholders and focus ring on ink | 6.9:1 |
-| Rule | `#DCDFE3` / `#2A2D31` | Decorative 1px rules on white / on ink | — |
+| Salt white | `#FAFBFC` | Page and hero background; text on charcoal | — |
+| Soft charcoal | `#2B2F33` | Body text; primary buttons; contact and footer band | 13.0:1 on salt white |
+| Muted | `#5F676E` | Secondary text on light | 5.55:1 |
+| Accent text | `#4A7488` | Eyebrows, labels, index numbers and focus ring on light | 4.89:1 |
+| Lido sky | `#7EB8D4` | Rules, eyebrow bar, hero base line, mark; labels and focus on charcoal | 6.23:1 on charcoal; never text on light |
+| Turkish Aegean | `#7898A4` | Secondary button outline, mark | never text on light |
+| Button hover | `#435F6D` | Primary hover on light | 6.55:1 with salt white |
+
+The hero photo sits under a salt-white overlay (96.5% on phones below the header strip, 93–97%
+behind the text on larger screens). All hero text was measured against the darkest 1% of backdrop
+pixels at 320–1440px widths and passes WCAG AA.
+
+## Hero photo licence
+
+"Saltdean Lido - Newly re-opened" © Paul Gillett,
+[geograph.org.uk/photo/5443210](https://www.geograph.org.uk/photo/5443210), licensed
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The cropped and softened versions in
+`site/assets/lido-*.webp` and the photo inside `og-image.jpg` are shared under the same licence.
+Credit is shown in the page footer. A photo of the Lido taken by Brad can replace it later; then drop the
+footer credit.
