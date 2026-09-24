@@ -24,6 +24,8 @@
   --bar: 64px;
 }
 
+.hdr,
+.hero,
 .sec-dark,
 .ftr,
 .callbar {
@@ -37,6 +39,12 @@
   --tint: rgba(126, 184, 212, 0.16);
   --hover-bg: var(--lido);
   --hover-fg: var(--charcoal);
+}
+
+.hdr,
+.hero {
+  --bg: #0a0b0d;
+  --rule: #2a2d31;
 }
 
 *,
@@ -102,7 +110,6 @@ a { color: inherit; }
 .hero-facts dt,
 .pc,
 .ptable thead th,
-.credit,
 .coords {
   font-family: var(--mono);
   font-size: 0.8125rem;
@@ -174,11 +181,7 @@ a { color: inherit; }
   display: flex;
   min-height: 88vh;
   min-height: 88svh;
-  border-bottom: 4px solid var(--lido);
-  background:
-    linear-gradient(180deg, rgba(250, 251, 252, 0.62) 0%, rgba(250, 251, 252, 0.78) 10%, rgba(250, 251, 252, 0.965) 17%, rgba(250, 251, 252, 0.965) 100%),
-    url("assets/lido-640.webp") 55% 45% / cover no-repeat,
-    var(--salt);
+  background: var(--bg);
   color: var(--fg);
 }
 .hero-in {
@@ -191,23 +194,10 @@ a { color: inherit; }
 .coords {
   margin-bottom: auto;
   padding-bottom: 32px;
-  color: var(--fg);
+  color: var(--muted);
   font-weight: 400;
 }
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  color: var(--accent);
-}
-.eyebrow::before {
-  content: "";
-  flex: none;
-  width: 32px;
-  height: 2px;
-  background: var(--lido);
-}
+.eyebrow { color: var(--accent); margin-bottom: 16px; }
 h1 {
   max-width: 11ch;
   font-size: clamp(2.875rem, 12.4vw, 7.75rem);
@@ -228,7 +218,7 @@ h1 {
 }
 .hero-facts {
   margin-top: 28px;
-  border-top: 2px solid var(--lido);
+  border-top: 1px solid var(--rule);
 }
 .hero-facts div {
   display: grid;
@@ -237,7 +227,7 @@ h1 {
   padding: 10px 0;
   border-bottom: 1px solid var(--rule);
 }
-.hero-facts dt { color: var(--accent); padding-top: 0.2em; }
+.hero-facts dt { color: var(--muted); padding-top: 0.2em; }
 .hero-facts dd { font-size: 1rem; line-height: 1.5; }
 .hero-facts a { text-decoration-thickness: 1px; text-underline-offset: 0.25em; font-variant-numeric: tabular-nums; }
 
@@ -555,8 +545,6 @@ h3 {
 .ftr address { font-style: normal; line-height: 1.75; }
 .ftr strong { color: var(--fg); }
 .ftr a { color: var(--fg); text-underline-offset: 0.2em; }
-.ftr-end { display: grid; gap: 4px; }
-.credit { font-weight: 400; }
 
 /* Sticky mobile call bar */
 .callbar {
@@ -595,14 +583,7 @@ h3 {
   }
   .nav a:hover { color: var(--fg); }
 
-  .hero {
-    min-height: 760px;
-    background:
-      linear-gradient(90deg, rgba(250, 251, 252, 0.97) 0%, rgba(250, 251, 252, 0.95) 45%, rgba(250, 251, 252, 0.62) 100%),
-      linear-gradient(180deg, rgba(250, 251, 252, 0.35) 0%, rgba(250, 251, 252, 0) 40%, rgba(250, 251, 252, 0) 68%, rgba(250, 251, 252, 0.9) 84%, rgba(250, 251, 252, 0.95) 100%),
-      url("assets/lido-1024.webp") 65% 40% / cover no-repeat,
-      var(--salt);
-  }
+  .hero { min-height: 760px; }
   .hero-in { padding-bottom: 48px; }
   .hero-cta { display: flex; flex-wrap: wrap; }
   .hero-facts {

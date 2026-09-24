@@ -16,8 +16,6 @@ site/                 ← the deployable site (publish this folder)
   assets/
     mark.svg          the Salt IT mark (header, favicon)
     mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
-    lido-640.webp     hero backdrop, phones (13 KB)
-    lido-1024.webp    hero backdrop, tablet and desktop (24 KB)
     og-image.jpg      1200×630 share image
 scripts/
   check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, placeholders)
@@ -78,29 +76,17 @@ and are not part of this repo.
 
 ## Visual system
 
-A light salt-white page with a soft Saltdean Lido backdrop behind the hero, lido blues for rules,
-labels, outlines and focus, and one soft-charcoal band for contact and the footer. Rules instead
+A near-black full-bleed hero and header band, a light salt-white page below it, lido blues for
+rules, labels, outlines and focus, and a soft-charcoal band for contact and the footer. Rules instead
 of cards, square buttons, monospace micro-labels, large tight sans-serif headings (system fonts only).
 
 | Token | Hex | Use | Contrast |
 | --- | --- | --- | --- |
-| Salt white | `#FAFBFC` | Page and hero background; text on charcoal | — |
+| Near-black | `#0A0B0D` | Hero and header band | 19.0:1 with salt white |
+| Salt white | `#FAFBFC` | Page background; text on the dark bands | — |
 | Soft charcoal | `#2B2F33` | Body text; primary buttons; contact and footer band | 13.0:1 on salt white |
 | Muted | `#5F676E` | Secondary text on light | 5.55:1 |
 | Accent text | `#4A7488` | Eyebrows, labels, index numbers and focus ring on light | 4.89:1 |
-| Lido sky | `#7EB8D4` | Rules, eyebrow bar, hero base line, mark; labels and focus on charcoal | 6.23:1 on charcoal; never text on light |
+| Lido sky | `#7EB8D4` | Rules and bullets on light; eyebrow, labels, outlines and focus on the dark bands | 9.1:1 on near-black, 6.23:1 on charcoal; never text on light |
 | Turkish Aegean | `#7898A4` | Secondary button outline, mark | never text on light |
 | Button hover | `#435F6D` | Primary hover on light | 6.55:1 with salt white |
-
-The hero photo sits under a salt-white overlay (96.5% on phones below the header strip, 93–97%
-behind the text on larger screens). All hero text was measured against the darkest 1% of backdrop
-pixels at 320–1440px widths and passes WCAG AA.
-
-## Hero photo licence
-
-"Saltdean Lido - Newly re-opened" © Paul Gillett,
-[geograph.org.uk/photo/5443210](https://www.geograph.org.uk/photo/5443210), licensed
-[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The cropped and softened versions in
-`site/assets/lido-*.webp` and the photo inside `og-image.jpg` are shared under the same licence.
-Credit is shown in the page footer. A photo of the Lido taken by Brad can replace it later; then drop the
-footer credit.
