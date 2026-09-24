@@ -8,7 +8,7 @@
 
   --bg: var(--salt);
   --fg: var(--charcoal);
-  --muted: #5f676e;
+  --muted: #525860;
   --rule: #d3e5ee;
   --rule-strong: var(--lido);
   --accent: var(--lido-ink);
@@ -110,6 +110,7 @@ a { color: inherit; }
 .hero-facts dt,
 .pc,
 .ptable thead th,
+.credit,
 .coords {
   font-family: var(--mono);
   font-size: 0.8125rem;
@@ -181,7 +182,13 @@ a { color: inherit; }
   display: flex;
   min-height: 88vh;
   min-height: 88svh;
-  background: var(--bg);
+  background-color: #0a0b0d;
+  background-image:
+    linear-gradient(180deg, rgba(10, 11, 13, 0.35) 0%, rgba(10, 11, 13, 0) 22%, rgba(10, 11, 13, 0) 58%, rgba(10, 11, 13, 0.72) 100%),
+    url("assets/lido-hero-640.webp");
+  background-repeat: no-repeat;
+  background-position: center top, center 18%;
+  background-size: cover, cover;
   color: var(--fg);
 }
 .hero-in {
@@ -233,7 +240,7 @@ h1 {
 
 /* Sections */
 .sec {
-  padding-block: 72px;
+  padding-block: 64px;
   background: var(--bg);
   color: var(--fg);
 }
@@ -545,6 +552,8 @@ h3 {
 .ftr address { font-style: normal; line-height: 1.75; }
 .ftr strong { color: var(--fg); }
 .ftr a { color: var(--fg); text-underline-offset: 0.2em; }
+.ftr-end { display: grid; gap: 4px; }
+.credit { font-weight: 400; }
 
 /* Sticky mobile call bar */
 .callbar {
@@ -583,7 +592,14 @@ h3 {
   }
   .nav a:hover { color: var(--fg); }
 
-  .hero { min-height: 760px; }
+  .hero {
+    min-height: 680px;
+    background-image:
+      linear-gradient(90deg, rgba(10, 11, 13, 0.42) 0%, rgba(10, 11, 13, 0.08) 46%, rgba(10, 11, 13, 0) 72%),
+      linear-gradient(180deg, rgba(10, 11, 13, 0.28) 0%, rgba(10, 11, 13, 0) 24%, rgba(10, 11, 13, 0) 72%, rgba(10, 11, 13, 0.55) 100%),
+      url("assets/lido-hero-1280.webp");
+    background-position: center, center, right center;
+  }
   .hero-in { padding-bottom: 48px; }
   .hero-cta { display: flex; flex-wrap: wrap; }
   .hero-facts {
@@ -598,7 +614,7 @@ h3 {
     border-bottom: 0;
   }
 
-  .sec { padding-block: 112px; }
+  .sec { padding-block: 88px; }
   .grid {
     display: grid;
     grid-template-columns: minmax(150px, 1fr) 3fr;
@@ -631,9 +647,9 @@ h3 {
 /* Desktop */
 @media (min-width: 1100px) {
   .nav { display: flex; }
-  .hero { min-height: min(100vh, 960px); }
-  h1 { max-width: 15ch; font-size: clamp(5rem, 8.4vw, 7.5rem); }
-  .sec { padding-block: 128px; }
+  .hero { min-height: min(86vh, 780px); }
+  h1 { max-width: 14ch; font-size: clamp(4.25rem, 6.4vw, 6rem); }
+  .sec { padding-block: 96px; }
   .grid { grid-template-columns: 3fr 9fr; gap: 48px; }
   .coords { text-align: right; }
 }

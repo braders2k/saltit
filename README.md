@@ -76,8 +76,10 @@ and are not part of this repo.
 
 ## Visual system
 
-A near-black full-bleed hero and header band, a light salt-white page below it, lido blues for
-rules, labels, outlines and focus, and a soft-charcoal band for contact and the footer. Rules instead
+A near-black full-bleed hero and header band, with a licensed photo of the reopened Saltdean Lido
+blended into the charcoal (stronger on the right, fading to black behind the headline). Below that,
+a light salt-white page, lido blues for rules, labels, outlines and focus, and a soft-charcoal band
+for contact and the footer. Rules instead
 of cards, square buttons, monospace micro-labels, large tight sans-serif headings (system fonts only).
 
 | Token | Hex | Use | Contrast |
