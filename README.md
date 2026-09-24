@@ -76,10 +76,10 @@ and are not part of this repo.
 
 ## Visual system
 
-A near-black full-bleed hero and header band, with a faint AI-generated view of a modern Saltdean
-Lido blended into the charcoal (stronger on the right, fading to black behind the headline). Below
-that, a light salt-white page, lido blues for rules, labels, outlines and focus, and a soft-charcoal
-band for contact and the footer. Rules instead
+A near-black full-bleed hero and header band, with a licensed photo of the reopened Saltdean Lido
+blended into the charcoal (stronger on the right, fading to black behind the headline). Below that,
+a light salt-white page, lido blues for rules, labels, outlines and focus, and a soft-charcoal band
+for contact and the footer. Rules instead
 of cards, square buttons, monospace micro-labels, large tight sans-serif headings (system fonts only).
 
 | Token | Hex | Use | Contrast |
@@ -93,5 +93,7 @@ of cards, square buttons, monospace micro-labels, large tight sans-serif heading
 | Turkish Aegean | `#7898A4` | Secondary button outline, mark | never text on light |
 | Button hover | `#435F6D` | Primary hover on light | 6.55:1 with salt white |
 
-Hero backdrop: an AI-generated image of a refurbished art deco lido, pre-blended into `#0A0B0D`
-in `site/assets/lido-hero-*.webp`. It is not a photograph and needs no photo credit.
+Hero photo: "Saltdean Lido - Newly re-opened" © Paul Gillett,
+[geograph.org.uk/photo/5443210](https://www.geograph.org.uk/photo/5443210),
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in `site/assets/`
+are cropped and pre-blended into `#0A0B0D`; credit is in the footer.
