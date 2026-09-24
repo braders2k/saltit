@@ -14,6 +14,7 @@
 
   const form = d.querySelector("[data-enquiry]");
   if (!form) return;
+  form.hidden = false;
   form.noValidate = true;
   const status = form.querySelector("[data-status]");
   const labelFor = (el) => {
