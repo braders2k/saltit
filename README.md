@@ -64,10 +64,16 @@ Still open with Brad:
    `https://wa.me/447843468904`), a real photo of Brad, and a Google review link once the Business
    Profile exists.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Vercel)
 
-No build command. Output directory: `site`. DNS and the saltit.co.uk zone are managed separately
-and are not part of this repo.
+Hosted on Vercel, project **saltit** (team "Si's projects"), connected to this repo. Every push to
+`main` deploys to production at https://saltit.co.uk; other branches get preview URLs.
+No build command; output directory `site` (set in `vercel.json`, which also carries the security
+headers and a `noindex` header for `*.vercel.app` hosts only).
+
+DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
+`35594c3e1ad992d0.vercel-dns-017.com`. `www.saltit.co.uk` 308-redirects to `saltit.co.uk` in Vercel.
+`site/_headers` is kept for a Cloudflare Pages fallback but Vercel ignores it.
 
 ## Brand rules
 
