@@ -1,0 +1,6 @@
+.playwright-mcp/
+.wrangler/
+.netlify/
+node_modules/
+.DS_Store
+saltit-hero/
