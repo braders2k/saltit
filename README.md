@@ -19,13 +19,13 @@ site/                 ← the deployable site (publish this folder)
     mark.svg          the Salt IT mark (header, footer, favicon)
     mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
     og-image.jpg      1200×630 share image
-    lido-hero-*.webp  the Aug 2024 Lido photo (780m = mobile crop; 960 and 1440 = tablet/desktop)
+    cliffs-hero-*.webp  Saltdean undercliff (780m = mobile crop; 960 and 1440 = tablet/desktop)
     fonts/            Barlow 400 and 600, Latin subset (woff2), plus the OFL licence
 scripts/
   check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, section numbers)
+  og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 api/
   enquiry.js          contact form handler (Web3Forms when WEB3FORMS_ACCESS_KEY is set)
-  og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 docs/                 design brief and market research (not deployed)
 ```
 
@@ -88,30 +88,28 @@ DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 
 ## Visual system
 
-**Saltdean Lido after dark**, in a SpaceX-style layout: near-black full-bleed bands, one huge
-uppercase idea per screen, hairline rules instead of boxes, square buttons, tracked micro-labels
-and almost no colour except the Lido's own turquoise. The hero is Andy Li's 30 August 2024
-photo of the restored Lido (early light, CC0), darkened slightly, with a navy scrim so the
-headline stays readable and the pool still reads turquoise against the white Deco wall.
+**Light comparison** of the same layout (this branch only; `main` stays the night palette).
+Warm off-white paper, one huge uppercase idea per screen, hairline rules instead of boxes,
+square buttons, tracked micro-labels, and the Lido's turquoise kept for buttons, dots and
+the map. Turquoise *text* uses a deeper sea-green so it stays readable on the paper.
+The hero is the chalk cliffs and undercliff at Saltdean, with a warm paper scrim so the
+dark headline stays readable over the bright chalk and sky.
 
 Page rhythm: hero → spec strip (£75 · £35 · 0 contracts · 20+ years) → What I fix → How it works
-(deep band, 3-step sequence) → **Prices on a Deco-white band** (the Lido's walls) → Who you'll get →
-Where (deep band, coverage map) → Reviews (honest empty state) → Contact (pool-glow band) → footer.
+(warmer stone band, 3-step sequence) → **Prices on the brightest chalk band** → Who you'll get →
+Where (stone band, coverage map) → Reviews (honest empty state) → Contact (soft pool-glow) → footer.
 
-| Token | Hex | From the Lido | Use | Contrast |
-| --- | --- | --- | --- | --- |
-| Abyss | `#050D14` | Night sea | Page background | — |
-| Deep | `#081723` | Deep water | Alternate bands (How it works, Where, Contact) | — |
-| Deco white | `#F2F4F3` | The 1938 walls | Text on dark; hover fill for buttons | 17.7:1 on abyss |
-| Mute | `#A3B3BD` | — | Secondary text on dark | 9.1:1 on abyss |
-| Lido turquoise | `#3EC6CF` | The pool / Lido brand | Primary buttons, eyebrows, numbers, focus ring, map | 9.5:1 on abyss; never text on the light band |
-| Pool blue | `#9DCFF1` | Pool water in daylight | Coastline, mark detail | decorative |
-| Lido sky | `#275E96` | Sky over the Lido | Map sea, contact glow | decorative |
-| Terrace sand | `#C4B8A4` | Sun terraces | Meridian line, "none yet" status dot | decorative |
-| Deco (light band) | `#F1F2EF` | White render | Prices background | — |
-| Ink | `#07131C` | — | Text on the light band | 16.7:1 |
-| Ink mute | `#4A5A64` | — | Secondary text on the light band | 6.4:1 |
-| Lido ink | `#0B6B74` | Deep turquoise | Labels on the light band | 5.5:1 |
+| Token | Hex | Use | Contrast |
+| --- | --- | --- | --- |
+| Paper | `#F6F1E8` | Page background | — |
+| Stone | `#EFE6D8` | Alternate bands (How it works, Where, Contact) | — |
+| Chalk | `#FBF8F2` | Prices band, raised panels | — |
+| Ink | `#122028` | Text, outline buttons | 15:1 on paper |
+| Mute | `#44555E` | Secondary text | 6.7:1 on paper |
+| Lido turquoise | `#3EC6CF` | Primary button fill, dots, map home | 9:1 with ink text on the fill |
+| Lido ink | `#085E66` | Eyebrows, numbers, links | 6.4:1 on paper |
+| Pool blue | `#1D7AA6` | Coastline on the map | decorative |
+| Terrace sand | `#8D7048` | Meridian, "none yet" status dot | decorative |
 
 Type: Barlow 600 for headings, labels and buttons (H1/H2 uppercase, micro-labels tracked 0.16em),
 Barlow 400 for body at 19px / 1.6. Tabular figures for prices and the phone number.
@@ -125,12 +123,11 @@ The coverage map in *Where* is hand-built inline SVG (approximate coastline, 2 k
 the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Local area").
 Its text is an accessible `<title>`; the ruled list next to it is the real content.
 
-Hero photo: "Saltdean Lido" by Andy Li, 30 August 2024, 06:51, after the refit,
-[commons.wikimedia.org/wiki/File:Saltdean_Lido_2024-08-30.jpg](https://commons.wikimedia.org/wiki/File:Saltdean_Lido_2024-08-30.jpg),
-[CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). The WebP files in
-`site/assets/` are crops of the 4032×3024 original (no upscale), with a slight exposure pull-down.
-A navy gradient in CSS keeps the headline, supporting line and buttons readable. Credit is in
-the footer. CC0 does not require attribution; the credit stays so the source is clear.
+Hero photo: "Beaches and Undercliff - Saltdean" © Paul Gillett,
+[geograph.org.uk/photo/3792351](https://www.geograph.org.uk/photo/3792351),
+[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in
+`site/assets/` are crops of the Geograph original (no upscale). A warm paper gradient in CSS
+keeps the headline, supporting line and buttons readable. Credit is in the footer.
 
 ## Contact form
 
