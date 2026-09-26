@@ -122,7 +122,7 @@ turns solid once you scroll; on mobile the sticky call bar slides in after the h
 scrolls away.
 
 The coverage map in *Where* is hand-built inline SVG (approximate coastline, 2 km scale bar,
-the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Travel included").
+the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Local area").
 Its text is an accessible `<title>`; the ruled list next to it is the real content.
 
 Hero photo: "Saltdean Lido" by Andy Li, 30 August 2024, 06:51, after the refit,
