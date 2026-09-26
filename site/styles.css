@@ -163,14 +163,11 @@ a { color: inherit; }
 
 /* ---------- Header ---------- */
 .hdr {
-  position: fixed;
+  position: absolute;
   inset: 0 0 auto;
   z-index: 40;
   transition: background-color 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
-  border-bottom: 1px solid var(--line);
-  background: rgba(5, 13, 20, 0.94);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
 }
 .hdr-in {
   display: flex;
@@ -195,30 +192,8 @@ a { color: inherit; }
 }
 .mark { width: 36px; height: 36px; }
 .nav { display: none; }
-.hdr-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-.hdr-num {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  color: var(--salt);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums lining-nums;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.hdr-num:hover { color: var(--lido); }
 .hdr-call { white-space: nowrap; border-color: rgba(242, 244, 243, 0.55); }
 .hdr-call:hover { border-color: var(--salt); }
-@media (max-width: 419px) {
-  .hdr-in { flex-wrap: wrap; row-gap: 0; padding-bottom: 8px; }
-  .hdr-actions { flex: 1 0 100%; justify-content: space-between; margin-left: 0; }
-}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -307,17 +282,10 @@ h1 {
   line-height: 1.5;
 }
 .hero-price strong { color: var(--salt); font-weight: 600; }
-.hero-trust {
-  margin-top: 12px;
-  color: var(--salt);
-  font-size: 1rem;
-  line-height: 1.4;
-}
 .hero-in .eyebrow,
 .hero h1,
 .hero-sub,
-.hero-price,
-.hero-trust {
+.hero-price {
   text-shadow:
     0 1px 1px rgba(5, 13, 20, 0.8),
     0 12px 32px rgba(5, 13, 20, 0.72);
@@ -894,7 +862,6 @@ strong { font-weight: 600; }
 
   .only-sm { display: none; }
   .only-lg { display: inline; }
-  .hdr-num { display: none; }
 
   .hero-media { aspect-ratio: 1440 / 871; }
   .hero-media img { object-position: 50% 50%; }
@@ -1026,7 +993,6 @@ strong { font-weight: 600; }
     margin-left: auto;
     margin-right: 12px;
   }
-  .hdr-actions { margin-left: 0; }
   .nav a {
     position: relative;
     display: inline-flex;
@@ -1051,7 +1017,7 @@ strong { font-weight: 600; }
   .nav a:hover { opacity: 1; }
   .nav a:hover::after { transform: scaleX(1); }
 
-  .hdr { background: transparent; border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .hdr { position: fixed; }
   .hdr.is-scrolled {
     border-bottom-color: var(--line);
     background: rgba(5, 13, 20, 0.86);
