@@ -87,7 +87,7 @@ DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 
 **Saltdean Lido after dark**, in a SpaceX-style layout: near-black full-bleed bands, one huge
 uppercase idea per screen, hairline rules instead of boxes, square buttons, tracked micro-labels
-and almost no colour except the Lido's own turquoise. The hero is a photo of the reopened Lido,
+and almost no colour except the Lido's own turquoise. The hero is a photo of the restored Lido (2024),
 colour-graded to night so the pool glows turquoise against the white Deco wall.
 
 Page rhythm: hero → spec strip (£75 · £35 · 0 contracts · 20+ years) → What I fix → How it works
@@ -121,7 +121,8 @@ The coverage map in *Where* is hand-built inline SVG (approximate coastline, 2 k
 the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Travel included").
 Its text is an accessible `<title>`; the ruled list next to it is the real content.
 
-Hero photo: "Saltdean Lido - Newly re-opened" © Paul Gillett,
-[geograph.org.uk/photo/5443210](https://www.geograph.org.uk/photo/5443210),
+Hero photo: "Saltdean Lido" © Ian Capper, taken 21 May 2024 after the main building's restoration,
+[geograph.org.uk/photo/7783941](https://www.geograph.org.uk/photo/7783941),
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in `site/assets/`
-are cropped and colour-graded (night sky, turquoise pool, darkened grass); credit is in the footer.
+are upscaled from the 640px original, cropped and colour-graded (night sky, turquoise pool,
+darkened grass); credit is in the footer. A sharper photo of Brad's own would be a good swap later.
