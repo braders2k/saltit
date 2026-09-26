@@ -117,9 +117,10 @@ Type: Barlow 600 for headings, labels and buttons (H1/H2 uppercase, micro-labels
 Barlow 400 for body at 19px / 1.6. Tabular figures for prices and the phone number.
 
 Motion: only a short fade-up of the hero on load, a slow pulse on the Saltdean map marker and
-hover transitions. All of it is switched off under `prefers-reduced-motion`. The desktop header
-turns solid once you scroll; on mobile the sticky call bar slides in after the hero's call button
-scrolls away.
+hover transitions. All of it is switched off under `prefers-reduced-motion`. The header stays
+fixed. On a phone it shows 07843 468904 beside Call. On a wide screen it is clear over the hero
+and turns solid once you scroll. The sticky call bar still slides in on mobile after the hero's
+call button scrolls away.
 
 The coverage map in *Where* is hand-built inline SVG (approximate coastline, 2 km scale bar,
 the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Travel included").
