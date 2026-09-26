@@ -161,6 +161,7 @@ a { color: inherit; }
 .btn-primary:hover { border-color: var(--salt); background: var(--salt); color: var(--abyss); }
 .btn-line:hover { background: var(--salt); color: var(--abyss); }
 .btn-sm { min-height: 48px; padding: 0 18px; }
+.btn svg { width: 16px; height: 16px; flex: none; }
 
 .only-lg { display: none; }
 
@@ -821,6 +822,7 @@ strong { font-weight: 600; }
 .form .btn { width: 100%; }
 .form .btn:disabled { opacity: 0.65; cursor: progress; }
 .form-note { margin-top: 16px; color: var(--mute); font-size: 1rem; }
+.form-note a { white-space: nowrap; }
 .form-note a:hover { color: var(--lido-ink); }
 
 /* ---------- Footer ---------- */
@@ -857,7 +859,7 @@ strong { font-weight: 600; }
   backdrop-filter: blur(14px);
   transition: transform 260ms var(--ease);
 }
-.callbar .btn { min-height: 50px; padding: 0 12px; }
+.callbar .btn { min-height: 50px; padding: 0 10px; letter-spacing: 0.1em; white-space: nowrap; }
 .callbar.is-off { transform: translateY(110%); }
 
 /* ---------- Tablet ---------- */

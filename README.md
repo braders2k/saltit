@@ -50,6 +50,7 @@ Live contact details (keep identical on the site, Google Business Profile, Nextd
 | --- | --- |
 | Phone (display) | `07843 468904` |
 | Phone (`tel:` and JSON-LD) | `+447843468904` |
+| WhatsApp | `https://wa.me/447843468904` |
 | Email | `hello@saltit.co.uk` |
 | Hours | Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can. |
 
@@ -63,9 +64,9 @@ Still open with Brad:
 2. **Bio** (Who you'll get): first person, from Brad. The spec strip still says "20+ years".
 3. Confirm: the 14-day free return (it appears in Prices *and* the promises, so change both or neither),
    no travel supplement elsewhere in Brighton & Hove, and "ring you back as soon as I can".
-4. Optional: WhatsApp on the same number (the sticky bar's **Message** button can then link to
-   `https://wa.me/447843468904`), a real photo of Brad, and a Google review link once the Business
-   Profile exists.
+4. A real photo of Brad, and a Google review link once the Business Profile exists.
+   WhatsApp is already on the same number (`https://wa.me/447843468904`) in the hero, contact
+   section, footer and sticky bar.
 
 ## Deploy (Vercel)
 

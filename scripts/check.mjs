@@ -64,6 +64,12 @@ try {
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
     if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
   }
+  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}`;
+  const waLinks = [...html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
+  if (!waLinks.length) errors.push("WhatsApp link missing");
+  for (const href of waLinks) {
+    if (href !== expectedWa) errors.push(`WhatsApp link "${href}" does not match ${expectedWa}`);
+  }
 } catch {
   errors.push("JSON-LD missing or invalid");
 }
