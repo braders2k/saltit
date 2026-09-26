@@ -134,7 +134,7 @@ the footer. CC0 does not require attribution; the credit stays so the source is 
 
 ## Contact form
 
-`Send to Brad` posts JSON to `/api/enquiry` (same origin, so the site CSP can stay `form-action 'self'`).
+`Send to Simon` posts JSON to `/api/enquiry` (same origin, so the site CSP can stay `form-action 'self'`).
 
 | Env var | Where | What it does |
 | --- | --- | --- |
