@@ -128,7 +128,7 @@ Voice: first person ("I") in body copy; buttons say "Call Brad". Short sentences
 
 - Eyebrow: `SALT IT · BRAD · BASED IN SALTDEAN`
 - **H1:** `Home IT support in Saltdean.`
-- Sub (one sentence): `Wi-Fi, printers, laptops, email and scam scares — fixed at your kitchen table by someone who lives down the road.`
+- Sub (one sentence): `Wi-Fi, printers, laptops, email and scam scares — reliable home IT support from a neighbour in Saltdean.`
 - Primary button: `Call Brad — [PHONE]` (`tel:`)
 - Secondary button (outline): `Book a home visit` (jumps to `#contact`)
 - Micro line under the buttons: `First hour £75, travel included · Saltdean · Rottingdean · Peacehaven · Woodingdean`
