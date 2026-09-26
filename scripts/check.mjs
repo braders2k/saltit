@@ -74,6 +74,12 @@ const phText = (html.match(/Add phone before launch/g) || []).length;
 if (phText) blockers.push(`Phone: ${phText} × "Add phone before launch" (visible number)`);
 for (const m of html.matchAll(/data-todo[^>]*>([^<]+)</g)) blockers.push(m[1].trim());
 
+const sectionNums = [...html.matchAll(/<p class="idx"><span>(\d{2})<\/span>/g)].map((m) => m[1]);
+const expectedNums = ["01", "02", "03", "04", "05", "06", "07"];
+if (sectionNums.join(",") !== expectedNums.join(",")) {
+  errors.push(`Section numbers ${sectionNums.join(", ") || "(none)"} (want ${expectedNums.join(", ")})`);
+}
+
 for (const e of errors) console.error(`ERROR    ${e}`);
 for (const b of blockers) console.warn(`BLOCKER  ${b}`);
 if (!errors.length && !blockers.length) console.log("All checks passed. Ready for launch.");

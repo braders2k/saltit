@@ -24,12 +24,29 @@
   form.hidden = false;
   form.noValidate = true;
   const status = form.querySelector("[data-status]");
+  const submit = form.querySelector("[type=submit]");
   const labelFor = (el) => {
     const label = form.querySelector(`label[for="${el.id}"]`);
     return label ? label.childNodes[0].textContent.trim() : el.name;
   };
 
-  form.addEventListener("submit", (event) => {
+  const openMailto = (fields) => {
+    const subject = `Home visit enquiry — ${fields.area} — ${fields.name}`;
+    const body = [
+      `Name: ${fields.name}`,
+      `Phone: ${fields.phone}`,
+      `Area: ${fields.area}`,
+      `Booking for someone else: ${fields.forSomeoneElse ? "Yes" : "No"}`,
+      "",
+      "What's gone wrong:",
+      fields.problem,
+    ].join("\n");
+    status.textContent = "Your email app should now open with the message ready to send. If it doesn't, email hello@saltit.co.uk.";
+    window.location.href =
+      `mailto:hello@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const missing = [];
     for (const el of form.querySelectorAll("[required]")) {
@@ -43,21 +60,52 @@
       return;
     }
 
-    const v = (name) => form.elements[name].value.trim();
-    const forSomeoneElse = form.elements.for_someone_else.checked;
-    const subject = `Home visit enquiry — ${v("area")} — ${v("name")}`;
-    const body = [
-      `Name: ${v("name")}`,
-      `Phone: ${v("phone")}`,
-      `Area: ${v("area")}`,
-      `Booking for someone else: ${forSomeoneElse ? "Yes" : "No"}`,
-      "",
-      "What's gone wrong:",
-      v("problem"),
-    ].join("\n");
+    const fields = {
+      name: form.elements.name.value.trim(),
+      phone: form.elements.phone.value.trim(),
+      area: form.elements.area.value.trim(),
+      problem: form.elements.problem.value.trim(),
+      forSomeoneElse: form.elements.for_someone_else.checked,
+      company: form.elements.hp_field ? form.elements.hp_field.value.trim() : "",
+    };
 
-    status.textContent = "Your email app should now open with the message ready to send. If it doesn't, email hello@saltit.co.uk.";
-    window.location.href =
-      `mailto:hello@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (fields.company) {
+      form.reset();
+      status.textContent = "Sent. I'll read this and ring you back.";
+      return;
+    }
+
+    if (submit) submit.disabled = true;
+    status.textContent = "Sending.";
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: fields.name,
+          phone: fields.phone,
+          area: fields.area,
+          problem: fields.problem,
+          for_someone_else: fields.forSomeoneElse ? "yes" : "",
+          hp_field: "",
+        }),
+      });
+      let data = {};
+      try { data = await res.json(); } catch { data = {}; }
+      if (res.ok && data.ok) {
+        form.reset();
+        status.textContent = "Sent. I'll read this and ring you back.";
+        return;
+      }
+      if (res.status === 400) {
+        status.textContent = "Please check the form and try again, or email hello@saltit.co.uk.";
+        return;
+      }
+      openMailto(fields);
+    } catch {
+      openMailto(fields);
+    } finally {
+      if (submit) submit.disabled = false;
+    }
   });
 })();
