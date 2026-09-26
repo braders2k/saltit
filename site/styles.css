@@ -272,8 +272,32 @@ h1 {
 }
 .hero-cta {
   display: grid;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 8px;
   margin-top: 26px;
+}
+/* Phone widths: Call and WhatsApp share the first row; booking stays full width.
+   The number is its own flex item so a narrow Call button breaks before it. */
+.hero-cta > .btn-primary {
+  grid-area: 1 / 1;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 0;
+  padding-inline: 10px;
+  line-height: 1.15;
+}
+.hero-cta > .btn-primary span { white-space: nowrap; }
+.hero-cta > a[href*="wa.me"] {
+  grid-area: 1 / 2;
+  gap: 6px;
+  padding-inline: 10px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.hero-cta > a[href="#contact"] {
+  grid-column: 1 / -1;
 }
 .hero-price {
   display: grid;
@@ -883,6 +907,22 @@ strong { font-weight: 600; }
   }
   .hero-in { margin-top: -15vw; padding-bottom: 72px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-cta > .btn-primary {
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0 30px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .hero-cta > a[href*="wa.me"] {
+    gap: 10px;
+    padding: 0 30px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
   .hero-price { display: flex; flex-wrap: wrap; gap: 4px 16px; max-width: 760px; }
 
   .specs-in { grid-template-columns: repeat(4, 1fr); }
