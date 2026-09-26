@@ -4,3 +4,5 @@
 node_modules/
 .DS_Store
 saltit-hero/
+video/audio.wav
+video/still-*.png

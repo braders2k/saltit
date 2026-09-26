@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <title>SaltIT promo</title>
+    <style>
+      :root {
+        --salt-white: #fafbfc;
+        --soft-charcoal: #2b2f33;
+        --lido-sky: #7eb8d4;
+        --turkish-aegean: #7898a4;
+        --eyebrow: #527e91;
+        --line: rgba(43, 47, 51, 0.18);
+        --muted: #5f676e;
+        --chrome: #2b2f33;
+        --pad: 140px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #1c1f22;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .stage {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        color: var(--soft-charcoal);
+        background: var(--salt-white);
+      }
+
+      .vertical .stage {
+        width: 1080px;
+        height: 1920px;
+      }
+
+      body.capture {
+        display: block;
+        min-height: 0;
+      }
+
+      /* ---------- chrome ---------- */
+
+      .chrome {
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        right: var(--pad);
+        left: var(--pad);
+        display: flex;
+        height: 120px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid color-mix(in srgb, var(--chrome) 16%, transparent);
+        color: var(--chrome);
+      }
+
+      .chrome .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .chrome .brand svg {
+        width: 42px;
+        height: 42px;
+        border-radius: 9px;
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--chrome) 22%, transparent);
+      }
+
+      .chrome .url {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .progress {
+        position: absolute;
+        z-index: 20;
+        bottom: 0;
+        left: 0;
+        height: 5px;
+        background: var(--lido-sky);
+        transform-origin: left;
+      }
+
+      /* ---------- scenes ---------- */
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: 0 var(--pad);
+        background: var(--salt-white);
+        opacity: 0;
+      }
+
+      .scene.dark {
+        color: var(--salt-white);
+        background: var(--soft-charcoal);
+      }
+
+      .eyebrow {
+        margin: 0 0 26px;
+        color: var(--eyebrow);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .dark .eyebrow {
+        color: var(--lido-sky);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      .mask {
+        display: block;
+        overflow: hidden;
+        padding-bottom: 0.08em;
+      }
+
+      .mask > span {
+        display: block;
+      }
+
+      .accent {
+        color: var(--turkish-aegean);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      /* intro + outro landscape art */
+      .coast {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .coast path {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .centered {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .logo-lockup {
+        display: flex;
+        align-items: center;
+        gap: 42px;
+      }
+
+      .logo-lockup svg {
+        width: 180px;
+        height: 180px;
+      }
+
+      .wordmark {
+        font-size: 190px;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1;
+      }
+
+      .intro .eyebrow {
+        margin: 56px 0 0;
+      }
+
+      /* statement */
+      .statement {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .statement h1 {
+        font-size: 168px;
+        font-weight: 500;
+        letter-spacing: -0.055em;
+        line-height: 1;
+      }
+
+      .statement .lede {
+        max-width: 1100px;
+        margin-top: 54px;
+        color: var(--muted);
+        font-size: 36px;
+        line-height: 1.4;
+      }
+
+      /* split service scenes */
+      .split {
+        display: grid;
+        padding-top: 120px;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        gap: 120px;
+      }
+
+      .split h2 {
+        font-size: 112px;
+        font-weight: 500;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .split .intro-copy {
+        margin-top: 36px;
+        font-size: 36px;
+        line-height: 1.4;
+      }
+
+      .split .note {
+        margin-top: 30px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 26px;
+        line-height: 1.45;
+      }
+
+      .card {
+        border-top: 4px solid var(--lido-sky);
+      }
+
+      .rows {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .rows li {
+        display: flex;
+        align-items: center;
+        gap: 34px;
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 44px;
+        letter-spacing: -0.02em;
+      }
+
+      .rows svg {
+        flex: none;
+        width: 56px;
+        height: 56px;
+        fill: none;
+        stroke: var(--soft-charcoal);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2.2;
+      }
+
+      .rows svg .hi {
+        stroke: var(--lido-sky);
+      }
+
+      /* automation flow */
+      .flow {
+        position: relative;
+        padding: 10px 0 10px 0;
+      }
+
+      .flow-track {
+        position: absolute;
+        top: 70px;
+        bottom: 70px;
+        left: 39px;
+        width: 2px;
+        background: var(--line);
+      }
+
+      .flow-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: var(--lido-sky);
+        transform-origin: top;
+      }
+
+      .flow-dot {
+        position: absolute;
+        left: -9px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--lido-sky);
+        box-shadow: 0 0 0 8px rgba(126, 184, 212, 0.25);
+      }
+
+      .node {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        margin: 0 0 44px;
+      }
+
+      .node:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .node .bullet {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        flex: none;
+        width: 80px;
+        height: 80px;
+        place-items: center;
+        border: 2px solid var(--line);
+        background: var(--salt-white);
+        color: var(--turkish-aegean);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .node .bullet em {
+        font-style: normal;
+      }
+
+      .node .bullet svg {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: var(--salt-white);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3.2;
+      }
+
+      .node .body {
+        flex: 1;
+        padding: 26px 32px;
+        border: 1px solid var(--line);
+        background: var(--salt-white);
+      }
+
+      .node strong {
+        display: block;
+        font-size: 38px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .node span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 25px;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 44px;
+      }
+
+      .tags span {
+        padding: 14px 22px;
+        border: 1px solid var(--soft-charcoal);
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      /* process (dark) */
+      .process {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 80px;
+      }
+
+      .process h2 {
+        font-size: 120px;
+        font-weight: 500;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .tracks {
+        display: grid;
+        margin-top: 80px;
+        grid-template-columns: 1fr 1fr;
+        gap: 110px;
+      }
+
+      .tracks h3 {
+        padding-bottom: 22px;
+        border-bottom: 1px solid rgba(250, 251, 252, 0.28);
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .tracks ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tracks li {
+        display: grid;
+        align-items: baseline;
+        padding: 26px 0;
+        border-bottom: 1px solid rgba(250, 251, 252, 0.16);
+        grid-template-columns: 84px 1fr;
+      }
+
+      .tracks li > span {
+        color: var(--lido-sky);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .tracks li strong {
+        font-size: 38px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+      }
+
+      /* local */
+      .local h2 {
+        font-size: 120px;
+        font-weight: 500;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .local .intro-copy {
+        margin-top: 40px;
+        color: var(--muted);
+        font-size: 36px;
+        line-height: 1.45;
+      }
+
+      .stat {
+        display: flex;
+        align-items: baseline;
+        gap: 22px;
+        margin-top: 48px;
+      }
+
+      .stat b {
+        font-size: 120px;
+        font-weight: 700;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 28px;
+        line-height: 1.3;
+      }
+
+      .areas {
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--line);
+        list-style: none;
+      }
+
+      .areas li {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 50px;
+        letter-spacing: -0.03em;
+      }
+
+      .areas li span {
+        color: var(--turkish-aegean);
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+      }
+
+      .pin {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 26px;
+        border-radius: 50% 50% 50% 0;
+        background: var(--lido-sky);
+        transform: rotate(-45deg) translateY(-6px);
+      }
+
+      /* outro: keep the lockup clear of the drawn shoreline */
+      .outro .centered {
+        padding-bottom: 300px;
+      }
+
+      .outro .logo-lockup svg {
+        width: 132px;
+        height: 132px;
+      }
+
+      .outro .wordmark {
+        font-size: 140px;
+      }
+
+      .outro .tagline {
+        margin-top: 40px;
+        font-size: 52px;
+        font-weight: 500;
+        letter-spacing: -0.035em;
+      }
+
+      .cta {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        margin-top: 64px;
+      }
+
+      .cta .site {
+        padding: 26px 40px;
+        color: var(--salt-white);
+        background: var(--soft-charcoal);
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .cta .mail {
+        font-size: 36px;
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-color: var(--lido-sky);
+        text-decoration-thickness: 3px;
+        text-underline-offset: 10px;
+      }
+
+      .outro .serving {
+        margin-top: 50px;
+        color: var(--muted);
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      /* ---------- vertical (9:16) ---------- */
+
+      .vertical {
+        --pad: 80px;
+      }
+
+      .vertical .chrome {
+        height: 150px;
+      }
+
+      .vertical .logo-lockup {
+        flex-direction: column;
+        gap: 36px;
+      }
+
+      .vertical .wordmark {
+        font-size: 200px;
+      }
+
+      .vertical .intro .eyebrow {
+        max-width: 760px;
+        line-height: 1.7;
+      }
+
+      .vertical .statement h1 {
+        font-size: 150px;
+      }
+
+      .vertical .statement .lede {
+        font-size: 40px;
+      }
+
+      .vertical .split {
+        align-content: center;
+        padding-top: 150px;
+        grid-template-columns: 1fr;
+        gap: 80px;
+      }
+
+      .vertical .split h2 {
+        font-size: 104px;
+      }
+
+      .vertical .split .intro-copy {
+        font-size: 38px;
+      }
+
+      .vertical .process h2,
+      .vertical .local h2 {
+        font-size: 108px;
+      }
+
+      .vertical .tracks {
+        grid-template-columns: 1fr;
+        gap: 70px;
+        margin-top: 70px;
+      }
+
+      .vertical .local .stat {
+        margin-top: 40px;
+      }
+
+      .vertical .areas li {
+        padding: 28px 0;
+        font-size: 46px;
+      }
+
+      .vertical .line {
+        display: block;
+      }
+
+      .vertical .line-v {
+        display: none;
+      }
+
+      .vertical .coast {
+        top: auto;
+        height: 1100px;
+      }
+
+      .vertical .intro .centered {
+        padding-bottom: 360px;
+      }
+
+      .vertical .outro .centered {
+        padding-bottom: 520px;
+      }
+
+      .vertical .outro .logo-lockup svg {
+        width: 170px;
+        height: 170px;
+      }
+
+      .vertical .outro .wordmark {
+        font-size: 170px;
+      }
+
+      .vertical .outro .tagline {
+        max-width: 800px;
+        font-size: 60px;
+        line-height: 1.15;
+      }
+
+      .vertical .cta {
+        flex-direction: column;
+        gap: 44px;
+        margin-top: 80px;
+      }
+
+      .vertical .cta .site {
+        font-size: 50px;
+      }
+
+      .vertical .outro .serving {
+        max-width: 760px;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="mark" viewBox="0 0 128 128">
+        <rect width="128" height="128" rx="25" fill="#2B2F33"/>
+        <path d="M64 19L39 63L47 78H65L77 47L64 19Z" fill="#FAFBFC"/>
+        <path d="M80 51L66 78H90L98 65L80 51Z" fill="#7898A4"/>
+        <path d="M34 84H100C88 92 77 96 66 96C54 96 43 92 34 84Z" fill="#7EB8D4"/>
+        <path d="M55 101H77L66 108L55 101Z" fill="#7EB8D4"/>
+      </symbol>
+      <symbol id="coast" viewBox="0 0 1600 900">
+        <path class="cliff-face" d="M0 478L48 494L100 517L160 528L221 543L300 553L377 562L421 645" stroke="#C9D1D6" stroke-width="3" pathLength="1"/>
+        <path class="cliff-lines" d="M12 482L22 635M55 497L74 637M107 519L125 638M165 530L182 640M224 545L244 641M299 555L319 642" stroke="#D8DEE2" stroke-width="4"/>
+        <path class="sea" d="M0 645C188 646 314 643 498 646C785 650 1111 645 1600 646" stroke="#7EB8D4" stroke-width="4" pathLength="1"/>
+        <path class="sea2" d="M0 653C267 649 457 655 703 652C997 648 1278 653 1600 650" stroke="#DCE8ED" stroke-width="2" pathLength="1"/>
+        <path class="groyne" d="M1467 645H1600" stroke="#7898A4" stroke-width="5" pathLength="1"/>
+      </symbol>
+    </svg>
+
+    <div class="stage" id="stage">
+      <!-- 1 · Intro -->
+      <section class="scene intro" data-start="0" data-end="4.2" data-fade-in="0">
+        <svg class="coast" preserveAspectRatio="xMidYMax slice" data-coast><use href="#coast"/></svg>
+        <div class="centered">
+          <div class="logo-lockup">
+            <svg data-at="0.35" data-dur="0.9" data-fx="scale"><use href="#mark"/></svg>
+            <div class="wordmark" data-at="0.8" data-dur="0.9" data-fx="wipe">SaltIT</div>
+          </div>
+          <p class="eyebrow" data-at="1.6">Home IT support · AI for local business<span class="line-v"> · </span><span class="line">Saltdean BN2</span></p>
+        </div>
+      </section>
+
+      <!-- 2 · Statement -->
+      <section class="scene statement" data-start="4.2" data-end="8.6">
+        <p class="eyebrow" data-at="0.3">Brad · Saltdean IT engineer · 20+ years</p>
+        <h1>
+          <span class="mask"><span data-at="0.45" data-dur="0.8" data-fx="rise">Tech that works.</span></span>
+          <span class="mask"><span data-at="0.85" data-dur="0.8" data-fx="rise"><span class="accent">At home</span> and <span class="accent">at work.</span></span></span>
+        </h1>
+        <p class="lede" data-at="1.6">Call-out fixes for Saltdean homes, and practical AI automations for local small businesses.</p>
+      </section>
+
+      <!-- 3 · Home IT -->
+      <section class="scene split" data-start="8.6" data-end="14.4">
+        <div>
+          <p class="eyebrow" data-at="0.3">01 · At home</p>
+          <h2><span class="mask"><span data-at="0.4" data-dur="0.8" data-fx="rise">Home IT support</span></span></h2>
+          <p class="intro-copy" data-at="0.9">Patient, plain-English help for the technology you rely on at home.</p>
+          <p class="note" data-at="1.3">On-site in Saltdean and nearby, or remote when that is simpler.</p>
+        </div>
+        <div class="card" data-at="0.7" data-fx="grow-x">
+          <ul class="rows">
+            <li data-at="1.1" data-fx="right">
+              <svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="21" rx="2"/><path d="M3 37h42l-3 4H6z"/><path class="hi" d="M19 21l4 4 7-8"/></svg>
+              PC &amp; laptop fixes
+            </li>
+            <li data-at="1.4" data-fx="right">
+              <svg viewBox="0 0 48 48"><path d="M6 19a26 26 0 0 1 36 0"/><path d="M12 26a17 17 0 0 1 24 0"/><path class="hi" d="M18 33a8 8 0 0 1 12 0"/><circle cx="24" cy="39" r="1.6"/></svg>
+              Wi‑Fi that reaches every room
+            </li>
+            <li data-at="1.7" data-fx="right">
+              <svg viewBox="0 0 48 48"><path d="M14 18V7h20v11"/><rect x="6" y="18" width="36" height="16" rx="2"/><path d="M14 29h20v12H14z"/><path class="hi" d="M34 24h2"/></svg>
+              Printers &amp; devices
+            </li>
+            <li data-at="2.0" data-fx="right">
+              <svg viewBox="0 0 48 48"><path d="M29 7a9 9 0 0 0-8 12L8 32a4 4 0 0 0 6 6l13-13a9 9 0 0 0 12-8l-6 2-4-4z"/><path class="hi" d="M11 35h0"/></svg>
+              Setup &amp; troubleshooting
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4 · AI for small business -->
+      <section class="scene split ai" data-start="14.4" data-end="20.6">
+        <div>
+          <p class="eyebrow" data-at="0.3">02 · At work</p>
+          <h2><span class="mask"><span data-at="0.4" data-dur="0.8" data-fx="rise">AI for small business</span></span></h2>
+          <p class="intro-copy" data-at="0.9">Focused automations that remove repetitive work without adding complexity.</p>
+          <div class="tags">
+            <span data-at="1.3">Fixed scope</span>
+            <span data-at="1.45">Tools-agnostic</span>
+            <span data-at="1.6">Clear outcome</span>
+          </div>
+        </div>
+        <div class="flow" data-flow>
+          <div class="flow-track" data-at="0.8" data-fx="fade">
+            <div class="flow-fill"></div>
+            <div class="flow-dot"></div>
+          </div>
+          <div class="node" data-at="0.9" data-fx="right">
+            <div class="bullet"><em>01</em><svg viewBox="0 0 40 40"><path d="M10 21l7 7 13-15"/></svg></div>
+            <div class="body"><strong>Capture new leads</strong><span>Every enquiry logged, nothing missed</span></div>
+          </div>
+          <div class="node" data-at="1.1" data-fx="right">
+            <div class="bullet"><em>02</em><svg viewBox="0 0 40 40"><path d="M10 21l7 7 13-15"/></svg></div>
+            <div class="body"><strong>Qualify them automatically</strong><span>The right jobs reach you first</span></div>
+          </div>
+          <div class="node" data-at="1.3" data-fx="right">
+            <div class="bullet"><em>03</em><svg viewBox="0 0 40 40"><path d="M10 21l7 7 13-15"/></svg></div>
+            <div class="body"><strong>Follow-ups that send themselves</strong><span>Less admin, more time for the work</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 · How it works -->
+      <section class="scene dark process" data-start="20.6" data-end="26.6">
+        <p class="eyebrow" data-at="0.3">How it works</p>
+        <h2><span class="mask"><span data-at="0.4" data-dur="0.8" data-fx="rise">A clear next step.</span></span></h2>
+        <div class="tracks">
+          <div>
+            <h3 data-at="0.9">For your home</h3>
+            <ol>
+              <li data-at="1.2"><span>01</span><strong>Tell Brad what is wrong</strong></li>
+              <li data-at="1.5"><span>02</span><strong>Choose on-site or remote</strong></li>
+              <li data-at="1.8"><span>03</span><strong>Get it working — no jargon</strong></li>
+            </ol>
+          </div>
+          <div>
+            <h3 data-at="1.05">For your business</h3>
+            <ol>
+              <li data-at="1.35"><span>01</span><strong>Pick one bottleneck</strong></li>
+              <li data-at="1.65"><span>02</span><strong>Agree the scope</strong></li>
+              <li data-at="1.95"><span>03</span><strong>Build, test, hand over</strong></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 · Local -->
+      <section class="scene split local" data-start="26.6" data-end="31.6">
+        <div>
+          <p class="eyebrow" data-at="0.3">Close to home</p>
+          <h2>
+            <span class="mask"><span data-at="0.4" data-dur="0.8" data-fx="rise">Here when you</span></span>
+            <span class="mask"><span data-at="0.6" data-dur="0.8" data-fx="rise">need a human.</span></span>
+          </h2>
+          <p class="intro-copy" data-at="1.1">SaltIT is Brad: an IT engineer with an EPOS background and a home in Saltdean.</p>
+          <div class="stat" data-at="1.4"><b data-count="20" data-count-at="1.4">20+</b><span>years fixing<br>real-world tech</span></div>
+        </div>
+        <ul class="areas">
+          <li data-at="0.9" data-fx="right"><div><i class="pin"></i>Saltdean</div><span>BN2</span></li>
+          <li data-at="1.15" data-fx="right"><div><i class="pin"></i>Peacehaven</div><span>BN10</span></li>
+          <li data-at="1.4" data-fx="right"><div><i class="pin"></i>Rottingdean</div><span>BN2</span></li>
+          <li data-at="1.65" data-fx="right"><div><i class="pin"></i>Brighton</div><span>BN2</span></li>
+        </ul>
+      </section>
+
+      <!-- 7 · Outro -->
+      <section class="scene outro" data-start="31.6" data-end="38">
+        <svg class="coast" preserveAspectRatio="xMidYMax slice" data-coast data-coast-at="0.1"><use href="#coast"/></svg>
+        <div class="centered">
+          <div class="logo-lockup">
+            <svg data-at="0.3" data-dur="0.8" data-fx="scale"><use href="#mark"/></svg>
+            <div class="wordmark" data-at="0.6" data-dur="0.9" data-fx="wipe">SaltIT</div>
+          </div>
+          <p class="tagline" data-at="1.2">Tech that works. <span class="line">At home and at work.</span></p>
+          <div class="cta">
+            <span class="site" data-at="1.7" data-fx="scale">saltit.co.uk</span>
+            <span class="mail" data-at="1.95">hello@saltit.co.uk</span>
+          </div>
+          <p class="serving" data-at="2.4" data-fx="fade">Saltdean · Peacehaven<span class="line-v"> · </span><span class="line">Rottingdean · Brighton BN2</span></p>
+        </div>
+      </section>
+
+      <header class="chrome" id="chrome">
+        <div class="brand"><svg><use href="#mark"/></svg>SaltIT</div>
+        <div class="url">saltit.co.uk</div>
+      </header>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      if (params.get("format") === "vertical") document.documentElement.classList.add("vertical");
+      if (params.has("capture")) document.body.classList.add("capture");
+
+      const DURATION = 38;
+      const EXIT = 0.45;
+      // Each scene starts building slightly before the previous one has finished leaving.
+      const LEAD = 0.25;
+      const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+      const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+      const outExpo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+      const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+      const lerp = (a, b, p) => a + (b - a) * p;
+      const mix = (c1, c2, p) => `rgb(${c1.map((v, i) => Math.round(lerp(v, c2[i], p))).join(",")})`;
+
+      const scenes = [...document.querySelectorAll(".scene")].map((el) => ({
+        el,
+        start: +el.dataset.start,
+        end: +el.dataset.end,
+        fadeIn: el.dataset.fadeIn !== undefined ? +el.dataset.fadeIn : 0.35,
+        items: [...el.querySelectorAll("[data-at]")],
+        coast: el.querySelector("[data-coast]"),
+        flow: el.querySelector("[data-flow]"),
+        counters: [...el.querySelectorAll("[data-count]")],
+      }));
+      const chrome = document.getElementById("chrome");
+      const progress = document.getElementById("progress");
+
+      function applyItem(el, local) {
+        const at = +el.dataset.at;
+        const dur = el.dataset.dur ? +el.dataset.dur : 0.7;
+        const raw = clamp((local - at) / dur);
+        const p = outCubic(raw);
+        const fx = el.dataset.fx || "up";
+        let transform = "";
+        let opacity = p;
+        let clip = "";
+        switch (fx) {
+          case "rise":
+            transform = `translateY(${(1 - outExpo(raw)) * 110}%)`;
+            opacity = 1;
+            break;
+          case "wipe":
+            clip = `inset(0 ${(1 - inOut(raw)) * 100}% 0 0)`;
+            opacity = 1;
+            transform = `translateX(${(1 - p) * -20}px)`;
+            break;
+          case "right":
+            transform = `translateX(${(1 - p) * 60}px)`;
+            break;
+          case "scale":
+            transform = `scale(${lerp(0.82, 1, outExpo(raw))})`;
+            break;
+          case "grow-x":
+            // The card's top rule grows in; contents animate on their own.
+            el.style.borderTopColor = `rgba(126,184,212,${p})`;
+            el.style.clipPath = `inset(0 ${(1 - inOut(raw)) * 100}% 0 0)`;
+            el.style.opacity = 1;
+            return;
+          case "fade":
+            break;
+          default:
+            transform = `translateY(${(1 - p) * 36}px)`;
+        }
+        el.style.opacity = opacity;
+        el.style.transform = transform;
+        el.style.clipPath = clip;
+      }
+
+      function drawCoast(svg, local) {
+        const at = svg.dataset.coastAt ? +svg.dataset.coastAt : 0;
+        const q = (s, d) => inOut(clamp((local - at - s) / d));
+        // <use> clones share one symbol, so draw a per-scene inline copy instead.
+        if (!svg._inline) {
+          svg.innerHTML = document.getElementById("coast").innerHTML;
+          svg.setAttribute("viewBox", "0 0 1600 900");
+          // In 9:16 anchor left so the chalk cliff stays in frame.
+          if (document.documentElement.classList.contains("vertical")) {
+            svg.setAttribute("preserveAspectRatio", "xMinYMax slice");
+          }
+          svg._inline = true;
+        }
+        const pieces = [
+          [".sea", q(0, 1.6)],
+          [".sea2", q(0.25, 1.6)],
+          [".cliff-face", q(0.3, 1.3)],
+          [".groyne", q(1.2, 0.6)],
+        ];
+        pieces.forEach(([sel, p]) => {
+          const path = svg.querySelector(sel);
+          path.style.strokeDasharray = "1 1";
+          path.style.strokeDashoffset = 1 - p;
+        });
+        const lines = svg.querySelector(".cliff-lines");
+        lines.style.opacity = q(0.9, 0.8);
+      }
+
+      function drawFlow(flow, local) {
+        const track = flow.querySelector(".flow-track");
+        const fill = flow.querySelector(".flow-fill");
+        const dot = flow.querySelector(".flow-dot");
+        const nodes = [...flow.querySelectorAll(".node")];
+        const run = clamp((local - 1.9) / 2.6);
+        const pos = inOut(run);
+        fill.style.transform = `scaleY(${pos})`;
+        dot.style.top = `calc(${pos * 100}% - 10px)`;
+        dot.style.opacity = run > 0 && run < 1 ? 1 : run >= 1 ? 1 - clamp((local - 4.5) / 0.3) : 0;
+        nodes.forEach((node, i) => {
+          const threshold = i / (nodes.length - 1);
+          const lit = clamp((pos - threshold + 0.08) / 0.08);
+          const bullet = node.querySelector(".bullet");
+          const tick = bullet.querySelector("svg");
+          const label = bullet.querySelector("em");
+          bullet.style.background = mix([250, 251, 252], [126, 184, 212], lit);
+          bullet.style.borderColor = lit > 0 ? `rgba(126,184,212,${lit})` : "";
+          tick.style.opacity = lit;
+          tick.style.transform = `scale(${lerp(0.6, 1, lit)})`;
+          label.style.opacity = 1 - lit;
+          node.querySelector(".body").style.borderColor = lit > 0 ? mix([214, 216, 218], [126, 184, 212], lit) : "";
+        });
+      }
+
+      function render(t) {
+        let dark = 0;
+        let chromeVisible = 0;
+        scenes.forEach((s) => {
+          const lead = s.start > 0 ? LEAD : 0;
+          const local = t - s.start + lead;
+          const isLast = s.end >= DURATION;
+          const fadeIn = s.fadeIn ? clamp(local / s.fadeIn) : local >= 0 ? 1 : 0;
+          const fadeOut = isLast ? 1 : clamp((s.end - t) / EXIT);
+          const vis = t < s.start - lead || t > s.end ? 0 : Math.min(fadeIn, fadeOut);
+          s.el.style.opacity = vis;
+          s.el.style.visibility = vis > 0 ? "visible" : "hidden";
+          s.el.style.transform = `translateY(${(1 - outCubic(fadeOut)) * -24}px)`;
+          if (vis <= 0) return;
+          s.items.forEach((el) => applyItem(el, local));
+          if (s.coast) drawCoast(s.coast, local);
+          if (s.flow) drawFlow(s.flow, local);
+          s.counters.forEach((c) => {
+            const p = outCubic(clamp((local - +c.dataset.countAt) / 1.2));
+            c.textContent = `${Math.round(p * +c.dataset.count)}+`;
+          });
+          if (s.el.classList.contains("dark")) dark = Math.max(dark, vis);
+        });
+
+        // Chrome sits out the intro and outro, which carry their own logo lockup.
+        const introEnd = scenes[0].end;
+        const outroStart = scenes[scenes.length - 1].start;
+        chromeVisible = Math.min(clamp((t - (introEnd - 0.1)) / 0.5), clamp((outroStart - t) / EXIT));
+        chrome.style.opacity = chromeVisible;
+        chrome.style.setProperty("--chrome", mix([43, 47, 51], [250, 251, 252], dark));
+        progress.style.width = `${(t / DURATION) * 100}%`;
+      }
+
+      window.DURATION = DURATION;
+      window.render = render;
+
+      if (params.has("capture")) {
+        render(+(params.get("t") || 0));
+      } else {
+        // Live preview: loop in real time. ?t=12 freezes on a single moment.
+        if (params.has("t")) {
+          render(+params.get("t"));
+        } else {
+          const t0 = performance.now();
+          const tick = (now) => {
+            render(((now - t0) / 1000) % DURATION);
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      }
+    </script>
+  </body>
+</html>
