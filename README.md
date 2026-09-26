@@ -3,24 +3,28 @@
 One-page site for **Salt IT**: home IT support from Brad, based in **Saltdean**, East Sussex.
 Built from `docs/saltit-design-brief.md` and `docs/saltit-local-market-research.md`.
 
-Plain static HTML, CSS and a 2 KB script. No framework, no build step and no third-party
-requests. The only web font is Barlow (SIL OFL), subset and self-hosted in `site/assets/fonts/`.
+Plain static HTML, CSS and a small script. No framework and no build step. The page
+itself makes no third-party requests. The only web font is Barlow (SIL OFL), subset and
+self-hosted in `site/assets/fonts/`. The contact form posts to `/api/enquiry` on this
+site; that function forwards to Web3Forms only when `WEB3FORMS_ACCESS_KEY` is set.
 
 ```text
 site/                 ← the deployable site (publish this folder)
   index.html          all content, meta, Open Graph and LocalBusiness JSON-LD
   styles.css          mobile-first styles (breakpoints 760px and 1100px)
-  script.js           mailto form handoff, footer year, sticky call-bar toggle
+  script.js           contact form (on-site post, mailto fallback), footer year, sticky call-bar toggle
   robots.txt, sitemap.xml
   _headers            Cloudflare Pages security headers; noindex on *.pages.dev previews
   assets/
     mark.svg          the Salt IT mark (header, footer, favicon)
     mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
     og-image.jpg      1200×630 share image
-    lido-hero-*.webp  the colour-graded Lido photo (780m = mobile crop; 960 and 1440 = tablet/desktop)
+    lido-hero-*.webp  the Aug 2024 Lido photo (780m = mobile crop; 960 and 1440 = tablet/desktop)
     fonts/            Barlow 400 and 600, Latin subset (woff2), plus the OFL licence
 scripts/
-  check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, placeholders)
+  check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, section numbers)
+api/
+  enquiry.js          contact form handler (Web3Forms when WEB3FORMS_ACCESS_KEY is set)
   og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 docs/                 design brief and market research (not deployed)
 ```
@@ -56,8 +60,7 @@ the Google Business Profile together.
 Still open with Brad:
 
 1. **Payment methods.** Not listed yet; add a line to the Prices small print once confirmed.
-2. **Bio** (Who you'll get): 20+ years, EPOS background, lives in Saltdean. Uses the brief's wording.
-   The "20+ years" figure also appears in the spec strip under the hero.
+2. **Bio** (Who you'll get): first person, from Brad. The spec strip still says "20+ years".
 3. Confirm: the 14-day free return (it appears in Prices *and* the promises, so change both or neither),
    no travel supplement elsewhere in Brighton & Hove, and "ring you back as soon as I can".
 4. Optional: WhatsApp on the same number (the sticky bar's **Message** button can then link to
@@ -87,8 +90,9 @@ DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 
 **Saltdean Lido after dark**, in a SpaceX-style layout: near-black full-bleed bands, one huge
 uppercase idea per screen, hairline rules instead of boxes, square buttons, tracked micro-labels
-and almost no colour except the Lido's own turquoise. The hero is a photo of the restored Lido (2024),
-colour-graded to night so the pool glows turquoise against the white Deco wall.
+and almost no colour except the Lido's own turquoise. The hero is Andy Li's 30 August 2024
+photo of the restored Lido (early light, CC0), darkened slightly, with a navy scrim so the
+headline stays readable and the pool still reads turquoise against the white Deco wall.
 
 Page rhythm: hero → spec strip (£75 · £35 · 0 contracts · 20+ years) → What I fix → How it works
 (deep band, 3-step sequence) → **Prices on a Deco-white band** (the Lido's walls) → Who you'll get →
@@ -121,8 +125,21 @@ The coverage map in *Where* is hand-built inline SVG (approximate coastline, 2 k
 the 0° meridian through Peacehaven, and a ring round Saltdean labelled "Travel included").
 Its text is an accessible `<title>`; the ruled list next to it is the real content.
 
-Hero photo: "Saltdean Lido" © Ian Capper, taken 21 May 2024 after the main building's restoration,
-[geograph.org.uk/photo/7783941](https://www.geograph.org.uk/photo/7783941),
-[CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in `site/assets/`
-are upscaled from the 640px original, cropped and colour-graded (night sky, turquoise pool,
-darkened grass); credit is in the footer. A sharper photo of Brad's own would be a good swap later.
+Hero photo: "Saltdean Lido" by Andy Li, 30 August 2024, 06:51, after the refit,
+[commons.wikimedia.org/wiki/File:Saltdean_Lido_2024-08-30.jpg](https://commons.wikimedia.org/wiki/File:Saltdean_Lido_2024-08-30.jpg),
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain). The WebP files in
+`site/assets/` are crops of the 4032×3024 original (no upscale), with a slight exposure pull-down.
+A navy gradient in CSS keeps the headline, supporting line and buttons readable. Credit is in
+the footer. CC0 does not require attribution; the credit stays so the source is clear.
+
+## Contact form
+
+`Send to Brad` posts JSON to `/api/enquiry` (same origin, so the site CSP can stay `form-action 'self'`).
+
+| Env var | Where | What it does |
+| --- | --- | --- |
+| `WEB3FORMS_ACCESS_KEY` | Vercel project **saltit**, Production and Preview | Forwards the note to hello@saltit.co.uk via [Web3Forms](https://web3forms.com). Create the key with that address. Do not commit it. |
+
+Until the key is set, the handler answers `{ ok: false, fallback: "mailto" }` and the page
+opens a ready-to-send email to hello@saltit.co.uk instead. A filled honeypot (`hp_field`)
+is dropped and reported as sent.
