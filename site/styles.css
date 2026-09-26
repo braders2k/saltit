@@ -1,4 +1,5 @@
-/* Salt IT: night-lido palette. Mobile first; breakpoints 760px and 1100px. */
+/* Salt IT: light comparison palette. Mobile first; breakpoints 760px and 1100px.
+   Warm chalk paper, Lido turquoise kept. Layout matches the night theme on main. */
 
 @font-face {
   font-family: "Barlow";
@@ -16,30 +17,31 @@
 }
 
 :root {
-  /* Saltdean Lido, after dark */
-  --abyss: #050d14;      /* night sea: page */
-  --deep: #081723;       /* deep water: alternate bands */
-  --deep-2: #0c1f2d;     /* raised: fields, panels */
-  --salt: #f2f4f3;       /* deco white: text on dark */
-  --mute: #a3b3bd;       /* secondary text on dark (8.9:1) */
-  --line: #1c2c38;       /* hairlines on dark */
-  --line-2: #2b3e4b;
-  --lido: #3ec6cf;       /* lido turquoise: CTAs, labels, focus */
-  --pool: #9dcff1;       /* pool blue from the photo */
+  /* Warm chalk paper. Names abyss/salt/deep stay so the layout rules still resolve. */
+  --paper: #f6f1e8;      /* warm off-white: page */
+  --abyss: var(--paper);
+  --deep: #efe6d8;       /* warm stone: alternate bands */
+  --deep-2: #fffdf8;     /* raised: fields, panels */
+  --ink: #122028;        /* sea ink: text */
+  --salt: var(--ink);
+  --mute: #44555e;       /* secondary text on paper (6.7:1) */
+  --line: #e0d5c6;       /* hairlines on paper */
+  --line-2: #d0c3b0;
+  --lido: #3ec6cf;       /* lido turquoise: button fills, dots, focus */
+  --pool: #1d7aa6;       /* pool blue, dark enough to read on paper */
   --sky: #275e96;        /* lido sky */
-  --sand: #c4b8a4;       /* sun-terrace stone */
+  --sand: #8d7048;       /* sun-terrace stone, visible on paper */
 
-  /* Light band (the Lido's white walls) */
-  --deco: #f1f2ef;
-  --ink: #07131c;
-  --ink-mute: #4a5a64;   /* 6.9:1 on deco */
-  --lido-ink: #0b6b74;   /* turquoise text on deco (5.5:1) */
-  --rule-light: #cfd8da;
+  /* Prices band: the brightest chalk */
+  --deco: #fbf8f2;
+  --ink-mute: var(--mute);
+  --lido-ink: #085e66;   /* turquoise text on paper (6.4:1) */
+  --rule-light: #ddd4c6;
 
-  --bg: var(--abyss);
-  --fg: var(--salt);
+  --bg: var(--paper);
+  --fg: var(--ink);
   --fg-mute: var(--mute);
-  --accent: var(--lido);
+  --accent: var(--lido-ink);
   --rule: var(--line);
 
   --font: "Barlow", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -56,7 +58,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--abyss);
+  background: var(--paper);
+  color-scheme: light;
 }
 
 body {
@@ -69,7 +72,7 @@ body {
   font-kerning: normal;
 }
 
-::selection { background: var(--lido); color: var(--abyss); }
+::selection { background: var(--lido); color: var(--ink); }
 
 h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
@@ -97,7 +100,7 @@ a { color: inherit; }
   z-index: 100;
   padding: 14px 18px;
   background: var(--lido);
-  color: var(--abyss);
+  color: var(--ink);
   font-weight: 600;
   transform: translateY(-160%);
 }
@@ -153,7 +156,7 @@ a { color: inherit; }
 .btn-primary {
   border-color: var(--lido);
   background: var(--lido);
-  color: var(--abyss);
+  color: var(--ink);
 }
 .btn-primary:hover { border-color: var(--salt); background: var(--salt); color: var(--abyss); }
 .btn-line:hover { background: var(--salt); color: var(--abyss); }
@@ -192,8 +195,8 @@ a { color: inherit; }
 }
 .mark { width: 36px; height: 36px; }
 .nav { display: none; }
-.hdr-call { white-space: nowrap; border-color: rgba(242, 244, 243, 0.55); }
-.hdr-call:hover { border-color: var(--salt); }
+.hdr-call { white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
+.hdr-call:hover { border-color: var(--ink); }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -216,7 +219,7 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 45%;
+  object-position: 42% 28%;
 }
 .hero-media::after {
   content: "";
@@ -224,12 +227,12 @@ a { color: inherit; }
   inset: 0;
   background:
     linear-gradient(180deg,
-      rgba(5, 13, 20, 0.88) 0%,
-      rgba(5, 13, 20, 0.55) 14%,
-      rgba(5, 13, 20, 0.38) 34%,
-      rgba(5, 13, 20, 0.62) 62%,
-      rgba(5, 13, 20, 0.92) 80%,
-      var(--abyss) 100%);
+      rgba(246, 241, 232, 0.5) 0%,
+      rgba(246, 241, 232, 0.12) 16%,
+      rgba(246, 241, 232, 0.04) 38%,
+      rgba(246, 241, 232, 0.55) 64%,
+      rgba(246, 241, 232, 0.92) 82%,
+      var(--paper) 100%);
 }
 .hero-in {
   position: relative;
@@ -241,7 +244,7 @@ a { color: inherit; }
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
-  color: var(--lido);
+  color: var(--lido-ink);
 }
 .dot {
   width: 8px; height: 8px;
@@ -287,18 +290,19 @@ h1 {
 .hero-sub,
 .hero-price {
   text-shadow:
-    0 1px 1px rgba(5, 13, 20, 0.8),
-    0 12px 32px rgba(5, 13, 20, 0.72);
+    0 1px 0 rgba(246, 241, 232, 0.95),
+    0 0 18px rgba(246, 241, 232, 0.92);
 }
 .hero .btn-primary,
 .hero .btn-line {
-  box-shadow: 0 10px 28px rgba(5, 13, 20, 0.45);
+  box-shadow: 0 8px 22px rgba(18, 32, 40, 0.1);
 }
 .hero .btn-line {
-  background: rgba(5, 13, 20, 0.72);
-  border-color: rgba(242, 244, 243, 0.92);
+  background: rgba(246, 241, 232, 0.9);
+  border-color: rgba(18, 32, 40, 0.8);
+  color: var(--ink);
 }
-.hero .btn-line:hover { background: var(--salt); color: var(--abyss); }
+.hero .btn-line:hover { background: var(--ink); color: var(--paper); }
 .coords { display: none; }
 
 /* ---------- Specs strip ---------- */
@@ -430,14 +434,14 @@ strong { font-weight: 600; }
   font-size: clamp(1.3125rem, 2.6vw, 1.75rem);
   line-height: 1.45;
 }
-.relative strong { display: block; color: var(--lido); }
+.relative strong { display: block; color: var(--lido-ink); }
 
 /* ---------- 02 How it works ---------- */
 .modes { display: grid; gap: 16px; }
 .mode {
   padding: 28px 24px 32px;
   border: 1px solid var(--line-2);
-  background: rgba(242, 244, 243, 0.015);
+  background: rgba(255, 253, 248, 0.72);
 }
 .mode .tag { color: var(--fg-mute); margin-bottom: 14px; }
 .mode h3 { margin-bottom: 12px; font-size: 1.75rem; text-transform: uppercase; letter-spacing: 0.01em; }
@@ -448,7 +452,7 @@ strong { font-weight: 600; }
   background:
     linear-gradient(180deg, rgba(62, 198, 207, 0.1), rgba(62, 198, 207, 0) 70%);
 }
-.mode-main .tag { color: var(--lido); }
+.mode-main .tag { color: var(--lido-ink); }
 .mode-main p:not(.tag) { color: var(--fg); }
 
 .steps {
@@ -470,7 +474,7 @@ strong { font-weight: 600; }
   background: var(--bg);
 }
 .steps li:first-child::before { background: var(--lido); }
-.step-n { display: block; color: var(--lido); margin-bottom: 8px; }
+.step-n { display: block; color: var(--lido-ink); margin-bottom: 8px; }
 .steps h3 { margin-bottom: 4px; }
 .steps p { color: var(--fg-mute); }
 
@@ -484,7 +488,7 @@ strong { font-weight: 600; }
 }
 .hours { margin-top: 16px; }
 .ready .mini,
-.hours .mini { color: var(--lido); }
+.hours .mini { color: var(--lido-ink); }
 .ready p:not(.mini),
 .hours p:not(.mini) { max-width: 70ch; font-size: 1.1875rem; }
 
@@ -588,16 +592,16 @@ strong { font-weight: 600; }
   position: relative;
   border: 1px solid var(--line-2);
   background:
-    radial-gradient(90% 90% at 54% 58%, rgba(62, 198, 207, 0.07), rgba(62, 198, 207, 0) 70%),
-    var(--abyss);
+    radial-gradient(90% 90% at 54% 58%, rgba(62, 198, 207, 0.14), rgba(62, 198, 207, 0) 70%),
+    var(--paper);
 }
 .map { width: 100%; height: auto; }
 .map text { font-family: var(--font); }
-.map-grid line { stroke: rgba(242, 244, 243, 0.05); stroke-width: 1; }
-.map-sea { fill: rgba(39, 94, 150, 0.22); }
+.map-grid line { stroke: rgba(18, 32, 40, 0.08); stroke-width: 1; }
+.map-sea { fill: rgba(39, 94, 150, 0.16); }
 .map-coast { fill: none; stroke: var(--pool); stroke-width: 2; stroke-linejoin: round; opacity: 0.8; }
 .map-meridian { stroke: var(--sand); stroke-width: 1.5; stroke-dasharray: 4 8; opacity: 0.6; }
-.map-ring { fill: rgba(62, 198, 207, 0.05); stroke: var(--lido); stroke-width: 1.5; stroke-dasharray: 2 7; }
+.map-ring { fill: rgba(62, 198, 207, 0.1); stroke: var(--lido-ink); stroke-width: 1.5; stroke-dasharray: 2 7; }
 .map-home { fill: var(--lido); }
 .map-pulse {
   fill: none;
@@ -613,7 +617,7 @@ strong { font-weight: 600; }
   font-size: 40px;
   font-weight: 600;
 }
-.map-label-home { fill: var(--lido); }
+.map-label-home { fill: var(--lido-ink); }
 .map-label-out { fill: var(--mute); }
 .map-note {
   fill: var(--mute);
@@ -622,7 +626,7 @@ strong { font-weight: 600; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-.map-note-ring { fill: var(--lido); }
+.map-note-ring { fill: var(--lido-ink); }
 .map-scale line { stroke: var(--mute); stroke-width: 2; }
 .map-scale text { fill: var(--mute); font-size: 28px; font-weight: 600; }
 .map-wrap figcaption {
@@ -697,8 +701,8 @@ strong { font-weight: 600; }
   padding-bottom: 96px;
   border-top: 1px solid var(--line);
   background:
-    radial-gradient(70% 60% at 85% 110%, rgba(62, 198, 207, 0.16), rgba(62, 198, 207, 0) 70%),
-    radial-gradient(60% 50% at 0% 0%, rgba(39, 94, 150, 0.16), rgba(39, 94, 150, 0) 70%),
+    radial-gradient(70% 60% at 85% 110%, rgba(62, 198, 207, 0.2), rgba(62, 198, 207, 0) 70%),
+    radial-gradient(60% 50% at 0% 0%, rgba(39, 94, 150, 0.08), rgba(39, 94, 150, 0) 70%),
     var(--deep);
 }
 .contact-grid { display: grid; gap: 56px; }
@@ -708,7 +712,7 @@ strong { font-weight: 600; }
   margin: 36px 0 32px;
   text-decoration: none;
 }
-.bigtel .mini { display: block; color: var(--lido); margin-bottom: 6px; }
+.bigtel .mini { display: block; color: var(--lido-ink); margin-bottom: 6px; }
 .bigtel .num-big {
   display: block;
   font-size: clamp(2.5rem, 11vw, 5.25rem);
@@ -719,7 +723,7 @@ strong { font-weight: 600; }
   white-space: nowrap;
   transition: color 180ms ease;
 }
-.bigtel:hover .num-big { color: var(--lido); }
+.bigtel:hover .num-big { color: var(--lido-ink); }
 
 .contact-list { max-width: 560px; border-top: 1px solid var(--line-2); }
 .contact-list li {
@@ -732,13 +736,13 @@ strong { font-weight: 600; }
 }
 .contact-list .mini { color: var(--mute); }
 .contact-list a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
-.contact-list a:hover { color: var(--lido); }
+.contact-list a:hover { color: var(--lido-ink); }
 
 .form {
   position: relative;
   padding: 28px 20px 32px;
   border: 1px solid var(--line-2);
-  background: rgba(5, 13, 20, 0.55);
+  background: var(--deep-2);
 }
 .hp {
   position: absolute;
@@ -776,12 +780,12 @@ strong { font-weight: 600; }
 }
 .field input:hover,
 .field select:hover,
-.field textarea:hover { border-color: #3d5563; }
+.field textarea:hover { border-color: #8fa0a8; }
 .field input:focus,
 .field select:focus,
-.field textarea:focus { border-color: var(--lido); background: #0e2433; }
+.field textarea:focus { border-color: var(--lido); background-color: #fff; }
 .field textarea { resize: vertical; min-height: 132px; }
-.field textarea::placeholder { color: #8698a3; opacity: 1; }
+.field textarea::placeholder { color: #6d7e86; opacity: 1; }
 .field select {
   -webkit-appearance: none;
   appearance: none;
@@ -811,13 +815,13 @@ strong { font-weight: 600; }
 .check label { font-size: 1.0625rem; }
 .form-status:not(:empty) {
   margin-bottom: 16px;
-  color: var(--lido);
+  color: var(--lido-ink);
   font-weight: 600;
 }
 .form .btn { width: 100%; }
 .form .btn:disabled { opacity: 0.65; cursor: progress; }
 .form-note { margin-top: 16px; color: var(--mute); font-size: 1rem; }
-.form-note a:hover { color: var(--lido); }
+.form-note a:hover { color: var(--lido-ink); }
 
 /* ---------- Footer ---------- */
 .ftr {
@@ -832,7 +836,7 @@ strong { font-weight: 600; }
 .ftr address { font-style: normal; line-height: 1.75; }
 .ftr strong { color: var(--salt); letter-spacing: 0.02em; }
 .ftr a { color: var(--salt); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
-.ftr a:hover { color: var(--lido); }
+.ftr a:hover { color: var(--lido-ink); }
 .ftr-end { display: grid; gap: 6px; }
 .ftr-nav { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 12px; }
 .ftr-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--salt); text-decoration: none; }
@@ -848,7 +852,7 @@ strong { font-weight: 600; }
   gap: 8px;
   padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line-2);
-  background: rgba(5, 13, 20, 0.94);
+  background: rgba(246, 241, 232, 0.94);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   transition: transform 260ms var(--ease);
@@ -864,16 +868,16 @@ strong { font-weight: 600; }
   .only-lg { display: inline; }
 
   .hero-media { aspect-ratio: 1440 / 871; }
-  .hero-media img { object-position: 50% 50%; }
+  .hero-media img { object-position: 38% 32%; }
   .hero-media::after {
     background:
       linear-gradient(180deg,
-        rgba(5, 13, 20, 0.9) 0%,
-        rgba(5, 13, 20, 0.5) 16%,
-        rgba(5, 13, 20, 0.42) 40%,
-        rgba(5, 13, 20, 0.72) 68%,
-        rgba(5, 13, 20, 0.94) 84%,
-        var(--abyss) 100%);
+        rgba(246, 241, 232, 0.42) 0%,
+        rgba(246, 241, 232, 0.1) 14%,
+        rgba(246, 241, 232, 0.02) 36%,
+        rgba(246, 241, 232, 0.62) 66%,
+        rgba(246, 241, 232, 0.94) 84%,
+        var(--paper) 100%);
   }
   .hero-in { margin-top: -15vw; padding-bottom: 72px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -935,7 +939,7 @@ strong { font-weight: 600; }
 
 /* ---------- Wide: split hero ---------- */
 @media (min-width: 1000px) {
-  /* Hero: headline over the night sky, the Lido glowing below-right */
+  /* Hero: headline on warm paper, chalk cliffs fading in from the right */
   .hero {
     justify-content: center;
     min-height: max(720px, 100vh);
@@ -947,12 +951,12 @@ strong { font-weight: 600; }
     width: 74vw;
     margin: 0;
     -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, #000 34%),
-      linear-gradient(180deg, transparent 0%, #000 22%, #000 70%, transparent 97%);
+      linear-gradient(90deg, transparent 0%, #000 20%),
+      linear-gradient(180deg, transparent 0%, #000 14%, #000 78%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image:
-      linear-gradient(90deg, transparent 0%, #000 34%),
-      linear-gradient(180deg, transparent 0%, #000 22%, #000 70%, transparent 97%);
+      linear-gradient(90deg, transparent 0%, #000 20%),
+      linear-gradient(180deg, transparent 0%, #000 14%, #000 78%, transparent 100%);
     mask-composite: intersect;
   }
   .hero-media::after { display: none; }
@@ -962,9 +966,9 @@ strong { font-weight: 600; }
     inset: 0;
     z-index: -1;
     background:
-      linear-gradient(180deg, rgba(5, 13, 20, 0.78) 0%, rgba(5, 13, 20, 0.2) 16%, rgba(5, 13, 20, 0.12) 42%, rgba(5, 13, 20, 0.45) 100%),
-      linear-gradient(90deg, rgba(5, 13, 20, 0.96) 0%, rgba(5, 13, 20, 0.88) 26%, rgba(5, 13, 20, 0.55) 46%, rgba(5, 13, 20, 0.22) 68%, rgba(5, 13, 20, 0.3) 100%),
-      radial-gradient(55% 42% at 78% 86%, rgba(62, 198, 207, 0.16), rgba(62, 198, 207, 0) 72%);
+      linear-gradient(180deg, rgba(246, 241, 232, 0.55) 0%, rgba(246, 241, 232, 0.08) 16%, rgba(246, 241, 232, 0) 40%, rgba(246, 241, 232, 0.28) 100%),
+      linear-gradient(90deg, rgba(246, 241, 232, 0.97) 0%, rgba(246, 241, 232, 0.86) 28%, rgba(246, 241, 232, 0.4) 50%, rgba(246, 241, 232, 0.1) 70%, rgba(246, 241, 232, 0.18) 100%),
+      radial-gradient(55% 42% at 78% 86%, rgba(62, 198, 207, 0.18), rgba(62, 198, 207, 0) 72%);
   }
   .hero-in {
     margin-top: 0;
@@ -1009,7 +1013,7 @@ strong { font-weight: 600; }
     position: absolute;
     left: 14px; right: 14px; bottom: 10px;
     height: 1px;
-    background: var(--lido);
+    background: var(--lido-ink);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 240ms var(--ease);
@@ -1020,7 +1024,7 @@ strong { font-weight: 600; }
   .hdr { position: fixed; }
   .hdr.is-scrolled {
     border-bottom-color: var(--line);
-    background: rgba(5, 13, 20, 0.86);
+    background: rgba(246, 241, 232, 0.9);
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
   }
