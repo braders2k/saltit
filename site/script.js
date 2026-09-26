@@ -4,6 +4,13 @@
   const year = d.querySelector("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const hdr = d.querySelector("[data-hdr]");
+  if (hdr) {
+    const onScroll = () => hdr.classList.toggle("is-scrolled", window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   const bar = d.querySelector("[data-callbar]");
   const heroCall = d.querySelector("[data-hero-call]");
   if (bar && heroCall && "IntersectionObserver" in window) {

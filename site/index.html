@@ -6,7 +6,8 @@
   <title>IT Support Saltdean | Home Computer &amp; Wi-Fi Help | Salt IT</title>
   <meta name="description" content="Wi-Fi, printers, slow laptops, email and scams, fixed at home in Saltdean, Rottingdean, Peacehaven and Woodingdean. First hour £75, travel included.">
   <link rel="canonical" href="https://saltit.co.uk/">
-  <meta name="theme-color" content="#0A0B0D">
+  <meta name="theme-color" content="#050D14">
+  <meta name="color-scheme" content="dark">
   <meta name="format-detection" content="telephone=no">
 
   <meta property="og:type" content="website">
@@ -24,6 +25,8 @@
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="icon" href="assets/mark-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="assets/mark-192.png">
+  <link rel="preload" href="assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 
   <script type="application/ld+json">
@@ -68,131 +71,133 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="hdr">
+  <header class="hdr" data-hdr>
     <div class="wrap hdr-in">
       <a class="brand" href="#top" aria-label="Salt IT, back to top">
-        <img class="mark" src="assets/mark.svg" width="40" height="40" alt="">
-        <span>Salt IT</span>
+        <img class="mark" src="assets/mark.svg" width="36" height="36" alt="">
+        <span class="brand-word">Salt IT</span>
       </a>
       <nav class="nav" aria-label="Sections">
         <a href="#fix">What I fix</a>
+        <a href="#how">How it works</a>
         <a href="#prices">Prices</a>
         <a href="#areas">Areas</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="btn btn-invert btn-sm hdr-call" href="tel:+447843468904">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-        <span class="only-sm">Call</span><span class="only-lg">Call 07843 468904</span>
+      <a class="btn btn-line btn-sm hdr-call" href="tel:+447843468904" aria-label="Call Brad on 07843 468904">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        <span class="only-sm">Call</span><span class="only-lg">07843 468904</span>
       </a>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero atmosphere: "Saltdean Lido - Newly re-opened" © Paul Gillett, CC BY-SA 2.0, geograph.org.uk/photo/5443210. Cropped and blended into the dark hero. -->
+    <!-- Hero photo: "Saltdean Lido - Newly re-opened" © Paul Gillett, CC BY-SA 2.0, geograph.org.uk/photo/5443210. Cropped and colour-graded to a night palette. -->
     <section class="hero" id="top" aria-labelledby="hero-h">
+      <picture class="hero-media">
+        <source media="(min-width: 760px)" srcset="assets/lido-hero-960.webp 960w, assets/lido-hero-1440.webp 1440w" sizes="100vw">
+        <img src="assets/lido-hero-780m.webp" width="780" height="510" alt="" fetchpriority="high" decoding="async">
+      </picture>
       <div class="wrap hero-in">
-        <p class="coords" aria-hidden="true">50.80° N &nbsp;0.04° W</p>
-        <p class="eyebrow">Salt IT · Brad · Based in Saltdean</p>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Salt IT · Brad · Based in Saltdean</p>
         <h1 id="hero-h">Home IT support in Saltdean.</h1>
         <p class="hero-sub">Wi-Fi, printers, laptops, email and scam scares — fixed at your kitchen table by someone who lives down the road.</p>
         <div class="hero-cta">
-          <a class="btn btn-invert" href="tel:+447843468904" data-hero-call>Call Brad — 07843 468904</a>
-          <a class="btn btn-line-invert" href="#contact">Book a home visit</a>
+          <a class="btn btn-primary" href="tel:+447843468904" data-hero-call aria-label="Call Brad on 07843 468904">Call Brad — 07843 468904</a>
+          <a class="btn btn-line" href="#contact">Book a home visit</a>
         </div>
-        <dl class="hero-facts">
-          <div><dt>First hour</dt><dd>£75, travel included</dd></div>
-          <div><dt>Phone</dt><dd><a href="tel:+447843468904" aria-label="Call Brad on 07843 468904">07843 468904</a></dd></div>
-          <div><dt>Areas</dt><dd>Saltdean · Rottingdean · Peacehaven · Woodingdean</dd></div>
-        </dl>
+        <p class="hero-price"><strong>First hour £75, travel included</strong> <span>Saltdean · Rottingdean · Peacehaven · Woodingdean</span></p>
       </div>
+      <p class="coords" aria-hidden="true">50.80° N &nbsp; 0.04° W</p>
+    </section>
+
+    <section class="specs" aria-label="At a glance">
+      <dl class="wrap specs-in">
+        <div><dt>First hour</dt><dd><span class="spec-n">£75</span><span class="spec-t">Travel included</span></dd></div>
+        <div><dt>Remote</dt><dd><span class="spec-n">£35</span><span class="spec-t">Up to 30 minutes</span></dd></div>
+        <div><dt>Contracts</dt><dd><span class="spec-n">0</span><span class="spec-t">Pay per visit</span></dd></div>
+        <div><dt>Experience</dt><dd><span class="spec-n">20+</span><span class="spec-t">Years in IT</span></dd></div>
+      </dl>
     </section>
 
     <section class="sec" id="fix" aria-labelledby="fix-h">
-      <div class="wrap grid">
-        <p class="idx"><span>01</span>What I fix</p>
-        <div class="body">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>01</span>What I fix</p>
           <h2 id="fix-h">The five jobs I'm called for most.</h2>
           <p class="lead">Computer repair in Saltdean and nearby usually means one of these.</p>
-          <ol class="rows">
-            <li>
-              <span class="num" aria-hidden="true">01</span>
-              <div>
-                <h3>Wi-Fi that dies in the back room.</h3>
-                <p>Dead spots, dropouts, or a router in the wrong corner. I find where the signal fails and fix it, and get the smart TV and streaming stick back online while I'm there.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">02</span>
-              <div>
-                <h3>The printer stopped after a new router.</h3>
-                <p>It worked yesterday and now nothing can find it. I reconnect it to every computer and phone that needs it.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">03</span>
-              <div>
-                <h3>A slow laptop, or a new one to set up.</h3>
-                <p>I'll tidy up the slow one and tell you honestly whether it has life left before you buy new. Or I'll set up the new one and move your files, photos and email across.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">04</span>
-              <div>
-                <h3>Email that's stopped working.</h3>
-                <p>It won't send, won't arrive, has locked you out, or has vanished from your phone. I get it working on every device and write down what I changed.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true">05</span>
-              <div>
-                <h3>“I think I've been scammed.”</h3>
-                <p>A pop-up, a call “from Microsoft” or “BT”, or someone was on your computer. Switch it off, leave it off, and call me. I'll check it, clean it up, and help you secure your accounts. If bank details were involved, call your bank first.</p>
-              </div>
-            </li>
-          </ol>
-          <p class="relative"><strong>Booking for Mum or Dad?</strong> I'll visit them, go at their pace, fix it, and leave simple written steps. If you like, I'll ring you afterwards to say what I did.</p>
         </div>
+        <ol class="rows">
+          <li>
+            <span class="num" aria-hidden="true">01</span>
+            <h3>Wi-Fi that dies in the back room.</h3>
+            <p>Dead spots, dropouts, or a router in the wrong corner. I find where the signal fails and fix it, and get the smart TV and streaming stick back online while I'm there.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">02</span>
+            <h3>The printer stopped after a new router.</h3>
+            <p>It worked yesterday and now nothing can find it. I reconnect it to every computer and phone that needs it.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">03</span>
+            <h3>A slow laptop, or a new one to set up.</h3>
+            <p>I'll tidy up the slow one and tell you honestly whether it has life left before you buy new. Or I'll set up the new one and move your files, photos and email across.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">04</span>
+            <h3>Email that's stopped working.</h3>
+            <p>It won't send, won't arrive, has locked you out, or has vanished from your phone. I get it working on every device and write down what I changed.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">05</span>
+            <h3>“I think I've been scammed.”</h3>
+            <p>A pop-up, a call “from Microsoft” or “BT”, or someone was on your computer. Switch it off, leave it off, and call me. I'll check it, clean it up, and help you secure your accounts. If bank details were involved, call your bank first.</p>
+          </li>
+        </ol>
+        <p class="relative"><strong>Booking for Mum or Dad?</strong> I'll visit them, go at their pace, fix it, and leave simple written steps. If you like, I'll ring you afterwards to say what I did.</p>
       </div>
     </section>
 
-    <section class="sec" id="how" aria-labelledby="how-h">
-      <div class="wrap grid">
-        <p class="idx"><span>02</span>How it works</p>
-        <div class="body">
+    <section class="sec sec-deep" id="how" aria-labelledby="how-h">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>02</span>How it works</p>
           <h2 id="how-h">I come to you. Remote when it's simpler.</h2>
-          <div class="modes">
-            <div class="mode mode-main">
-              <p class="tag">The usual way</p>
-              <h3>At your home.</h3>
-              <p>Most jobs are best done in the room where the problem is. That includes Wi-Fi and router placement, printers, setting up a new device with you there, anything for an older relative, and anything after a scam, when letting a stranger connect remotely is the last thing you want.</p>
-            </div>
-            <div class="mode">
-              <p class="tag">When it's simpler</p>
-              <h3>Remote.</h3>
-              <p>If your internet works and you're comfortable, I can sort a slow PC, email settings, or a quick follow-up on a machine I've already seen. You start the session and can end it at any time. <strong>I will never call you out of the blue asking to connect.</strong></p>
-            </div>
+        </div>
+        <div class="modes">
+          <div class="mode mode-main">
+            <p class="tag">The usual way</p>
+            <h3>At your home.</h3>
+            <p>Most jobs are best done in the room where the problem is. That includes Wi-Fi and router placement, printers, setting up a new device with you there, anything for an older relative, and anything after a scam, when letting a stranger connect remotely is the last thing you want.</p>
           </div>
-          <ol class="steps">
-            <li><span class="num" aria-hidden="true">1</span><div><h3>Call or message.</h3><p>Tell me what's gone wrong.</p></div></li>
-            <li><span class="num" aria-hidden="true">2</span><div><h3>Hear the price.</h3><p>I'll give you the likely cost before I travel.</p></div></li>
-            <li><span class="num" aria-hidden="true">3</span><div><h3>Fixed and explained.</h3><p>I'll show you what I did and leave notes.</p></div></li>
-          </ol>
-          <div class="hours">
-            <p class="mini">Hours</p>
-            <p>Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can.</p>
+          <div class="mode">
+            <p class="tag">When it's simpler</p>
+            <h3>Remote.</h3>
+            <p>If your internet works and you're comfortable, I can sort a slow PC, email settings, or a quick follow-up on a machine I've already seen. You start the session and can end it at any time. <strong>I will never call you out of the blue asking to connect.</strong></p>
           </div>
+        </div>
+        <ol class="steps">
+          <li><span class="step-n" aria-hidden="true">Step 1</span><h3>Call or message.</h3><p>Tell me what's gone wrong.</p></li>
+          <li><span class="step-n" aria-hidden="true">Step 2</span><h3>Hear the price.</h3><p>I'll give you the likely cost before I travel.</p></li>
+          <li><span class="step-n" aria-hidden="true">Step 3</span><h3>Fixed and explained.</h3><p>I'll show you what I did and leave notes.</p></li>
+        </ol>
+        <div class="hours">
+          <p class="mini">Hours</p>
+          <p>Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can.</p>
         </div>
       </div>
     </section>
 
-    <section class="sec" id="prices" aria-labelledby="prices-h">
-      <div class="wrap grid">
-        <p class="idx"><span>03</span>Prices</p>
-        <div class="body">
+    <section class="sec sec-light" id="prices" aria-labelledby="prices-h">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>03</span>Prices</p>
           <h2 id="prices-h">The price, before I visit.</h2>
           <p class="lead">Pay per visit. No contracts, no monthly fee.</p>
+        </div>
+        <div class="price-grid">
           <table class="ptable">
-            <caption class="sr-only">Visit prices</caption>
+            <caption class="mini">Visits</caption>
             <thead><tr><th scope="col">Service</th><th scope="col">Price</th></tr></thead>
             <tbody>
               <tr><th scope="row">Home visit, first hour<span>Travel included in Saltdean, Rottingdean, Peacehaven and Woodingdean</span></th><td>£75</td></tr>
@@ -202,142 +207,186 @@
             </tbody>
           </table>
 
-          <h3 class="sub-h">Typical jobs</h3>
-          <table class="ptable ptable-sm">
-            <caption class="sr-only">Typical job prices</caption>
-            <thead><tr><th scope="col">Job</th><th scope="col">Usually</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Wi-Fi dead spot fixed, or printer back on the network</th><td>£75–£90</td></tr>
-              <tr><th scope="row">Scam or virus clean-up, including “someone was on my computer”</th><td>£80–£110</td></tr>
-              <tr><th scope="row">New laptop set up, files and email moved across</th><td>£90–£130</td></tr>
-            </tbody>
-          </table>
+          <div class="price-side">
+            <table class="ptable ptable-sm">
+              <caption class="mini">Typical jobs</caption>
+              <thead><tr><th scope="col">Job</th><th scope="col">Usually</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Wi-Fi dead spot fixed, or printer back on the network</th><td>£75–£90</td></tr>
+                <tr><th scope="row">Scam or virus clean-up, including “someone was on my computer”</th><td>£80–£110</td></tr>
+                <tr><th scope="row">New laptop set up, files and email moved across</th><td>£90–£130</td></tr>
+              </tbody>
+            </table>
 
-          <ul class="fine">
-            <li>Parts, if needed, are quoted before I buy anything.</li>
-            <li>Same problem back within 14 days? I'll pop back at no charge.</li>
-            <li>Elsewhere in Brighton &amp; Hove: same rates. I'll tell you any travel charge on the phone before booking.</li>
-            <li>Home office or small business? Your first visit is on the same rates.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec" id="brad" aria-labelledby="brad-h">
-      <div class="wrap grid">
-        <p class="idx"><span>04</span>Who you'll get</p>
-        <div class="body">
-          <h2 id="brad-h">Brad. He lives in Saltdean.</h2>
-          <p class="lead">I'm an IT engineer with more than 20 years' experience, including years in EPOS systems for shops and restaurants. I live in Saltdean, so I'm usually a few minutes away, whether you need computer help in Peacehaven or Saltdean.</p>
-          <ul class="promises">
-            <li><h3>Price first.</h3><p>You'll hear the likely cost before I travel.</p></li>
-            <li><h3>Plain English.</h3><p>No jargon, and no making you feel daft for asking.</p></li>
-            <li><h3>I'll show you what I did.</h3><p>And I'll leave written steps if you want them.</p></li>
-            <li><h3>I'll come back if it comes back.</h3><p>The same problem within 14 days is on me.</p></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec" id="areas" aria-labelledby="areas-h">
-      <div class="wrap grid">
-        <p class="idx"><span>05</span>Where</p>
-        <div class="body">
-          <h2 id="areas-h">Close to home.</h2>
-          <ul class="areas">
-            <li><span>Saltdean</span><span class="pc">BN2</span></li>
-            <li><span>Rottingdean</span><span class="pc">BN2</span></li>
-            <li><span>Peacehaven</span><span class="pc">BN10</span></li>
-            <li><span>Woodingdean</span><span class="pc">BN2</span></li>
-            <li><span>Brighton &amp; Hove</span><span class="pc">Wider area · same rates · travel confirmed on the phone</span></li>
-          </ul>
-          <p class="lead">I'm based in Saltdean and cover the Deans and Peacehaven for home visits, from PC repair in Rottingdean to a home-visit computer repair in Woodingdean, and Wi-Fi help across Brighton &amp; Hove.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec" id="reviews" aria-labelledby="reviews-h">
-      <div class="wrap grid">
-        <p class="idx"><span>06</span>Reviews</p>
-        <div class="body">
-          <h2 id="reviews-h">What neighbours say.</h2>
-          <div class="empty">
-            <p class="mini">Reviews so far: none yet</p>
-            <p>Salt IT is new. I won't make up quotes. Reviews from real local jobs will appear here as they come in, on Google first.</p>
+            <ul class="fine">
+              <li>Parts, if needed, are quoted before I buy anything.</li>
+              <li>Same problem back within 14 days? I'll pop back at no charge.</li>
+              <li>Elsewhere in Brighton &amp; Hove: same rates. I'll tell you any travel charge on the phone before booking.</li>
+              <li>Home office or small business? Your first visit is on the same rates.</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="sec sec-dark" id="contact" aria-labelledby="contact-h">
-      <div class="wrap grid">
-        <p class="idx"><span>07</span>Contact</p>
-        <div class="body">
+    <section class="sec" id="brad" aria-labelledby="brad-h">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>04</span>Who you'll get</p>
+          <h2 id="brad-h">Brad. He lives in Saltdean.</h2>
+          <p class="lead">I'm an IT engineer with more than 20 years' experience, including years in EPOS systems for shops and restaurants. I live in Saltdean, so I'm usually a few minutes away, whether you need computer help in Peacehaven or Saltdean.</p>
+        </div>
+        <ul class="promises">
+          <li><span class="num" aria-hidden="true">01</span><h3>Price first.</h3><p>You'll hear the likely cost before I travel.</p></li>
+          <li><span class="num" aria-hidden="true">02</span><h3>Plain English.</h3><p>No jargon, and no making you feel daft for asking.</p></li>
+          <li><span class="num" aria-hidden="true">03</span><h3>I'll show you what I did.</h3><p>And I'll leave written steps if you want them.</p></li>
+          <li><span class="num" aria-hidden="true">04</span><h3>I'll come back if it comes back.</h3><p>The same problem within 14 days is on me.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec sec-deep" id="areas" aria-labelledby="areas-h">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>05</span>Where</p>
+          <h2 id="areas-h">Close to home.</h2>
+        </div>
+        <div class="area-grid">
+          <figure class="map-wrap">
+            <svg class="map" viewBox="0 0 1000 496" role="img" aria-labelledby="map-t">
+              <title id="map-t">Map of the area: Saltdean, Rottingdean, Peacehaven and Woodingdean sit inside the travel-included circle, with Brighton &amp; Hove to the west.</title>
+              <g class="map-grid" aria-hidden="true">
+                <line x1="100" y1="0" x2="100" y2="496"/><line x1="200" y1="0" x2="200" y2="496"/><line x1="300" y1="0" x2="300" y2="496"/><line x1="400" y1="0" x2="400" y2="496"/><line x1="500" y1="0" x2="500" y2="496"/><line x1="600" y1="0" x2="600" y2="496"/><line x1="700" y1="0" x2="700" y2="496"/><line x1="800" y1="0" x2="800" y2="496"/><line x1="900" y1="0" x2="900" y2="496"/>
+                <line x1="0" y1="100" x2="1000" y2="100"/><line x1="0" y1="200" x2="1000" y2="200"/><line x1="0" y1="300" x2="1000" y2="300"/><line x1="0" y1="400" x2="1000" y2="400"/>
+              </g>
+              <path class="map-sea" d="M0 152.5 L68.2 179.8 L103.6 194.2 L204.5 215.8 L272.7 243.1 L327.3 266.2 L372.7 284.1 L418.2 305.7 L459.1 320.1 L509.1 330.9 L545.5 338.1 L600 351 L636.4 358.2 L681.8 374.1 L727.3 392 L772.7 406.4 L818.2 420.8 L877.3 433 L931.8 442.4 L1000 453.2 L1000 496 L0 496 Z"/>
+              <path class="map-coast" d="M0 152.5 L68.2 179.8 L103.6 194.2 L204.5 215.8 L272.7 243.1 L327.3 266.2 L372.7 284.1 L418.2 305.7 L459.1 320.1 L509.1 330.9 L545.5 338.1 L600 351 L636.4 358.2 L681.8 374.1 L727.3 392 L772.7 406.4 L818.2 420.8 L877.3 433 L931.8 442.4 L1000 453.2"/>
+              <line class="map-meridian" x1="727.3" y1="0" x2="727.3" y2="496"/>
+              <text class="map-note" x="737" y="24">0° meridian</text>
+              <circle class="map-ring" cx="543.2" cy="291.3" r="297.6"/>
+              <text class="map-note map-note-ring" x="543.2" y="30" text-anchor="middle">Travel included</text>
+              <circle class="map-pulse" cx="543.2" cy="291.3" r="7"/>
+              <circle class="map-home" cx="543.2" cy="291.3" r="7"/>
+              <text class="map-label map-label-home" x="559" y="281">Saltdean</text>
+              <circle class="map-dot" cx="467.3" cy="274.8" r="5.5"/>
+              <text class="map-label" x="453" y="266" text-anchor="end">Rottingdean</text>
+              <circle class="map-dot" cx="395.5" cy="79.1" r="5.5"/>
+              <text class="map-label" x="410" y="72">Woodingdean</text>
+              <circle class="map-dot" cx="732.7" cy="352.5" r="5.5"/>
+              <text class="map-label" x="747" y="344">Peacehaven</text>
+              <circle class="map-dot map-dot-out" cx="104.5" cy="140.3" r="5.5"/>
+              <text class="map-label map-label-out" x="92" y="120">Brighton &amp; Hove</text>
+              <text class="map-note" x="300" y="440">English Channel</text>
+              <g class="map-scale"><line x1="40" y1="466" x2="169.2" y2="466"/><line x1="40" y1="459" x2="40" y2="473"/><line x1="169.2" y1="459" x2="169.2" y2="473"/><text x="40" y="450">2 km</text></g>
+            </svg>
+            <figcaption class="mini">Home base: Saltdean · 50.80° N 0.04° W</figcaption>
+          </figure>
+          <div class="area-list">
+            <ul class="areas">
+              <li><span class="area-n">Saltdean</span><span class="pc">BN2</span></li>
+              <li><span class="area-n">Rottingdean</span><span class="pc">BN2</span></li>
+              <li><span class="area-n">Peacehaven</span><span class="pc">BN10</span></li>
+              <li><span class="area-n">Woodingdean</span><span class="pc">BN2</span></li>
+              <li class="area-out"><span class="area-n">Brighton &amp; Hove</span><span class="pc">Wider area · same rates · travel confirmed on the phone</span></li>
+            </ul>
+            <p class="lead">I'm based in Saltdean and cover the Deans and Peacehaven for home visits, from PC repair in Rottingdean to a home-visit computer repair in Woodingdean, and Wi-Fi help across Brighton &amp; Hove.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="reviews" aria-labelledby="reviews-h">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="idx"><span>06</span>Reviews</p>
+          <h2 id="reviews-h">What neighbours say.</h2>
+        </div>
+        <div class="empty">
+          <p class="status"><span class="status-dot" aria-hidden="true"></span><span class="mini">Reviews so far: none yet</span></p>
+          <p class="empty-t">Salt IT is new. I won't make up quotes. Reviews from real local jobs will appear here as they come in, on Google first.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec sec-contact" id="contact" aria-labelledby="contact-h">
+      <div class="wrap contact-grid">
+        <div class="contact-main">
+          <p class="idx"><span>07</span>Contact</p>
           <h2 id="contact-h">What's gone wrong?</h2>
           <p class="lead">The quickest way is to call. If I'm with a customer, leave a message and I'll ring you back as soon as I can.</p>
-          <a class="bigtel" href="tel:+447843468904"><span class="mini">Call Brad</span><span class="num-big">07843 468904</span></a>
+          <a class="bigtel" href="tel:+447843468904" aria-label="Call Brad on 07843 468904"><span class="mini">Call Brad</span><span class="num-big">07843 468904</span></a>
           <ul class="contact-list">
             <li><span class="mini">Email</span><a href="mailto:hello@saltit.co.uk">hello@saltit.co.uk</a></li>
-            <li><span class="mini">Where</span>Based in Saltdean, East Sussex</li>
+            <li><span class="mini">Where</span><span>Based in Saltdean, East Sussex</span></li>
+            <li><span class="mini">Hours</span><span>Mon–Fri 9am–6pm</span></li>
           </ul>
-
-          <form class="form" hidden data-enquiry>
-            <h3>Or send a short note</h3>
-            <div class="field">
-              <label for="f-name">Your name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone number <span>(so I can call you back)</span></label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
-            </div>
-            <div class="field">
-              <label for="f-area">Where are you?</label>
-              <select id="f-area" name="area" required>
-                <option value="">Choose one</option>
-                <option>Saltdean</option>
-                <option>Rottingdean</option>
-                <option>Peacehaven</option>
-                <option>Woodingdean</option>
-                <option>Brighton &amp; Hove</option>
-                <option>Somewhere else</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="f-problem">What's gone wrong?</label>
-              <textarea id="f-problem" name="problem" rows="4" placeholder="e.g. The printer stopped working after BT changed our router." required></textarea>
-            </div>
-            <div class="check">
-              <input id="f-other" name="for_someone_else" type="checkbox" value="yes">
-              <label for="f-other">I'm booking for someone else</label>
-            </div>
-            <p class="form-status" role="status" aria-live="polite" data-status></p>
-            <button class="btn btn-invert" type="submit">Send to Brad</button>
-            <p class="form-note">This opens a ready-to-send email in your email app. Prefer to talk? <a href="tel:+447843468904">Call 07843 468904</a>.</p>
-          </form>
         </div>
+
+        <form class="form" hidden data-enquiry>
+          <h3>Or send a short note</h3>
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone number <span>(so I can call you back)</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+          </div>
+          <div class="field">
+            <label for="f-area">Where are you?</label>
+            <select id="f-area" name="area" required>
+              <option value="">Choose one</option>
+              <option>Saltdean</option>
+              <option>Rottingdean</option>
+              <option>Peacehaven</option>
+              <option>Woodingdean</option>
+              <option>Brighton &amp; Hove</option>
+              <option>Somewhere else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-problem">What's gone wrong?</label>
+            <textarea id="f-problem" name="problem" rows="4" placeholder="e.g. The printer stopped working after BT changed our router." required></textarea>
+          </div>
+          <div class="check">
+            <input id="f-other" name="for_someone_else" type="checkbox" value="yes">
+            <label for="f-other">I'm booking for someone else</label>
+          </div>
+          <p class="form-status" role="status" aria-live="polite" data-status></p>
+          <button class="btn btn-primary" type="submit">Send to Brad</button>
+          <p class="form-note">This opens a ready-to-send email in your email app. Prefer to talk? <a href="tel:+447843468904">Call 07843 468904</a>.</p>
+        </form>
       </div>
     </section>
   </main>
 
   <footer class="ftr">
     <div class="wrap ftr-in">
-      <address>
-        <strong>Salt IT</strong><br>
-        Based in Saltdean, East Sussex BN2<br>
-        <a href="tel:+447843468904" aria-label="Call Salt IT on 07843 468904">07843 468904</a> · <a href="mailto:hello@saltit.co.uk">hello@saltit.co.uk</a><br>
-        Home visits in Saltdean, Rottingdean, Peacehaven, Woodingdean and Brighton &amp; Hove
-      </address>
+      <div class="ftr-brand">
+        <img class="mark" src="assets/mark.svg" width="36" height="36" alt="">
+        <address>
+          <strong>Salt IT</strong><br>
+          Based in Saltdean, East Sussex BN2<br>
+          <a href="tel:+447843468904" aria-label="Call Salt IT on 07843 468904">07843 468904</a> · <a href="mailto:hello@saltit.co.uk">hello@saltit.co.uk</a><br>
+          Home visits in Saltdean, Rottingdean, Peacehaven, Woodingdean and Brighton &amp; Hove
+        </address>
+      </div>
       <div class="ftr-end">
+        <nav class="ftr-nav" aria-label="Footer">
+          <a href="#fix">What I fix</a>
+          <a href="#prices">Prices</a>
+          <a href="#areas">Areas</a>
+          <a href="#contact">Contact</a>
+        </nav>
         <p>© <span data-year>2026</span> Salt IT</p>
-        <p class="credit">Lido photo © <a href="https://www.geograph.org.uk/photo/5443210">Paul Gillett</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></p>
+        <p class="credit">Lido photo © <a href="https://www.geograph.org.uk/photo/5443210">Paul Gillett</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, colour-graded</p>
       </div>
     </div>
   </footer>
 
   <nav class="callbar" aria-label="Quick contact" data-callbar>
-    <a class="btn btn-invert" href="tel:+447843468904">Call Brad</a>
-    <a class="btn btn-line-invert" href="#contact">Message</a>
+    <a class="btn btn-primary" href="tel:+447843468904" aria-label="Call Brad on 07843 468904">Call Brad</a>
+    <a class="btn btn-line" href="#contact">Message</a>
   </nav>
 </body>
 </html>
