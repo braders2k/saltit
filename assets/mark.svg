@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="SaltIT mark">
-  <rect width="128" height="128" rx="25" fill="#2B2F33"/>
-  <path d="M64 19L39 63L47 78H65L77 47L64 19Z" fill="#FAFBFC"/>
-  <path d="M80 51L66 78H90L98 65L80 51Z" fill="#7898A4"/>
-  <path d="M34 84H100C88 92 77 96 66 96C54 96 43 92 34 84Z" fill="#7EB8D4"/>
-  <path d="M55 101H77L66 108L55 101Z" fill="#7EB8D4"/>
-</svg>
