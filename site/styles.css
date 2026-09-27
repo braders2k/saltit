@@ -599,6 +599,18 @@ strong { font-weight: 600; }
 }
 
 /* ---------- 04 Who you'll get ---------- */
+.portrait {
+  width: 156px;
+  margin: 28px 0 4px;
+}
+.portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(62, 198, 207, 0.22);
+}
 .promises {
   display: grid;
   border-top: 1px solid var(--line-2);
@@ -966,6 +978,22 @@ strong { font-weight: 600; }
   .hours { padding: 24px 32px; }
   .hours { grid-template-columns: 8rem 1fr; align-items: baseline; }
 
+  .simon-head {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: 40px;
+    align-items: start;
+  }
+  .simon-head .idx { grid-column: 2; grid-row: 1; margin-bottom: 12px; }
+  .simon-head h2 { grid-column: 2; grid-row: 2; }
+  .simon-head .lead { grid-column: 2; grid-row: 3; }
+  .simon-head .portrait {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 200px;
+    margin: 8px 0 0;
+  }
+
   .promises { grid-template-columns: 1fr 1fr; column-gap: 48px; }
 
   .map-label { font-size: 26px; }
@@ -1084,6 +1112,23 @@ strong { font-weight: 600; }
   }
   .sec-head .idx { grid-row: 1 / span 2; align-self: start; margin-top: 0.9rem; }
   .sec-head h2, .sec-head .lead { grid-column: 2; }
+
+  .simon-head { align-items: start; }
+  .simon-head .idx {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0.9rem;
+    margin-bottom: 0;
+  }
+  .simon-head h2 { grid-column: 2; grid-row: 1; }
+  .simon-head .portrait {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: min(100%, 220px);
+    margin-top: 4rem;
+  }
+  .simon-head .lead { grid-column: 2; grid-row: 2; }
 
   .rows, .relative, .modes, .steps, .ready, .hours, .price-grid, .promises, .area-grid, .empty {
     margin-left: calc((100% - 48px) * 3 / 12 + 48px);
