@@ -13,7 +13,7 @@ Items marked **[BRAD]** are facts only Brad can supply or confirm. The build mus
 
 **One-line position**
 
-> Salt IT is Brad, an IT engineer who lives in Saltdean. He comes to your home and fixes the Wi-Fi, the printer, the laptop, the email, or the mess after a scam. He tells you the price before he comes, in plain English.
+> Salt IT is Brad, an IT engineer who lives in Saltdean. He comes to your home and fixes the Wi-Fi, the printer, the laptop, the email, or the mess after a scam. He quotes the price up front, in plain English.
 
 **Primary audience: households in the Deans and Peacehaven.** That means Saltdean, Rottingdean, Peacehaven and Woodingdean, and within them two groups:
 
@@ -168,7 +168,7 @@ Two columns (they stack on mobile). The on-site column comes first and is visual
 **Three steps** (a small numbered row under the columns):
 
 1. **Call or message.** Tell me what's gone wrong.
-2. **Hear the price.** I'll give you the likely cost before I travel.
+2. **Hear the price.** I'll give you the likely cost up front.
 3. **Fixed and explained.** I'll show you what I did and leave notes.
 
 **Hours [BRAD]** (a single line; only promise hours you'll actually keep). Proposed format:
@@ -180,7 +180,7 @@ The research identifies after 5–6pm and Saturday as the credible local gap. If
 ### 4. Prices
 
 - Eyebrow: `PRICES`
-- H2: `The price, before I visit.`
+- H2: `Clear prices.`
 - Intro: `Pay per visit. No contracts, no monthly fee.`
 
 Show this as a price table (a real `<table>`), with prices right-aligned:
@@ -230,7 +230,7 @@ No retainer, subscription or annual plan appears on the page (section 12).
 
 Four promises, as a 2×2 grid (1 column on mobile), each a bold label plus one line:
 
-1. **Price first.** You'll hear the likely cost before I travel.
+1. **Price first.** You'll hear the likely cost up front.
 2. **Plain English.** No jargon, and no making you feel daft for asking.
 3. **I'll show you what I did.** And I'll leave written steps if you want them.
 4. **I'll come back if it comes back.** The same problem within 14 days is on me. (This must match the Prices line.)
@@ -334,7 +334,7 @@ No street address (it's a mobile service-area business). "Saltdean" is spelled a
 ## 8. Trust and calls to action
 
 - **Named local:** "Brad, based in Saltdean" appears in the eyebrow, the "Who you'll get" H2 and the footer.
-- **Price before the visit:** it's in the hero micro line, the Prices section and the promises.
+- **Price up front:** it's in the hero micro line, the Prices section and the promises.
 - **"I'll show you what I did"** and written steps.
 - **The anti-scam line:** "I will never call you out of the blue asking to connect."
 - **The phone is the primary CTA everywhere.** It appears in the header, the hero, the sticky mobile bar and the contact section. **The placeholder `01xxx xxxxxx` must be replaced by Brad's real number before launch. [BRAD]** The same number goes on the Google Business Profile.
