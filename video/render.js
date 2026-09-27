@@ -1,8 +1,9 @@
-// Renders video/promo.html frame-by-frame with Playwright and encodes an MP4 with ffmpeg.
+// Renders video/ad.html frame-by-frame with Playwright and encodes an MP4 with ffmpeg.
 //
-//   node video/render.js                       # 1920x1080 landscape
-//   node video/render.js --format vertical     # 1080x1920 for Reels / Stories / TikTok
-//   node video/render.js --stills 2,10,17      # PNG previews at those seconds only
+//   node video/render.js                      # 4:5 feed ad (1080x1350), the default
+//   node video/render.js --format story       # 9:16 for Stories / Reels (1080x1920)
+//   node video/render.js --format square      # 1:1 (1080x1080)
+//   node video/render.js --stills 1,6,12      # PNG previews at those seconds only
 //
 // Needs `playwright` (npm i -D playwright) and an ffmpeg with libx264 on PATH, or FFMPEG=/path/to/ffmpeg.
 // If video/audio.wav exists (see make_audio.py) it is muxed in as the soundtrack.
@@ -13,26 +14,38 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 
+const FORMATS = {
+  feed: { width: 1080, height: 1350, suffix: "4x5-feed" },
+  story: { width: 1080, height: 1920, suffix: "9x16-stories-reels" },
+  square: { width: 1080, height: 1080, suffix: "1x1-square" },
+};
+
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
   const i = args.indexOf(`--${name}`);
   return i === -1 ? fallback : args[i + 1];
 };
 
-const format = opt("format", "landscape");
+const format = opt("format", "feed");
+if (!FORMATS[format]) {
+  console.error(`Unknown --format ${format}. Use one of: ${Object.keys(FORMATS).join(", ")}`);
+  process.exit(1);
+}
+const { width, height, suffix } = FORMATS[format];
 const fps = Number(opt("fps", 30));
 const workers = Number(opt("workers", Math.max(1, Math.min(6, os.cpus().length))));
 const stills = opt("stills", null);
-const [width, height] = format === "vertical" ? [1080, 1920] : [1920, 1080];
 const here = __dirname;
-const out = opt("out", path.join(here, `saltit-promo-${format}.mp4`));
+const out = opt("out", path.join(here, `salt-it-facebook-ad-${suffix}.mp4`));
 const ffmpeg = process.env.FFMPEG || "ffmpeg";
-const pageUrl = `file://${path.join(here, "promo.html")}?capture&format=${format}`;
+const pageUrl = `file://${path.join(here, "ad.html")}?capture&format=${format}`;
 
 async function openPage(browser) {
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   await page.goto(pageUrl);
   await page.evaluate(() => document.fonts.ready);
+  const barlow = await page.evaluate(() => document.fonts.check('600 40px "Barlow"'));
+  if (!barlow) throw new Error("Barlow did not load from site/assets/fonts");
   return page;
 }
 

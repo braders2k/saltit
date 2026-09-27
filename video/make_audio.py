@@ -1,7 +1,8 @@
-"""Synthesises a calm, royalty-free soundtrack for the SaltIT promo (video/audio.wav).
+"""Synthesises a royalty-free soundtrack for the Salt IT Facebook ad (video/audio.wav).
 
-Soft pad chords change with each scene, a gentle plucked arpeggio adds motion and a quiet
-sea wash nods to Saltdean. Everything is generated here, so there are no licensing questions.
+Pad chords change with each scene, a soft kick lands on every problem in the opening hook,
+a plucked arpeggio and light hats keep it moving, and a quiet sea wash nods to Saltdean.
+Everything is generated here, so there are no licensing questions.
 
     python3 video/make_audio.py        # needs numpy
 """
@@ -12,20 +13,20 @@ from pathlib import Path
 import numpy as np
 
 SR = 44100
-DURATION = 38.0
-# Scene boundaries mirror data-start in promo.html.
-SCENES = [0.0, 4.2, 8.6, 14.4, 20.6, 26.6, 31.6, DURATION]
-# One chord per scene, as MIDI note numbers (D major, unhurried).
+DURATION = 27.5
+# Scene boundaries mirror data-start in ad.html; HOOK mirrors the hook's data-roll times.
+SCENES = [0.0, 4.4, 7.9, 13.1, 17.6, 21.8, DURATION]
+HOOK = [0.0, 0.8, 1.6, 2.4, 3.2]
+# One chord per scene, as MIDI note numbers: unsettled for the problems, home for the answer.
 CHORDS = [
-    [50, 57, 61, 64, 66],  # Dmaj9
-    [47, 54, 57, 61, 62],  # Bm(add9)
+    [47, 54, 57, 61, 62],  # Bm(add9): the problems
+    [50, 57, 61, 64, 66],  # Dmaj9: "Simon fixes it"
     [43, 50, 54, 59, 62],  # Gmaj7
-    [52, 59, 62, 66, 67],  # Em9
-    [47, 54, 57, 62, 66],  # Bm7
+    [45, 52, 57, 59, 64],  # Asus2
     [43, 50, 54, 57, 59],  # Gmaj9
-    [50, 57, 61, 64, 69],  # Dmaj9 (resolve)
+    [50, 57, 61, 64, 69],  # Dmaj9: call to action
 ]
-BEAT = 0.6  # 100 bpm
+BEAT = 0.4  # eighth notes at 75 bpm, so every 0.8s roll in the hook lands on a beat
 
 rng = np.random.default_rng(7)
 n = int(SR * DURATION)
@@ -79,10 +80,10 @@ for k, chord in enumerate(CHORDS):
     tt = np.arange(length) / SR
     add(np.sin(2 * np.pi * hz(chord[0] - 12) * tt) * envelope(length, 0.4, 0.8), start, 0, 0.02)
 
-# Plucked arpeggio through the chord tones, starting once the logo has landed.
+# Plucked arpeggio through the chord tones.
 pattern = [0, 2, 3, 4, 3, 2, 1, 3]
-beat_time, step = 1.2, 0
-while beat_time < DURATION - 3.0:
+beat_time, step = 0.0, 0
+while beat_time < DURATION - 2.5:
     k = max(i for i in range(len(CHORDS)) if SCENES[i] <= beat_time)
     chord = CHORDS[k]
     note = chord[pattern[step % len(pattern)]] + 24
@@ -93,7 +94,7 @@ while beat_time < DURATION - 3.0:
     pluck *= envelope(length, 0.004, 0.2)
     accent = 1.0 if step % 4 == 0 else 0.7
     add(pluck, beat_time, -0.35 if step % 2 else 0.35, 0.045 * accent)
-    beat_time += BEAT / 2 if 14.4 <= beat_time < 31.6 else BEAT
+    beat_time += BEAT
     step += 1
 
 # Chimes on each scene change.
@@ -110,7 +111,7 @@ tt = np.arange(length) / SR
 for note, g in ((74, 0.05), (81, 0.035), (86, 0.025)):
     f = hz(note)
     bell = (np.sin(2 * np.pi * f * tt) + 0.2 * np.sin(2 * np.pi * f * 2.76 * tt)) * np.exp(-tt * 1.1)
-    add(bell * envelope(length, 0.003, 1.0), 33.3, 0, g)
+    add(bell * envelope(length, 0.003, 1.0), SCENES[-2] + 0.9, 0, g)
 
 
 def shaped_noise(slope, low, high):
@@ -142,10 +143,39 @@ def reverb(x, seconds=2.6, mix=0.28):
 
 left, right = reverb(left), reverb(right)
 
+# Drums stay dry, after the reverb, so they sound close and tight.
+hat_noise = shaped_noise(0.0, 6000, 14000)
+
+
+def kick(gain):
+    length = int(0.5 * SR)
+    tt = np.arange(length) / SR
+    sweep = 2 * np.pi * (48 * tt + (110 / 22) * (1 - np.exp(-tt * 22)))  # 158 Hz falling to 48 Hz
+    add(np.sin(sweep) * np.exp(-tt * 9) * envelope(length, 0.002, 0.1), start, 0, gain)
+
+
+def hat(gain, pan):
+    length = int(0.08 * SR)
+    i = int(start * SR) % (n - length)
+    burst = hat_noise[i : i + length] * np.exp(-np.arange(length) / SR * 60)
+    add(burst, start, pan, gain)
+
+
+for start in HOOK:
+    kick(0.2)
+start = SCENES[1]
+while start < SCENES[-2] - 0.1:
+    kick(0.14)
+    start += 2 * BEAT
+start = SCENES[2] + BEAT
+while start < SCENES[-2] - 0.1:
+    hat(0.1, 0.25)
+    start += 2 * BEAT
+
 master = np.stack([left, right], axis=1)
 master *= envelope(n, 0.4, 2.8)[:, None]
 master = np.tanh(master * 1.4) / 1.4
-master *= 0.55 / np.abs(master).max()  # about -16 LUFS: a background bed, not a banger
+master *= 0.55 / np.abs(master).max()  # around -17 LUFS: sits under a voice-free ad without shouting
 
 out = Path(__file__).with_name("audio.wav")
 with wave.open(str(out), "wb") as wav:
