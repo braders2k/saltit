@@ -118,8 +118,9 @@ Where (stone band, coverage map) → Reviews (honest empty state) → Contact (s
 
 Logo: "SALT IT" outlined from Barlow 600, all caps, tracked 0.15em, in ink. The A has no crossbar;
 a small square salt grain in Lido turquoise sits where it would be. That is the only mark, and it
-is easy to miss until you look. The icon is the same A and grain, paper and turquoise on a
-square ink tile. Regenerate both with `python3 scripts/logo.py`; the PNGs are screenshots of
+is easy to miss until you look. The wordmark is the logo in the header and footer, with no icon tile
+beside it. The icon is the same A and grain, paper and turquoise
+on a square ink tile, used only for the favicon and apple-touch icon. Regenerate both with `python3 scripts/logo.py`; the PNGs are screenshots of
 `icon.svg` at 192 and 180 px. On a dark background, swap the ink letters for paper and keep the
 grain turquoise.
 
@@ -139,7 +140,9 @@ Hero photo: "Beaches and Undercliff - Saltdean" © Paul Gillett,
 [geograph.org.uk/photo/3792351](https://www.geograph.org.uk/photo/3792351),
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in
 `site/assets/` are crops of the Geograph original (no upscale). A warm paper gradient in CSS
-keeps the headline, supporting line and buttons readable. Credit is in the footer.
+keeps the headline, supporting line and buttons readable. The visible footer credit was removed at
+Brad's request, so the credit now only appears in an HTML comment by the hero. CC BY-SA 2.0 expects
+attribution visible to readers; restore a credit line if the photo stays.
 
 ## Contact form
 
