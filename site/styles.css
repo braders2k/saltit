@@ -599,17 +599,25 @@ strong { font-weight: 600; }
 }
 
 /* ---------- 04 Who you'll get ---------- */
-.portrait {
-  width: 156px;
-  margin: 28px 0 4px;
+.simon-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 18px;
+  align-items: center;
 }
+.simon-head .idx, .simon-head .lead { grid-column: 1 / -1; }
+.simon-head .portrait { grid-column: 1; grid-row: 2; }
+.simon-head h2 { grid-column: 2; grid-row: 2; }
+.portrait { width: 96px; }
 .portrait img {
   width: 100%;
   height: auto;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(62, 198, 207, 0.22);
+  box-shadow:
+    0 0 0 1px var(--line-2),
+    0 14px 32px -14px rgba(18, 32, 40, 0.38);
 }
 .promises {
   display: grid;
@@ -979,7 +987,6 @@ strong { font-weight: 600; }
   .hours { grid-template-columns: 8rem 1fr; align-items: baseline; }
 
   .simon-head {
-    display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
     column-gap: 40px;
     align-items: start;
