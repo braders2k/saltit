@@ -183,18 +183,17 @@ a { color: inherit; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   min-height: 48px;
   text-decoration: none;
   white-space: nowrap;
 }
 .brand-word {
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  line-height: 1;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-.mark { width: 36px; height: 36px; }
 .nav { display: none; }
 .hdr-call { white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
 .hdr-call:hover { border-color: var(--ink); }
@@ -862,7 +861,6 @@ strong { font-weight: 600; }
   font-size: 1rem;
 }
 .ftr-in { display: grid; gap: 32px; }
-.ftr-brand { display: flex; gap: 16px; align-items: flex-start; }
 .ftr address { font-style: normal; line-height: 1.75; }
 .ftr strong { color: var(--salt); letter-spacing: 0.02em; }
 .ftr a { color: var(--salt); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }

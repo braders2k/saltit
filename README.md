@@ -16,7 +16,7 @@ site/                 ← the deployable site (publish this folder)
   robots.txt, sitemap.xml
   _headers            Cloudflare Pages security headers; noindex on *.pages.dev previews
   assets/
-    mark.svg          the Salt IT mark (header, footer, favicon)
+    mark.svg          the old Salt IT mark, now favicon only (header and footer use the text wordmark)
     mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
     og-image.jpg      1200×630 share image
     cliffs-hero-*.webp  Saltdean undercliff (780m = mobile crop; 960 and 1440 = tablet/desktop)
