@@ -6,13 +6,14 @@ Built from `docs/saltit-design-brief.md` and `docs/saltit-local-market-research.
 Plain static HTML, CSS and a small script. No framework and no build step. The page
 itself makes no third-party requests. The only web font is Barlow (SIL OFL), subset and
 self-hosted in `site/assets/fonts/`. The contact form posts to `/api/enquiry` on this
-site; that function forwards to Web3Forms only when `WEB3FORMS_ACCESS_KEY` is set.
+site. That function forwards to Web3Forms when `WEB3FORMS_ACCESS_KEY` is set. If
+Web3Forms rejects the server call, the page submits the same note from the browser.
 
 ```text
 site/                 ← the deployable site (publish this folder)
   index.html          all content, meta, Open Graph and LocalBusiness JSON-LD
   styles.css          mobile-first styles (breakpoints 760px and 1100px)
-  script.js           contact form (on-site post, mailto fallback), footer year, sticky call-bar toggle
+  script.js           contact form (on-site post, browser Web3Forms handoff, mailto fallback), footer year, sticky call-bar toggle
   robots.txt, sitemap.xml
   _headers            Cloudflare Pages security headers; noindex on *.pages.dev previews
   assets/
@@ -28,7 +29,7 @@ scripts/
   logo.py             source for assets/logo.svg and icon.svg (outlined from Barlow 600)
   og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 api/
-  enquiry.js          contact form handler (Web3Forms when WEB3FORMS_ACCESS_KEY is set)
+  enquiry.js          contact form handler (Web3Forms, then a same-site browser handoff)
 docs/                 design brief and market research (not deployed)
 ```
 
@@ -146,12 +147,22 @@ attribution visible to readers; restore a credit line if the photo stays.
 
 ## Contact form
 
-`Send to Simon` posts JSON to `/api/enquiry` (same origin, so the site CSP can stay `form-action 'self'`).
+`Send to Simon` posts JSON to `/api/enquiry` (same origin, so the form itself stays `form-action 'self'`).
+
+Web3Forms expects that call to come from a browser. Their free plan answers a serverless
+proxy with HTTP 403 (`This method is not allowed`) or a Cloudflare challenge, which this
+handler used to turn into a 502 and a mailto draft. The handler still tries the upstream
+call, so a safelisted paid key can return `{ ok: true }` directly. When the server call is
+blocked, a page on this site receives the public access key and posts the note to
+`https://api.web3forms.com/submit`. The page CSP allows that one connection (`connect-src`).
+Web3Forms documents the access key as a public form alias. It is not committed and it is not
+logged. A request whose `Origin` is not this site gets `{ ok: false, fallback: "client" }`
+with no key.
 
 | Env var | Where | What it does |
 | --- | --- | --- |
-| `WEB3FORMS_ACCESS_KEY` | Vercel project **saltit**, Production and Preview | Forwards the note to support@saltit.co.uk via [Web3Forms](https://web3forms.com). Create the key with that address. Do not commit it. |
+| `WEB3FORMS_ACCESS_KEY` | Vercel project **saltit**, Production, Preview and Development | Sends the note to support@saltit.co.uk via [Web3Forms](https://web3forms.com). Create the key with that address. Do not commit it. |
 
-Until the key is set, the handler answers `{ ok: false, fallback: "mailto" }` and the page
-opens a ready-to-send email to support@saltit.co.uk instead. A filled honeypot (`hp_field`)
-is dropped and reported as sent.
+Until the key is set, or if Web3Forms rejects the browser submission as well, the handler
+answers `{ ok: false, fallback: "mailto" }` and the page opens a ready-to-send email to
+support@saltit.co.uk. A filled honeypot (`hp_field`) is dropped and reported as sent.

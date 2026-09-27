@@ -46,6 +46,32 @@
       `mailto:support@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
+  const markSent = () => {
+    form.reset();
+    status.textContent = "Sent. I'll read this and ring you back.";
+  };
+
+  // Web3Forms rejects the Vercel function. The handler then asks this page to submit.
+  const submitViaWeb3Forms = async (fields, accessKey) => {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: accessKey,
+        subject: `Home visit enquiry — ${fields.area} — ${fields.name}`,
+        from_name: fields.name,
+        name: fields.name,
+        phone: fields.phone,
+        area: fields.area,
+        booking_for_someone_else: fields.forSomeoneElse ? "Yes" : "No",
+        message: fields.problem,
+      }),
+    });
+    let data = {};
+    try { data = await res.json(); } catch { data = {}; }
+    return res.ok && data.success === true;
+  };
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const missing = [];
@@ -70,8 +96,7 @@
     };
 
     if (fields.company) {
-      form.reset();
-      status.textContent = "Sent. I'll read this and ring you back.";
+      markSent();
       return;
     }
 
@@ -93,9 +118,22 @@
       let data = {};
       try { data = await res.json(); } catch { data = {}; }
       if (res.ok && data.ok) {
-        form.reset();
-        status.textContent = "Sent. I'll read this and ring you back.";
+        markSent();
         return;
+      }
+      if (data.fallback === "client" && data.accessKey) {
+        const source = data.submission && typeof data.submission === "object" ? data.submission : fields;
+        const sent = await submitViaWeb3Forms({
+          name: source.name,
+          phone: source.phone,
+          area: source.area,
+          problem: source.problem,
+          forSomeoneElse: source.forSomeoneElse === true || source.forSomeoneElse === "yes",
+        }, data.accessKey);
+        if (sent) {
+          markSent();
+          return;
+        }
       }
       if (res.status === 400) {
         status.textContent = "Please check the form and try again, or email support@saltit.co.uk.";
