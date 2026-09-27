@@ -140,7 +140,9 @@ Hero photo: "Beaches and Undercliff - Saltdean" © Paul Gillett,
 [geograph.org.uk/photo/3792351](https://www.geograph.org.uk/photo/3792351),
 [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). The WebP files in
 `site/assets/` are crops of the Geograph original (no upscale). A warm paper gradient in CSS
-keeps the headline, supporting line and buttons readable. Credit is in the footer.
+keeps the headline, supporting line and buttons readable. The visible footer credit was removed at
+Brad's request, so the credit now only appears in an HTML comment by the hero. CC BY-SA 2.0 expects
+attribution visible to readers; restore a credit line if the photo stays.
 
 ## Contact form
 
