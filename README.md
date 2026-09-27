@@ -54,7 +54,7 @@ Live contact details (keep identical on the site, Google Business Profile, Nextd
 | Phone (display) | `07843 468904` |
 | Phone (`tel:` and JSON-LD) | `+447843468904` |
 | WhatsApp | `https://wa.me/447843468904` |
-| Email | `hello@saltit.co.uk` |
+| Email | `support@saltit.co.uk` |
 | Hours | Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can. |
 
 The JSON-LD `openingHoursSpecification` lists only the fixed Mon–Fri 09:00–18:00 block, because
@@ -87,7 +87,7 @@ DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 
 - Name: **Salt IT** (with a space). Never "SaltIT".
 - Place: **Saltdean** (one word), East Sussex. Never "Salt Dean" or "Southend".
-- Domain / email: `saltit.co.uk` / `hello@saltit.co.uk`.
+- Domain / email: `saltit.co.uk` / `support@saltit.co.uk`.
 - Voice: first person, plain UK English, short sentences, no exclamation marks.
 - No invented reviews, ratings, customer counts, stock photos or AI-generated people.
 
@@ -150,8 +150,8 @@ attribution visible to readers; restore a credit line if the photo stays.
 
 | Env var | Where | What it does |
 | --- | --- | --- |
-| `WEB3FORMS_ACCESS_KEY` | Vercel project **saltit**, Production and Preview | Forwards the note to hello@saltit.co.uk via [Web3Forms](https://web3forms.com). Create the key with that address. Do not commit it. |
+| `WEB3FORMS_ACCESS_KEY` | Vercel project **saltit**, Production and Preview | Forwards the note to support@saltit.co.uk via [Web3Forms](https://web3forms.com). Create the key with that address. Do not commit it. |
 
 Until the key is set, the handler answers `{ ok: false, fallback: "mailto" }` and the page
-opens a ready-to-send email to hello@saltit.co.uk instead. A filled honeypot (`hp_field`)
+opens a ready-to-send email to support@saltit.co.uk instead. A filled honeypot (`hp_field`)
 is dropped and reported as sent.
