@@ -118,8 +118,8 @@ Where (stone band, coverage map) → Reviews (honest empty state) → Contact (s
 
 Logo: "SALT IT" outlined from Barlow 600, all caps, tracked 0.15em, in ink. The A has no crossbar;
 a small square salt grain in Lido turquoise sits where it would be. That is the only mark, and it
-is easy to miss until you look. The wordmark is the logo everywhere on the page (header and footer),
-with no separate icon or dot beside the name. The icon is the same A and grain, paper and turquoise
+is easy to miss until you look. The wordmark is the logo in the header and footer, with no icon tile
+beside it. The icon is the same A and grain, paper and turquoise
 on a square ink tile, used only for the favicon and apple-touch icon. Regenerate both with `python3 scripts/logo.py`; the PNGs are screenshots of
 `icon.svg` at 192 and 180 px. On a dark background, swap the ink letters for paper and keep the
 grain turquoise.
