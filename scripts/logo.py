@@ -1,4 +1,4 @@
-"""Source for the Salt IT logo files in site/assets/. Run: python3 scripts/logo.py
+"""Source for the Salt I.T. logo files in site/assets/. Run: python3 scripts/logo.py
 
 Needs fontTools and brotli (pip install fonttools brotli). The letters are outlined from the
 site's own Barlow 600, so the logo and the headings share one typeface. The A loses its crossbar
@@ -6,7 +6,7 @@ and gets a square salt grain in its place; the icon is that A alone on an ink ti
 """
 from pathlib import Path
 
-from fontTools.pens.recordingPen import RecordingPen
+from fontTools.pens.recordingPen import DecomposingRecordingPen, RecordingPen
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.ttLib import TTFont
@@ -22,6 +22,7 @@ LIDO = "#3EC6CF"
 
 TRACK = 150          # letter-spacing in font units (0.15em), a touch tighter than the old 0.2em text
 WORD_GAP = 540       # T to I, measured ink to ink with tracking included
+PUNCT_GAP = 168      # ink-to-ink gap around the periods in "I.T." (tighter than letter tracking)
 TOP, BOTTOM = 708, -8  # S overshoot, so nothing is clipped
 GRAIN = 112          # square, between the crossbar (101) and stem (116) weights
 GRAIN_Y = 110        # bottom of the grain; centres it on Barlow's crossbar height
@@ -62,7 +63,8 @@ def grain(cx):
 
 
 def glyph(name):
-    pen = RecordingPen()
+    # Decompose composites (the period is a component) so the SVG pen only sees outlines.
+    pen = DecomposingRecordingPen(glyphs)
     glyphs[name].draw(pen)
     return pen
 
@@ -85,7 +87,9 @@ def wordmark():
         ("T", glyph("T"), 579, 34, 545),
         None,
         ("I", glyph("I"), 262, 73, 189),
+        ("period", glyph("period"), 273, 62, 203),
         ("T", glyph("T"), 579, 34, 545),
+        ("period", glyph("period"), 273, 62, 203),
     ]
     kern = {("L", "T"): -86}  # Barlow's own LT pair
     s = 0.1
@@ -101,6 +105,8 @@ def wordmark():
         elif new_word:
             pen_x = ink_right + WORD_GAP - xmin
             new_word = False
+        elif name == "period" or prev == "period":
+            pen_x = ink_right + PUNCT_GAP - xmin
         else:
             pen_x += kern.get((prev, name), 0)
         paths.append(to_path(rec, pen_x * s, s, TOP * s))
@@ -116,7 +122,7 @@ def write_wordmark(path, fill_letters, fill_grain):
     w, h, letters, grain_d = wordmark()
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w:g} {h:g}" role="img" aria-labelledby="t">'
-        f'<title id="t">Salt IT</title>'
+        f'<title id="t">Salt I.T.</title>'
         f'<path fill="{fill_letters}" d="{letters}"/>'
         f'<path fill="{fill_grain}" d="{grain_d}"/>'
         f"</svg>\n"
@@ -135,7 +141,7 @@ def write_icon(path):
     g = to_path(grain(A_CENTRE), ox, s, oy)
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}" role="img" aria-labelledby="t">'
-        f'<title id="t">Salt IT</title>'
+        f'<title id="t">Salt I.T.</title>'
         f'<rect width="{size}" height="{size}" fill="{INK}"/>'
         f'<path fill="{PAPER}" d="{a}"/>'
         f'<path fill="{LIDO}" d="{g}"/>'
