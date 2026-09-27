@@ -16,13 +16,16 @@ site/                 ← the deployable site (publish this folder)
   robots.txt, sitemap.xml
   _headers            Cloudflare Pages security headers; noindex on *.pages.dev previews
   assets/
-    mark.svg          the Salt IT mark (header, footer, favicon)
-    mark-192.png      the mark as PNG (apple-touch-icon, JSON-LD logo)
+    logo.svg          the Salt IT wordmark (header, share image)
+    icon.svg          the A-and-grain icon on an ink tile (footer, favicon)
+    icon-192.png      the icon as PNG (favicon fallback, JSON-LD logo)
+    apple-touch-icon.png  the icon at 180×180
     og-image.jpg      1200×630 share image
     cliffs-hero-*.webp  Saltdean undercliff (780m = mobile crop; 960 and 1440 = tablet/desktop)
     fonts/            Barlow 400 and 600, Latin subset (woff2), plus the OFL licence
 scripts/
   check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, section numbers)
+  logo.py             source for assets/logo.svg and icon.svg (outlined from Barlow 600)
   og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 api/
   enquiry.js          contact form handler (Web3Forms when WEB3FORMS_ACCESS_KEY is set)
@@ -111,6 +114,13 @@ Where (stone band, coverage map) → Reviews (honest empty state) → Contact (s
 | Lido ink | `#085E66` | Eyebrows, numbers, links | 6.4:1 on paper |
 | Pool blue | `#1D7AA6` | Coastline on the map | decorative |
 | Terrace sand | `#8D7048` | Meridian, "none yet" status dot | decorative |
+
+Logo: "SALT IT" outlined from Barlow 600, all caps, tracked 0.15em, in ink. The A has no crossbar;
+a small square salt grain in Lido turquoise sits where it would be. That is the only mark, and it
+is easy to miss until you look. The icon is the same A and grain, paper and turquoise on a
+square ink tile. Regenerate both with `python3 scripts/logo.py`; the PNGs are screenshots of
+`icon.svg` at 192 and 180 px. On a dark background, swap the ink letters for paper and keep the
+grain turquoise.
 
 Type: Barlow 600 for headings, labels and buttons (H1/H2 uppercase, micro-labels tracked 0.16em),
 Barlow 400 for body at 19px / 1.6. Tabular figures for prices and the phone number.
