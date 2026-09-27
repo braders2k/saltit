@@ -41,9 +41,9 @@
       "What's gone wrong:",
       fields.problem,
     ].join("\n");
-    status.textContent = "Your email app should now open with the message ready to send. If it doesn't, email hello@saltit.co.uk.";
+    status.textContent = "Your email app should now open with the message ready to send. If it doesn't, email support@saltit.co.uk.";
     window.location.href =
-      `mailto:hello@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      `mailto:support@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   form.addEventListener("submit", async (event) => {
@@ -98,7 +98,7 @@
         return;
       }
       if (res.status === 400) {
-        status.textContent = "Please check the form and try again, or email hello@saltit.co.uk.";
+        status.textContent = "Please check the form and try again, or email support@saltit.co.uk.";
         return;
       }
       openMailto(fields);

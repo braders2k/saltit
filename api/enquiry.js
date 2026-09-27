@@ -1,6 +1,6 @@
 // Posts the contact form to Web3Forms when WEB3FORMS_ACCESS_KEY is set on Vercel.
 // Without that key the handler asks the page to open a mailto fallback.
-// Create a free key at https://web3forms.com for hello@saltit.co.uk, then add
+// Create a free key at https://web3forms.com for support@saltit.co.uk, then add
 // WEB3FORMS_ACCESS_KEY to the saltit project (Production and Preview). Do not commit it.
 
 const AREAS = new Set([

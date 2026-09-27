@@ -45,7 +45,7 @@ Why:
 - **It reads correctly.** "SaltIT" can be read as "salt it" or "salty". "Salt IT" reads as Salt plus IT, which says what the business does. That matters for an older audience reading a van, a card or a Google listing.
 - **It says the service out loud.** The phrase "IT support" sits right next to the brand in titles and listings ("IT Support Saltdean | … | Salt IT").
 - **It matches the research** and every planning document so far. Only the current page uses SaltIT.
-- **Search is unaffected.** The domain stays `saltit.co.uk` and the email stays `hello@saltit.co.uk`. Lowercase, no-space domains are normal and people will still find it.
+- **Search is unaffected.** The domain stays `saltit.co.uk` and the email stays `support@saltit.co.uk`. Lowercase, no-space domains are normal and people will still find it.
 
 **Rules (apply everywhere, before the first citation):**
 
@@ -53,7 +53,7 @@ Why:
 | --- | --- | --- |
 | Business name | **Salt IT** | SaltIT, Salt-IT, Salt I.T., SALT IT in body copy |
 | Place | **Saltdean** | Salt Dean, Salt-dean, Southend |
-| Domain / email | saltit.co.uk / hello@saltit.co.uk | — |
+| Domain / email | saltit.co.uk / support@saltit.co.uk | — |
 | County line | Saltdean, East Sussex | "Saltdean, Brighton" as the only locator |
 
 Uppercase "SALT IT" is fine inside all-caps micro-labels (eyebrows, buttons) because those are styled with CSS `text-transform`. The underlying HTML text must still read "Salt IT".
@@ -275,7 +275,7 @@ Body, one short paragraph that uses the remaining phrases once each:
 - Lead: `The quickest way is to call. If I'm with a customer, leave a message and I'll ring you back the same day.` **[BRAD]** Only keep "same day" if you can honour it; otherwise use "as soon as I can".
 - Large phone link: `[PHONE]`
 - Optional: `WhatsApp: [PHONE]` (a `https://wa.me/44…` link), only if Brad uses WhatsApp on that number **[BRAD]**.
-- Email: `hello@saltit.co.uk`
+- Email: `support@saltit.co.uk`
 - Line: `Based in Saltdean, East Sussex`
 
 **Form** (secondary, kept as a `mailto:` handoff):
@@ -301,7 +301,7 @@ Plain text, left-aligned, identical to the Google Business Profile:
 ```
 Salt IT
 Based in Saltdean, East Sussex BN2
-[PHONE] · hello@saltit.co.uk
+[PHONE] · support@saltit.co.uk
 Home visits in Saltdean, Rottingdean, Peacehaven, Woodingdean and Brighton & Hove
 © 2026 Salt IT
 ```
@@ -373,7 +373,7 @@ No street address (it's a mobile service-area business). "Saltdean" is spelled a
   "description": "Home IT support in Saltdean, East Sussex: Wi-Fi, printers, laptops, email and scam clean-ups. On-site home visits, remote when simpler.",
   "url": "https://saltit.co.uk/",
   "telephone": "+44XXXXXXXXXX",
-  "email": "hello@saltit.co.uk",
+  "email": "support@saltit.co.uk",
   "image": "https://saltit.co.uk/assets/og-image.png",
   "logo": "https://saltit.co.uk/assets/mark-192.png",
   "priceRange": "£35–£130",
