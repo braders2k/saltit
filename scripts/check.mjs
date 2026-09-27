@@ -37,7 +37,7 @@ for (const f of files) {
 
 const count = (needle) => visible.split(needle).length - 1;
 const phrases = [
-  "IT SUPPORT IN SALTDEAN AND SURROUNDING AREAS",
+  "IT SUPPORT IN SALTDEAN & NEARBY",
   "Computer repair in Saltdean",
   "computer help in Peacehaven",
   "PC repair in Rottingdean",
@@ -64,7 +64,8 @@ try {
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
     if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
   }
-  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}`;
+  const waText = "Hi Simon, I need help with...";
+  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}?text=${encodeURIComponent(waText)}`;
   const waLinks = [...html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
   if (!waLinks.length) errors.push("WhatsApp link missing");
   for (const href of waLinks) {

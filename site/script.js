@@ -46,10 +46,67 @@
       `mailto:support@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  const markSent = () => {
-    form.reset();
-    status.textContent = "Sent. I'll read this and ring you back.";
+  // On success the form swaps for a large "sent" panel; "Send another message" swaps back.
+  const wrap = d.querySelector("[data-enquiry-wrap]");
+  const done = d.querySelector("[data-enquiry-done]");
+  const formTitle = form.querySelector("h3");
+  const doneTitle = done && done.querySelector("[data-done-title]");
+  const donePhone = done && done.querySelector("[data-done-phone]");
+  const donePhoneLine = done && done.querySelector("[data-done-phone-line]");
+  const again = done && done.querySelector("[data-enquiry-again]");
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let swapping = false;
+
+  // Fade one panel out, ease the wrapper to the other's height, then fade it in.
+  const swap = async (from, to, focusEl) => {
+    if (swapping) return;
+    swapping = true;
+    const still = reduceMotion();
+    if (!still) {
+      wrap.style.height = `${wrap.offsetHeight}px`;
+      wrap.classList.add("is-swapping");
+      from.classList.add("is-out");
+      await wait(240);
+      to.classList.add("is-out");
+    }
+    from.hidden = true;
+    from.classList.remove("is-out");
+    to.hidden = false;
+    if (!still) wrap.style.height = `${to.offsetHeight}px`;
+    if (wrap.getBoundingClientRect().top < 0) {
+      wrap.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
+    }
+    focusEl.focus({ preventScroll: true });
+    if (!still) {
+      requestAnimationFrame(() => requestAnimationFrame(() => to.classList.remove("is-out")));
+      await wait(360);
+      wrap.style.height = "";
+      wrap.classList.remove("is-swapping");
+    }
+    swapping = false;
   };
+
+  const markSent = (phone) => {
+    form.reset();
+    if (!done || !wrap) {
+      status.textContent = "Sent. I'll read this and ring you back.";
+      return;
+    }
+    status.textContent = "";
+    donePhone.textContent = phone || "";
+    donePhoneLine.hidden = !phone;
+    swap(form, done, doneTitle);
+  };
+
+  if (again) {
+    formTitle.tabIndex = -1;
+    again.addEventListener("click", () => {
+      status.textContent = "";
+      for (const el of form.querySelectorAll("[aria-invalid]")) el.removeAttribute("aria-invalid");
+      swap(done, form, formTitle);
+    });
+  }
 
   // Web3Forms rejects the Vercel function. The handler then asks this page to submit.
   const submitViaWeb3Forms = async (fields, accessKey) => {
@@ -96,7 +153,7 @@
     };
 
     if (fields.company) {
-      markSent();
+      markSent(fields.phone);
       return;
     }
 
@@ -118,7 +175,7 @@
       let data = {};
       try { data = await res.json(); } catch { data = {}; }
       if (res.ok && data.ok) {
-        markSent();
+        markSent(fields.phone);
         return;
       }
       if (data.fallback === "client" && data.accessKey) {
@@ -131,7 +188,7 @@
           forSomeoneElse: source.forSomeoneElse === true || source.forSomeoneElse === "yes",
         }, data.accessKey);
         if (sent) {
-          markSent();
+          markSent(fields.phone);
           return;
         }
       }
