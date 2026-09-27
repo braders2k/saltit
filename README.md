@@ -64,7 +64,8 @@ Still open with Brad:
 2. **Bio** (Who you'll get): first person, from Brad. The spec strip still says "20+ years".
 3. Confirm: the 14-day free return (it appears in Prices *and* the promises, so change both or neither),
    no travel supplement elsewhere in Brighton & Hove, and "ring you back as soon as I can".
-4. A real photo of Brad, and a Google review link once the Business Profile exists.
+4. A Google review link once the Business Profile exists. Simon's photo is on Who you'll get
+   (`site/assets/simon-portrait.webp`).
    WhatsApp is already on the same number (`https://wa.me/447843468904`) in the hero, contact
    section, footer and sticky bar.
 
