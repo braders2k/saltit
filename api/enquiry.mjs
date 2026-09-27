@@ -1,12 +1,15 @@
-// Posts the contact form to Web3Forms when WEB3FORMS_ACCESS_KEY is set on Vercel.
-// Web3Forms is a browser API. A serverless call is rejected (HTTP 403
-// "This method is not allowed", or a Cloudflare challenge to Node fetch).
-// That used to become a 502 and the page opened mailto. When the upstream
-// blocks the server, this handler hands the public access key to a page on
-// this site so the browser can submit. Mailto remains for a missing key or
-// a real Web3Forms failure. Do not commit the key, and do not log it.
-// Create a free key at https://web3forms.com for support@saltit.co.uk, then add
-// WEB3FORMS_ACCESS_KEY to the saltit project (Production, Preview and Development).
+// Posts the contact form to Web3Forms when WEB3FORMS_ACCESS_KEY is set.
+// Node fetch from a Vercel serverless function is rejected: a Cloudflare
+// challenge, or HTTP 403 "This method is not allowed" for a plain HTTPS
+// client. The same call from the Vercel Edge runtime reaches the real
+// Web3Forms API (a bad key comes back as "invalid access key", not the
+// server-side block), so this handler runs on the Edge and returns
+// { ok: true } when Web3Forms accepts the note.
+// If that call is blocked, a page on this site can still submit. Mailto
+// remains for a missing key or a real Web3Forms rejection.
+// Do not commit the key, and do not log it.
+
+export const config = { runtime: "edge" };
 
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
@@ -27,29 +30,12 @@ const clip = (value, max, keepBreaks) => {
   return text.trim().slice(0, max);
 };
 
-const readBody = (req) => {
-  if (req.body && typeof req.body === "object") return req.body;
-  if (typeof req.body === "string") {
-    try {
-      return JSON.parse(req.body);
-    } catch {
-      return {};
-    }
-  }
-  return {};
-};
+const headerValue = (request, name) => request.headers.get(name) || "";
 
-const headerValue = (req, name) => {
-  const headers = req.headers || {};
-  const raw = headers[name] ?? headers[name.toLowerCase()];
-  if (Array.isArray(raw)) return String(raw[0] ?? "");
-  return typeof raw === "string" ? raw : "";
-};
-
-// The access key is a public form alias, but it is only returned to this site
-// so a curl of /api/enquiry does not print it into logs.
-const browserMaySubmit = (req) => {
-  const origin = headerValue(req, "origin") || headerValue(req, "referer");
+// The access key is a public form alias. It is only returned to this site,
+// so a curl of /api/enquiry does not print it.
+const browserMaySubmit = (request) => {
+  const origin = headerValue(request, "origin") || headerValue(request, "referer");
   if (!origin) return false;
   let host = "";
   try {
@@ -79,37 +65,38 @@ const serverBlocked = (status, contentType, data) => {
   return /not allowed|client side|server ip|too many requests/i.test(message);
 };
 
-const send = (res, status, body) => {
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Vary", "Origin");
-  res.status(status).json(body);
-};
-
-const clientHandoff = (req, res, key, submission) => {
-  if (!browserMaySubmit(req)) {
-    send(res, 200, { ok: false, fallback: "client" });
-    return;
-  }
-  send(res, 200, {
-    ok: false,
-    fallback: "client",
-    accessKey: key,
-    submission,
+const send = (status, body, extra) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      vary: "Origin",
+      ...extra,
+    },
   });
+
+const clientHandoff = (request, key, submission) => {
+  if (!browserMaySubmit(request)) return send(200, { ok: false, fallback: "client" });
+  return send(200, { ok: false, fallback: "client", accessKey: key, submission });
 };
 
-module.exports = async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    send(res, 405, { ok: false, error: "Method not allowed" });
-    return;
+const readBody = async (request) => {
+  try {
+    const body = await request.json();
+    return body && typeof body === "object" ? body : {};
+  } catch {
+    return {};
+  }
+};
+
+export default async function handler(request) {
+  if (request.method !== "POST") {
+    return send(405, { ok: false, error: "Method not allowed" }, { allow: "POST" });
   }
 
-  const body = readBody(req);
-  if (clip(body.hp_field, 200)) {
-    send(res, 200, { ok: true });
-    return;
-  }
+  const body = await readBody(request);
+  if (clip(body.hp_field, 200)) return send(200, { ok: true });
 
   const name = clip(body.name, 80);
   const phone = clip(body.phone, 40);
@@ -119,17 +106,14 @@ module.exports = async function handler(req, res) {
   const submission = { name, phone, area, problem, forSomeoneElse };
 
   if (!name || !phone || !problem || !AREAS.has(area)) {
-    send(res, 400, { ok: false, error: "Missing fields" });
-    return;
+    return send(400, { ok: false, error: "Missing fields" });
   }
 
   const key = String(process.env.WEB3FORMS_ACCESS_KEY || "").trim();
-  if (!key) {
-    // 200 so the designed mailto fallback is not a failed request in the browser.
-    send(res, 200, { ok: false, fallback: "mailto" });
-    return;
-  }
+  if (!key) return send(200, { ok: false, fallback: "mailto" });
 
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
     const upstream = await fetch(WEB3FORMS_URL, {
       method: "POST",
@@ -144,7 +128,7 @@ module.exports = async function handler(req, res) {
         booking_for_someone_else: forSomeoneElse ? "Yes" : "No",
         message: problem,
       }),
-      signal: AbortSignal.timeout(8000),
+      signal: controller.signal,
     });
     const contentType = upstream.headers.get("content-type") || "";
     let data = {};
@@ -153,26 +137,23 @@ module.exports = async function handler(req, res) {
     } else {
       await upstream.arrayBuffer().catch(() => null);
     }
-    if (upstream.ok && data.success === true) {
-      send(res, 200, { ok: true });
-      return;
-    }
+    if (upstream.ok && data.success === true) return send(200, { ok: true });
+
     const blocked = serverBlocked(upstream.status, contentType, data);
-    console.error("enquiry: Web3Forms did not accept the server submission", {
+    console.error("enquiry: Web3Forms did not accept the submission", {
       status: upstream.status,
       blocked,
       nonJson: !contentType.includes("json"),
       message: safeMessage(data, key),
     });
-    if (blocked) {
-      clientHandoff(req, res, key, submission);
-      return;
-    }
-    send(res, 502, { ok: false, fallback: "mailto" });
+    if (blocked) return clientHandoff(request, key, submission);
+    return send(502, { ok: false, fallback: "mailto" });
   } catch (err) {
     console.error("enquiry: Web3Forms request failed", {
       name: err && err.name ? err.name : "Error",
     });
-    clientHandoff(req, res, key, submission);
+    return clientHandoff(request, key, submission);
+  } finally {
+    clearTimeout(timer);
   }
-};
+}

@@ -29,7 +29,7 @@ scripts/
   logo.py             source for assets/logo.svg and icon.svg (outlined from Barlow 600)
   og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 api/
-  enquiry.js          contact form handler (Web3Forms, then a same-site browser handoff)
+  enquiry.mjs         contact form handler (Edge runtime → Web3Forms)
 docs/                 design brief and market research (not deployed)
 ```
 
@@ -149,15 +149,13 @@ attribution visible to readers; restore a credit line if the photo stays.
 
 `Send to Simon` posts JSON to `/api/enquiry` (same origin, so the form itself stays `form-action 'self'`).
 
-Web3Forms expects that call to come from a browser. Their free plan answers a serverless
-proxy with HTTP 403 (`This method is not allowed`) or a Cloudflare challenge, which this
-handler used to turn into a 502 and a mailto draft. The handler still tries the upstream
-call, so a safelisted paid key can return `{ ok: true }` directly. When the server call is
-blocked, a page on this site receives the public access key and posts the note to
-`https://api.web3forms.com/submit`. The page CSP allows that one connection (`connect-src`).
-Web3Forms documents the access key as a public form alias. It is not committed and it is not
-logged. A request whose `Origin` is not this site gets `{ ok: false, fallback: "client" }`
-with no key.
+Web3Forms rejects the Node.js serverless runtime. `fetch` there gets a Cloudflare
+challenge, and a plain HTTPS client gets HTTP 403 (`This method is not allowed`). The
+same `fetch` from the Vercel Edge runtime reaches Web3Forms, so `/api/enquiry` runs on
+the Edge. A successful submit returns `{ ok: true }`. If that call is blocked, a page on
+this site receives the public access key and posts the note itself. The page CSP allows
+that one connection (`connect-src`). The key is not committed and it is not logged. A
+caller whose `Origin` is not this site does not receive the key.
 
 | Env var | Where | What it does |
 | --- | --- | --- |

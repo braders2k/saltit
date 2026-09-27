@@ -1,9 +1,6 @@
 import assert from "node:assert/strict";
-import { createRequire } from "node:module";
 import { afterEach, describe, test } from "node:test";
-
-const require = createRequire(import.meta.url);
-const handler = require("../api/enquiry.js");
+import handler from "../api/enquiry.mjs";
 
 const KEY = "test-access-key";
 const ORIGIN = "https://saltit.co.uk";
@@ -21,34 +18,26 @@ const invoke = async (body, { origin = ORIGIN, method = "POST", envKey = KEY } =
   const previous = process.env.WEB3FORMS_ACCESS_KEY;
   if (envKey === undefined) delete process.env.WEB3FORMS_ACCESS_KEY;
   else process.env.WEB3FORMS_ACCESS_KEY = envKey;
-  const res = {
-    statusCode: 200,
-    body: null,
-    headers: {},
-    setHeader(name, value) {
-      this.headers[name] = value;
-    },
-    status(code) {
-      this.statusCode = code;
-      return this;
-    },
-    json(payload) {
-      this.body = payload;
-      return this;
-    },
-  };
-  const req = {
+  const headers = { "content-type": "application/json" };
+  if (origin) headers.origin = origin;
+  const request = new Request("https://saltit.co.uk/api/enquiry", {
     method,
-    headers: origin ? { origin } : {},
-    body,
-  };
+    headers,
+    body: JSON.stringify(body ?? {}),
+  });
   try {
-    await handler(req, res);
+    const response = await handler(request);
+    const outHeaders = {};
+    response.headers.forEach((value, name) => {
+      outHeaders[name] = value;
+    });
+    let parsed = null;
+    try { parsed = await response.json(); } catch { parsed = null; }
+    return { statusCode: response.status, body: parsed, headers: outHeaders };
   } finally {
     if (previous === undefined) delete process.env.WEB3FORMS_ACCESS_KEY;
     else process.env.WEB3FORMS_ACCESS_KEY = previous;
   }
-  return res;
 };
 
 describe("enquiry handler", { concurrency: 1 }, () => {
@@ -124,7 +113,7 @@ test("server 403 hands the key to this site and withholds it from other callers"
     assert.equal(site.body.accessKey, KEY);
     assert.equal(site.body.submission.area, "Saltdean");
     assert.equal(site.body.submission.forSomeoneElse, true);
-    assert.equal(site.headers["Cache-Control"], "no-store");
+    assert.equal(site.headers["cache-control"], "no-store");
 
     const curl = await invoke(validBody, { origin: "" });
     assert.deepEqual(curl.body, { ok: false, fallback: "client" });
