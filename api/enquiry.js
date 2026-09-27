@@ -161,6 +161,7 @@ module.exports = async function handler(req, res) {
     console.error("enquiry: Web3Forms did not accept the server submission", {
       status: upstream.status,
       blocked,
+      nonJson: !contentType.includes("json"),
       message: safeMessage(data, key),
     });
     if (blocked) {
