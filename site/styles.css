@@ -252,8 +252,8 @@ a { color: inherit; }
   box-shadow: 0 0 0 4px rgba(62, 198, 207, 0.18);
 }
 h1 {
-  max-width: 13ch;
-  font-size: clamp(2.6rem, 11.2vw, 5.75rem);
+  max-width: 16ch;
+  font-size: clamp(2.5rem, 10.7vw, 5.75rem);
   font-weight: 600;
   letter-spacing: 0.005em;
   line-height: 0.98;
