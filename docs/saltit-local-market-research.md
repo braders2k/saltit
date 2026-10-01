@@ -90,13 +90,13 @@ Little local advertising for hubs, doorbells, or heating. Screen and liquid dama
 2. Virus / scareware clean-up, or “someone remote-accessed the PC”: **£80–£110**.
 3. New laptop set up, files and email moved: **£90–£130**.
 
-Quote parts on top. Say the likely band before travelling.
+Quote parts on top. Say the likely band up front.
 
 ## 4. One-page site implications (Opus bullets)
 
 - Speak first to **households in Saltdean, Rottingdean, Peacehaven, and Woodingdean**, especially adult children booking help for a parent. Brighton & Hove is the wider net. Light small-business IT is a second offer. Do not let “AI for local business” lead the title or the first screen — that phrase splits the query “IT support Saltdean,” which is the term worth owning. The current one-pager title does both jobs at once.
 - Feature five jobs in household language: **Wi-Fi that dies in the back room, printer after a new router, slow or new laptop, email, and “I think I’ve been scammed / someone was on my computer.”** Add one line for an older relative. Smart TV can sit under Wi-Fi. Full smart-home installs are not what the catchment is visibly buying.
-- Trust signals that match local reviews: a **named person based in Saltdean**, plain English, a price (or a tight band) **before** the visit, and “I’ll show you what I did.” The current proof block correctly refuses invented quotes — keep it empty until real ones exist, then add Google reviews rather than anonymous lines.
+- Trust signals that match local reviews: a **named person based in Saltdean**, plain English, a price (or a tight band) up front, and “I’ll show you what I did.” The current proof block correctly refuses invented quotes — keep it empty until real ones exist, then add Google reviews rather than anonymous lines.
 - CTA tone: phone and a short “what’s gone wrong” note. Neighbours already ask on Nextdoor for “a reliable computer person.” “Book a home visit” matches the market. Offer remote as the simpler option when the broadband works, not as the headline.
 - Say **on-site and remote**, with on-site as the default for Wi-Fi, printers, and anyone who does not want a stranger on their PC.
 - Name **Woodingdean** next to Saltdean, Peacehaven, and Rottingdean. The live page lists the first three and “Brighton BN2,” and omits Woodingdean.

@@ -19,6 +19,39 @@
     }).observe(heroCall);
   }
 
+  // Every WhatsApp href is https://wa.me/<number>?text=<draft>, encoded once.
+  // That redirect keeps the draft for WhatsApp Web. On a phone, iOS and some
+  // in-app browsers open the wa.me universal link and drop the query, so the
+  // chat arrives empty. whatsapp://send is the scheme that fills the composer.
+  // If the app is not installed, fall back to the https link.
+  const mobileWhatsApp = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (mobileWhatsApp) {
+    for (const a of d.querySelectorAll('a[href^="https://wa.me/"]')) {
+      a.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        let url;
+        try { url = new URL(a.href); } catch { return; }
+        const phone = url.pathname.replace(/\D/g, "");
+        const text = url.searchParams.get("text");
+        if (!phone || !text) return;
+        event.preventDefault();
+        const deep = `whatsapp://send?phone=${phone}&text=${encodeURIComponent(text)}`;
+        const started = Date.now();
+        const timer = window.setTimeout(() => {
+          if (!document.hidden && Date.now() - started < 2500) window.location.assign(a.href);
+        }, 1200);
+        const cancel = () => window.clearTimeout(timer);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) cancel();
+        }, { once: true });
+        window.addEventListener("pagehide", cancel, { once: true });
+        window.location.href = deep;
+      });
+    }
+  }
+
   const form = d.querySelector("[data-enquiry]");
   if (!form) return;
   form.hidden = false;
@@ -46,10 +79,69 @@
       `mailto:support@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  const markSent = () => {
-    form.reset();
-    status.textContent = "Sent. I'll read this and ring you back.";
+  // On success the form swaps for a large "sent" panel; "Send another message" swaps back.
+  const wrap = d.querySelector("[data-enquiry-wrap]");
+  const done = d.querySelector("[data-enquiry-done]");
+  const formTitle = form.querySelector("h3");
+  const doneTitle = done && done.querySelector("[data-done-title]");
+  const donePhone = done && done.querySelector("[data-done-phone]");
+  const donePhoneLine = done && done.querySelector("[data-done-phone-line]");
+  const again = done && done.querySelector("[data-enquiry-again]");
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let swapping = false;
+
+  // Fade one panel out, ease the wrapper to the other's height, then fade it in.
+  const swap = async (from, to, focusEl) => {
+    if (swapping || !from || !to || !wrap) return;
+    swapping = true;
+    const still = reduceMotion();
+    if (!still) {
+      wrap.style.height = `${wrap.offsetHeight}px`;
+      wrap.classList.add("is-swapping");
+      from.classList.add("is-out");
+      await wait(240);
+      to.classList.add("is-out");
+    }
+    from.hidden = true;
+    from.classList.remove("is-out");
+    to.hidden = false;
+    if (!still) wrap.style.height = `${to.offsetHeight}px`;
+    if (wrap.getBoundingClientRect().top < 8) {
+      wrap.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
+    }
+    if (focusEl) focusEl.focus({ preventScroll: true });
+    if (!still) {
+      requestAnimationFrame(() => requestAnimationFrame(() => to.classList.remove("is-out")));
+      await wait(360);
+      wrap.style.height = "";
+      wrap.classList.remove("is-swapping");
+    }
+    swapping = false;
   };
+
+  const markSent = (phone) => {
+    form.reset();
+    if (!done || !wrap) {
+      status.textContent = "Sent. I'll read this and ring you back.";
+      return;
+    }
+    status.textContent = "";
+    donePhone.textContent = phone || "";
+    donePhoneLine.hidden = !phone;
+    form.setAttribute("inert", "");
+    swap(form, done, doneTitle);
+  };
+
+  if (again && formTitle) {
+    formTitle.tabIndex = -1;
+    again.addEventListener("click", () => {
+      status.textContent = "";
+      form.removeAttribute("inert");
+      for (const el of form.querySelectorAll("[aria-invalid]")) el.removeAttribute("aria-invalid");
+      swap(done, form, formTitle);
+    });
+  }
 
   // Web3Forms rejects the Vercel function. The handler then asks this page to submit.
   const submitViaWeb3Forms = async (fields, accessKey) => {
@@ -96,7 +188,7 @@
     };
 
     if (fields.company) {
-      markSent();
+      markSent(fields.phone);
       return;
     }
 
@@ -118,7 +210,7 @@
       let data = {};
       try { data = await res.json(); } catch { data = {}; }
       if (res.ok && data.ok) {
-        markSent();
+        markSent(fields.phone);
         return;
       }
       if (data.fallback === "client" && data.accessKey) {
@@ -131,7 +223,7 @@
           forSomeoneElse: source.forSomeoneElse === true || source.forSomeoneElse === "yes",
         }, data.accessKey);
         if (sent) {
-          markSent();
+          markSent(fields.phone);
           return;
         }
       }

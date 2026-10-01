@@ -48,6 +48,9 @@ for (const p of phrases) {
   const n = count(p);
   if (n !== 1) errors.push(`SEO phrase "${p}" appears ${n} times (want 1)`);
 }
+for (const banned of ["before I travel", "before I visit", "before travelling", "before the visit"]) {
+  if (visible.toLowerCase().includes(banned.toLowerCase())) errors.push(`Banned price timing phrase "${banned}" is still visible`);
+}
 for (const area of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Brighton & Hove"]) {
   if (!count(area)) errors.push(`Area "${area}" missing from visible copy`);
 }
@@ -64,12 +67,21 @@ try {
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
     if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
   }
-  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}`;
+  const waText = "Hi Simon, I need help with...";
+  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}?text=${encodeURIComponent(waText)}`;
   const waLinks = [...html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
-  if (!waLinks.length) errors.push("WhatsApp link missing");
+  if (waLinks.length < 5) errors.push(`WhatsApp links: ${waLinks.length} (want at least 5)`);
+  const parsedWa = new URL(expectedWa);
+  if (parsedWa.searchParams.get("text") !== waText) errors.push("WhatsApp text does not round-trip through one decode");
+  if (/%25/.test(parsedWa.search)) errors.push("WhatsApp text is double-encoded");
+  const deep = `whatsapp://send?phone=${parsedWa.pathname.replace(/\D/g, "")}&text=${encodeURIComponent(parsedWa.searchParams.get("text"))}`;
+  if (new URL(deep).searchParams.get("text") !== waText) errors.push("whatsapp:// draft text does not round-trip");
   for (const href of waLinks) {
     if (href !== expectedWa) errors.push(`WhatsApp link "${href}" does not match ${expectedWa}`);
   }
+  const pageJs = read(join(root, "script.js"));
+  if (!pageJs.includes("whatsapp://send?phone=")) errors.push("Mobile WhatsApp draft scheme missing from script.js");
+  if (!pageJs.includes("encodeURIComponent(text)")) errors.push("WhatsApp draft text must be encoded once in script.js");
 } catch {
   errors.push("JSON-LD missing or invalid");
 }
