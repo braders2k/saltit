@@ -866,6 +866,52 @@ strong { font-weight: 600; }
 .form-note a { white-space: nowrap; }
 .form-note a:hover { color: var(--lido-ink); }
 
+/* After a successful send the form swaps for this panel. script.js fades one
+   out, eases the wrapper's height, then fades the other in. Reduced motion
+   skips that and swaps immediately. */
+.enquiry { scroll-margin-top: calc(var(--bar) + 24px); transition: height 360ms var(--ease); }
+.enquiry.is-swapping { overflow: hidden; }
+.enquiry > .form { transition: opacity 240ms ease, transform 240ms var(--ease); }
+.enquiry > .form.is-out { opacity: 0; transform: translateY(12px); }
+.form-done { padding-block: 36px 40px; }
+.done-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 24px;
+  background: var(--lido);
+  color: var(--ink);
+}
+.form-done .mini { margin-bottom: 10px; color: var(--lido-ink); }
+.form-done h3 {
+  max-width: 16ch;
+  margin-bottom: 20px;
+  font-size: clamp(1.875rem, 7vw, 2.75rem);
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.enquiry h3:focus:not(:focus-visible) { outline: none; }
+.done-t { max-width: 34ch; font-size: 1.3125rem; line-height: 1.5; }
+.done-t strong { font-weight: 600; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+.done-urgent {
+  margin-top: 28px;
+  padding: 18px 16px 16px;
+  border: 1.5px solid var(--lido);
+  background: rgba(62, 198, 207, 0.14);
+}
+.done-urgent .mini { margin-bottom: 12px; }
+.form-done .done-urgent .btn {
+  width: 100%;
+  margin-top: 0;
+  padding-block: 14px;
+  line-height: 1.25;
+  white-space: normal;
+}
+.form-done .done-urgent .btn span { white-space: nowrap; }
+.form-done > .btn { margin-top: 28px; }
+
 /* ---------- Footer ---------- */
 .ftr {
   padding: 48px 0 calc(var(--bar) + 48px + env(safe-area-inset-bottom));
@@ -1003,6 +1049,7 @@ strong { font-weight: 600; }
   .empty { padding: 40px 44px 44px; }
 
   .form { padding: 40px 40px 44px; }
+  .form-done { padding-block: 48px 52px; }
   .form .btn { width: auto; }
   .callbar { display: none; }
   .ftr { padding-bottom: 56px; }

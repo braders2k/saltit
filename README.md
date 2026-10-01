@@ -54,7 +54,7 @@ Live contact details (keep identical on the site, Google Business Profile, Nextd
 | --- | --- |
 | Phone (display) | `07843 468904` |
 | Phone (`tel:` and JSON-LD) | `+447843468904` |
-| WhatsApp | `https://wa.me/447843468904` |
+| WhatsApp | `https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...` (opens a chat with an editable first line) |
 | Email | `support@saltit.co.uk` |
 | Hours | Mon–Fri 9am–6pm · Evenings and Saturdays by arrangement · Same-day: ask, and I'll tell you honestly if I can. |
 
@@ -70,8 +70,10 @@ Still open with Brad:
    no travel supplement elsewhere in Brighton & Hove, and "ring you back as soon as I can".
 4. A Google review link once the Business Profile exists. Simon's photo is on Who you'll get
    (`site/assets/simon-portrait.webp`).
-   WhatsApp is already on the same number (`https://wa.me/447843468904`) in the hero, contact
-   section, footer and sticky bar.
+   WhatsApp is already on the same number in the hero, contact section, form note, footer and
+   sticky bar. Every link opens with "Hi Simon, I need help with..." ready to edit
+   (`scripts/check.mjs` fails if one drifts). On a phone the click uses `whatsapp://send`
+   so the draft is in the composer; the `https://wa.me` link is the fallback.
 
 ## Deploy (Vercel)
 
@@ -148,6 +150,10 @@ attribution visible to readers; restore a credit line if the photo stays.
 ## Contact form
 
 `Send to Simon` posts JSON to `/api/enquiry` (same origin, so the form itself stays `form-action 'self'`).
+When the note is sent, the form fades out and a large "Thank you. Your message has been sent." panel
+takes its place, repeating the phone number they gave, with a Call Simon button if it's urgent.
+"Send another message" brings back an empty form. Errors and the mailto fallback still show in the
+status line above the Send button.
 
 Web3Forms rejects the Node.js serverless runtime. `fetch` there gets a Cloudflare
 challenge, and a plain HTTPS client gets HTTP 403 (`This method is not allowed`). The
