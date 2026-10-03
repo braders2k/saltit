@@ -55,16 +55,21 @@ for (const area of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Bri
   if (!count(area)) errors.push(`Area "${area}" missing from visible copy`);
 }
 if ((html.match(/<h1[\s>]/g) || []).length !== 1) errors.push("Page must have exactly one <h1>");
-for (const price of ["£60", "£30", "£95", "£60–£90", "£80–£110", "£90–£130"]) {
+for (const price of ["First hour £35", "Home visit, first hour £35", "Each extra half hour £15", "Remote support, per hour £30", "Saturday visit, first hour £60", "£35–£70", "£80–£110", "£70–£130"]) {
   if (!count(price)) errors.push(`Price ${price} missing`);
 }
-if (!count("Remote support, per hour")) errors.push("Remote hourly rate missing from the price table");
-if (count("£35") || /30 minutes/i.test(visible)) errors.push("Old remote price or 30-minute framing is still visible");
+if (/30 minutes/i.test(visible)) errors.push("Old remote 30-minute framing is still visible");
+for (const retired of ["£95", "£60–£90", "£90–£130", "First hour £60", "Each extra half hour £30"]) {
+  if (count(retired)) errors.push(`Retired price "${retired}" is still visible`);
+}
 const desc = html.match(/<meta name="description" content="([^"]+)"/);
 if (!desc || desc[1].length >= 160) errors.push("Meta description missing or 160+ characters");
+if (!desc?.[1].includes("First hour £35")) errors.push("Meta description should publish first hour £35");
+const og = html.match(/<meta property="og:description" content="([^"]+)"/);
+if (!og?.[1].includes("First hour £35")) errors.push("Open Graph description should publish first hour £35");
 try {
   const ld = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  if (ld.name !== "Salt IT" || ld.areaServed.length !== 5 || ld.priceRange !== "£30–£130") errors.push("JSON-LD fields incomplete");
+  if (ld.name !== "Salt IT" || ld.areaServed.length !== 5 || ld.priceRange !== "£15–£130") errors.push("JSON-LD fields incomplete");
   if (!/^\+44\d{10}$/.test(ld.telephone)) errors.push(`JSON-LD telephone "${ld.telephone}" is not E.164`);
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
     if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
