@@ -55,7 +55,7 @@ for (const area of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Bri
   if (!count(area)) errors.push(`Area "${area}" missing from visible copy`);
 }
 if ((html.match(/<h1[\s>]/g) || []).length !== 1) errors.push("Page must have exactly one <h1>");
-for (const price of ["£75", "£30", "£35", "£95", "£75–£90", "£80–£110", "£90–£130"]) {
+for (const price of ["£60", "£30", "£35", "£95", "£60–£90", "£80–£110", "£90–£130"]) {
   if (!count(price)) errors.push(`Price ${price} missing`);
 }
 const desc = html.match(/<meta name="description" content="([^"]+)"/);
