@@ -373,6 +373,7 @@ h1 {
   border-block: 1px solid var(--line);
 }
 .sec-head { margin-bottom: 48px; }
+.sec-head:last-child { margin-bottom: 0; }
 .idx {
   display: flex;
   align-items: center;
