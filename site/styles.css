@@ -306,7 +306,6 @@ h1 {
   font-size: 1rem;
   line-height: 1.5;
 }
-.hero-price strong { color: var(--salt); font-weight: 600; }
 .hero-in .eyebrow,
 .hero h1,
 .hero-sub,
