@@ -1,6 +1,23 @@
 (() => {
   const d = document;
 
+  // Logo intro: any tap or key skips it; drop it from the page once it lifts.
+  const intro = d.querySelector("[data-intro]");
+  if (intro) {
+    const root = d.documentElement;
+    if (!root.classList.contains("has-intro")) intro.remove();
+    else {
+      const skip = () => root.classList.add("intro-skip");
+      intro.addEventListener("pointerdown", skip);
+      d.addEventListener("keydown", skip, { once: true });
+      intro.addEventListener("animationend", (e) => {
+        if (e.target !== intro) return;
+        intro.remove();
+        d.removeEventListener("keydown", skip);
+      });
+    }
+  }
+
   const year = d.querySelector("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
 

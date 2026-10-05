@@ -1191,6 +1191,79 @@ strong { font-weight: 600; }
   .hero-media { width: 70vw; }
 }
 
+/* ---------- Logo intro ----------
+   Plays once per browser session (intro.js adds .has-intro before first paint).
+   Pure CSS from there: it fades itself out, so the page never waits on script.
+   Tap, click or any key skips it (script.js adds .intro-skip). */
+.intro { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .has-intro .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    background: var(--paper);
+    cursor: pointer;
+    animation: intro-out 450ms var(--ease) 1500ms both;
+  }
+  .has-intro.intro-skip .intro { animation: intro-out 220ms ease-out both; }
+
+  .intro-logo { width: min(68vw, 360px); height: auto; overflow: visible; }
+  .intro-letters path,
+  .intro-grain { transform-box: fill-box; transform-origin: 50% 100%; }
+  .intro-letters path { animation: intro-rise 520ms var(--ease) both; }
+  .intro-letters path:nth-child(1) { animation-delay: 80ms; }
+  .intro-letters path:nth-child(2) { animation-delay: 135ms; }
+  .intro-letters path:nth-child(3) { animation-delay: 190ms; }
+  .intro-letters path:nth-child(4) { animation-delay: 245ms; }
+  .intro-letters path:nth-child(5) { animation-delay: 330ms; }
+  .intro-letters path:nth-child(6) { animation-delay: 385ms; }
+  .intro-letters path:nth-child(7) { animation-delay: 440ms; }
+  .intro-letters path:nth-child(8) { animation-delay: 495ms; }
+  /* The turquoise grain in the A drops in last, like a pinch of salt. */
+  .intro-grain { animation: intro-drop 560ms cubic-bezier(0.3, 0, 0.3, 1) 720ms both; }
+  .intro-line {
+    width: min(68vw, 360px);
+    height: 3px;
+    background: var(--lido);
+    transform-origin: 0 50%;
+    animation: intro-sweep 520ms var(--ease) 900ms both;
+  }
+
+  /* Hold the hero's own entrance until the intro has lifted. */
+  .has-intro .hero-media img,
+  .has-intro .hero-in > * { animation-delay: 1500ms; }
+  .has-intro .hero-in > :nth-child(2) { animation-delay: 1580ms; }
+  .has-intro .hero-in > :nth-child(3) { animation-delay: 1660ms; }
+  .has-intro .hero-in > :nth-child(4) { animation-delay: 1740ms; }
+  .has-intro .hero-in > :nth-child(5) { animation-delay: 1820ms; }
+  .has-intro.intro-skip .hero-media img,
+  .has-intro.intro-skip .hero-in > * { animation-delay: 0ms; }
+}
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(45%); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes intro-drop {
+  0% { opacity: 0; transform: translateY(-420%); }
+  55% { opacity: 1; transform: translateY(0) scale(1.15, 0.8); }
+  75% { transform: translateY(-35%) scale(0.95, 1.05); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes intro-sweep {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes intro-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
 /* ---------- Motion ---------- */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
