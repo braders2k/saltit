@@ -620,6 +620,20 @@ strong { font-weight: 600; }
 }
 .ptable-sm tbody th { font-weight: 400; }
 .ptable-sm td { padding-top: 20px; font-size: 1.5rem; }
+.ptable td span {
+  display: block;
+  margin-top: 4px;
+  color: var(--fg-mute);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.price-note {
+  max-width: 62ch;
+  margin-top: 16px;
+  color: var(--fg-mute);
+  font-size: 1rem;
+}
 
 .fine {
   max-width: 62ch;
