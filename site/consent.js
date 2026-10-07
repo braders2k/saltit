@@ -28,7 +28,7 @@
   function loadGA() {
     if (gaLoaded) return;
     gaLoaded = true;
-    addScript("/ga4.js", false);
+    addScript("/ga4.js?v=55855c27", false);
     addScript("https://www.googletagmanager.com/gtag/js?id=" + GA_ID, true);
   }
 
