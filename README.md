@@ -1,6 +1,6 @@
 # Salt IT — saltit.co.uk
 
-One-page site for **Salt IT**: home IT support from Brad, based in **Saltdean**, East Sussex.
+One-page site for **Salt I.T.**: home IT support from Brad, based in **Saltdean**, East Sussex.
 Built from `docs/saltit-design-brief.md` and `docs/saltit-local-market-research.md`.
 
 Plain static HTML, CSS and a small script. No framework and no build step. The page
@@ -82,6 +82,9 @@ Hosted on Vercel, project **saltit** (team "Si's projects"), connected to this r
 No build command; output directory `site` (set in `vercel.json`, which also carries the security
 headers and a `noindex` header for `*.vercel.app` hosts only). The page CSP and Permissions-Policy
 apply to `/` and `/index.html` only, so `/sitemap.xml` and `/robots.txt` are not sent the HTML policy.
+`/sitemap.xml` (and `/sitemap`) rewrite to `api/sitemap.mjs`, which answers `text/xml; charset=utf-8`
+without a download disposition. `site/sitemap.xml` stays in the repo for local preview and is listed in
+`.vercelignore` so the static file does not shadow that rewrite.
 
 DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 `35594c3e1ad992d0.vercel-dns-017.com`. `www.saltit.co.uk` 308-redirects to `saltit.co.uk` in Vercel.
@@ -89,7 +92,7 @@ DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 
 ## Brand rules
 
-- Name: **Salt IT** (with a space). Never "SaltIT".
+- Name: **Salt I.T.** (with periods) in customer-facing text and JSON-LD. Never "SaltIT" or "Salt IT".
 - Place: **Saltdean** (one word), East Sussex. Never "Salt Dean" or "Southend".
 - Domain / email: `saltit.co.uk` / `support@saltit.co.uk`.
 - Voice: first person, plain UK English, short sentences, no exclamation marks.
