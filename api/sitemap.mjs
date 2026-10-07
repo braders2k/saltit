@@ -9,6 +9,21 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     <loc>https://saltit.co.uk/</loc>
   </url>
+  <url>
+    <loc>https://saltit.co.uk/wifi-help/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/virus-scam-cleanup/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/laptop-pc-repair/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/printer-setup/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/help-for-parents/</loc>
+  </url>
 </urlset>
 `;
 
