@@ -42,7 +42,11 @@
     text.className = "consent-text";
     text.textContent =
       "Salt I.T. would like to use Google Analytics, which sets cookies, to see how the site is used and improve it. " +
-      "Cloudflare’s cookie-free, privacy-friendly visit counts stay on either way.";
+      "Cloudflare’s cookie-free, privacy-friendly visit counts stay on either way. ";
+    var more = d.createElement("a");
+    more.href = "/privacy/";
+    more.textContent = "Privacy notice";
+    text.appendChild(more);
 
     var actions = d.createElement("div");
     actions.className = "consent-actions";

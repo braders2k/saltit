@@ -39,6 +39,9 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     <loc>https://saltit.co.uk/peacehaven/</loc>
   </url>
+  <url>
+    <loc>https://saltit.co.uk/privacy/</loc>
+  </url>
 </urlset>
 `;
 
