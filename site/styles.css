@@ -326,6 +326,21 @@ h1 {
 .hero .btn-line:hover { background: var(--ink); color: var(--paper); }
 .coords { display: none; }
 
+/* Service pages reuse the cliffs hero, with breadcrumbs above the eyebrow. */
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-bottom: 14px;
+  color: var(--mute);
+  font-size: 0.875rem;
+  text-shadow:
+    0 1px 0 rgba(246, 241, 232, 0.95),
+    0 0 18px rgba(246, 241, 232, 0.92);
+}
+.crumbs a { color: var(--ink); text-underline-offset: 3px; }
+.crumbs a:hover { color: var(--lido-ink); }
+
 /* ---------- Specs strip ---------- */
 .specs {
   border-top: 1px solid var(--line);
@@ -1127,6 +1142,11 @@ strong { font-weight: 600; }
     padding-bottom: 120px;
   }
   h1 { max-width: 11.5ch; font-size: clamp(4.25rem, 6.4vw, 6.5rem); }
+  .page-hero {
+    min-height: max(640px, 86vh);
+    min-height: max(640px, 86svh);
+  }
+  .page-hero h1 { max-width: 14ch; font-size: clamp(3.5rem, 5.4vw, 5.5rem); }
   .hero-sub { max-width: 34ch; margin-top: 24px; }
   .hero-cta { margin-top: 36px; }
   .hero-price { max-width: 560px; margin-top: 28px; }
@@ -1273,6 +1293,7 @@ strong { font-weight: 600; }
   html .hero-in > :nth-child(3) { animation-delay: 1660ms; }
   html .hero-in > :nth-child(4) { animation-delay: 1740ms; }
   html .hero-in > :nth-child(5) { animation-delay: 1820ms; }
+  html .hero-in > :nth-child(6) { animation-delay: 1900ms; }
   html.intro-skip .hero-media img,
   html.intro-skip .hero-in > * { animation-delay: 0ms; }
 }
@@ -1314,6 +1335,7 @@ strong { font-weight: 600; }
   .hero-in > :nth-child(3) { animation-delay: 160ms; }
   .hero-in > :nth-child(4) { animation-delay: 240ms; }
   .hero-in > :nth-child(5) { animation-delay: 320ms; }
+  .hero-in > :nth-child(6) { animation-delay: 400ms; }
   .map-pulse { animation: pulse 2.6s ease-out infinite; }
   .dot { animation: glow 2.6s ease-in-out infinite; }
 }

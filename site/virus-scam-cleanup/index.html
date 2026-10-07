@@ -213,8 +213,13 @@
   </header>
 
   <main id="main">
-    <section class="page-hero" id="top" aria-labelledby="hero-h">
-      <div class="wrap">
+    <!-- Hero photo: "Beaches and Undercliff - Saltdean" © Paul Gillett, CC BY-SA 2.0, geograph.org.uk/photo/3792351. Cropped; a warm paper scrim keeps the dark headline readable. -->
+    <section class="hero page-hero" id="top" aria-labelledby="hero-h">
+      <picture class="hero-media">
+        <source media="(min-width: 760px)" srcset="/assets/cliffs-hero-960.webp 960w, /assets/cliffs-hero-1440.webp 1440w" sizes="100vw">
+        <img src="/assets/cliffs-hero-780m.webp" width="780" height="510" alt="" fetchpriority="high" decoding="async">
+      </picture>
+      <div class="wrap hero-in">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Virus removal and scam clean-up</span></nav>
         <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Salt I.T. · Virus & scam clean-up</p>
         <h1 id="hero-h">Virus & scam clean-up — Brighton & Saltdean</h1>
