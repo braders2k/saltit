@@ -18,6 +18,8 @@ const AREAS = new Set([
   "Rottingdean",
   "Peacehaven",
   "Woodingdean",
+  "Telscombe Cliffs",
+  "Ovingdean",
   "Brighton & Hove",
   "Somewhere else",
 ]);

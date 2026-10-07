@@ -24,6 +24,21 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     <loc>https://saltit.co.uk/help-for-parents/</loc>
   </url>
+  <url>
+    <loc>https://saltit.co.uk/rottingdean/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/woodingdean/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/telscombe-cliffs/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/ovingdean/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/peacehaven/</loc>
+  </url>
 </urlset>
 `;
 
