@@ -22,7 +22,7 @@ const visible = html
   .replace(/<script[\s\S]*?<\/script>/g, " ")
   .replace(/<style[\s\S]*?<\/style>/g, " ")
   .replace(/<[^>]+>/g, " ")
-  .replace(/&amp;/g, "&")
+  .replace(/&/g, "&")
   .replace(/\s+/g, " ");
 
 const errors = [];
@@ -112,20 +112,25 @@ const phText = (html.match(/Add phone before launch/g) || []).length;
 if (phText) blockers.push(`Phone: ${phText} × "Add phone before launch" (visible number)`);
 for (const m of html.matchAll(/data-todo[^>]*>([^<]+)</g)) blockers.push(m[1].trim());
 
+const servicePages = ["wifi-help", "virus-scam-cleanup", "laptop-pc-repair", "printer-setup", "help-for-parents"];
 const sitemap = read(join(root, "sitemap.xml"));
 if (!sitemap.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap.xml is missing the homepage loc");
 const vercel = JSON.parse(read(join(repoRoot, "vercel.json")));
 const documentOnly = new Set(["Content-Security-Policy", "Permissions-Policy"]);
-const htmlSources = new Set(["/", "/index.html"]);
+const servicePagesSource = `/:service(${servicePages.join("|")})(/|/index\\.html)?`;
+const htmlSources = new Set(["/", "/index.html", servicePagesSource]);
 let homepageCsp = false;
+let servicePagesCsp = false;
 for (const rule of vercel.headers || []) {
   for (const header of rule.headers || []) {
     if (!documentOnly.has(header.key)) continue;
     if (!htmlSources.has(rule.source)) errors.push(`${header.key} is not limited to HTML (source ${rule.source})`);
     if (header.key === "Content-Security-Policy" && rule.source === "/") homepageCsp = true;
+    if (header.key === "Content-Security-Policy" && rule.source === servicePagesSource) servicePagesCsp = true;
   }
 }
 if (!homepageCsp) errors.push("Homepage is missing Content-Security-Policy");
+if (!servicePagesCsp) errors.push("Service pages are missing Content-Security-Policy");
 const rewriteSources = (vercel.rewrites || []).filter((rule) => rule.destination === "/api/sitemap").map((rule) => rule.source);
 for (const source of ["/sitemap.xml", "/sitemap"]) {
   if (!rewriteSources.includes(source)) errors.push(`vercel.json is missing a rewrite from ${source} to /api/sitemap`);
@@ -140,6 +145,50 @@ if (sitemapRes.status !== 200) errors.push(`sitemap handler status ${sitemapRes.
 if (!/^text\/xml;\s*charset=utf-8$/i.test(sitemapType)) errors.push(`sitemap content-type "${sitemapType}"`);
 if (sitemapRes.headers.has("content-disposition")) errors.push("sitemap handler must not set Content-Disposition");
 if (!sitemapBody.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap handler is missing the homepage loc");
+
+// Service pages: one job each, not town doorways. Same chrome, NAP and schema rules as the homepage.
+for (const slug of servicePages) {
+  const loc = `<loc>https://saltit.co.uk/${slug}/</loc>`;
+  if (!sitemap.includes(loc)) errors.push(`sitemap.xml is missing ${loc}`);
+  if (!sitemapBody.includes(loc)) errors.push(`sitemap handler is missing ${loc}`);
+  if (!html.includes(`href="/${slug}/"`)) errors.push(`Homepage does not link to /${slug}/`);
+
+  let page;
+  try { page = read(join(root, slug, "index.html")); } catch { errors.push(`/${slug}/index.html is missing`); continue; }
+  const at = `/${slug}/`;
+  if ((page.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${at}: must have exactly one <h1>`);
+  if (!page.includes(`<link rel="canonical" href="https://saltit.co.uk/${slug}/">`)) errors.push(`${at}: canonical URL is wrong`);
+  if (/Salt IT(?!\.)/.test(page)) errors.push(`${at}: customer-facing name must be "Salt I.T."`);
+  if (/aggregateRating|reviewCount/.test(page)) errors.push(`${at}: do not publish ratings or review counts`);
+  if (/(?:src|href)="(?!\/|#|https?:|tel:|mailto:)/.test(page)) errors.push(`${at}: relative link or asset path (use root-absolute paths)`);
+  if (/style="/.test(page)) errors.push(`${at}: inline style attribute is blocked by the CSP`);
+  const pageDesc = page.match(/<meta name="description" content="([^"]+)"/);
+  if (!pageDesc || pageDesc[1].length >= 160) errors.push(`${at}: meta description missing or 160+ characters`);
+  for (const price of ["Home visit, first hour</th><td>£35", "Each extra half hour</th><td>£15", "Remote support, per hour</th><td>£30", "Saturday visit, first hour</th><td>£60"]) {
+    if (!page.includes(price)) errors.push(`${at}: price row "${price.replace(/<[^>]+>/g, " ")}" missing`);
+  }
+  for (const [, tel] of page.matchAll(/href="tel:([^"]*)"/g)) {
+    if (tel !== "+447843468904") errors.push(`${at}: tel: link "${tel}" is wrong`);
+  }
+  for (const [, href] of page.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
+    if (href !== "https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...") errors.push(`${at}: WhatsApp link "${href}" is wrong`);
+  }
+  try {
+    const ld = JSON.parse(page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+    const graph = ld["@graph"] || [ld];
+    const biz = graph.find((node) => node["@type"] === "LocalBusiness");
+    const faq = graph.find((node) => node["@type"] === "FAQPage");
+    if (!biz || biz.name !== "Salt I.T." || biz.telephone !== "+447843468904" || biz.priceRange !== "£35+") errors.push(`${at}: LocalBusiness JSON-LD incomplete`);
+    if (biz?.address?.streetAddress) errors.push(`${at}: JSON-LD must not invent a street address`);
+    if (biz?.aggregateRating || biz?.review) errors.push(`${at}: JSON-LD must not invent ratings or reviews`);
+    const unescape = (t) => t.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
+    const shownQ = [...page.matchAll(/<summary><h3>([\s\S]*?)<\/h3><\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
+    const ldQ = (faq?.mainEntity || []).map((q) => [q.name, q.acceptedAnswer?.text]);
+    if (!shownQ.length || JSON.stringify(shownQ) !== JSON.stringify(ldQ)) errors.push(`${at}: FAQPage JSON-LD does not match the visible FAQ`);
+  } catch {
+    errors.push(`${at}: JSON-LD missing or invalid`);
+  }
+}
 
 const sectionNums = [...html.matchAll(/<p class="idx"><span>(\d{2})<\/span>/g)].map((m) => m[1]);
 const expectedNums = ["01", "02", "03", "04", "05", "06", "07", "08"];
