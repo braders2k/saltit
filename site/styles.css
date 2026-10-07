@@ -977,7 +977,8 @@ strong { font-weight: 600; }
 
 /* ---------- Footer ---------- */
 .ftr {
-  padding: 48px 0 calc(var(--bar) + 48px + env(safe-area-inset-bottom));
+  /* Clear sticky .callbar on phones (--bar is the header; callbar is ~66px + safe-area) */
+  padding: 48px 0 calc(72px + 72px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
   background: var(--abyss);
   color: var(--mute);
