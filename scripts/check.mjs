@@ -17,6 +17,8 @@ const walk = (dir) => {
 walk(root);
 
 const read = (p) => readFileSync(p, "utf8");
+// JSON-LD alternateName deliberately lists the misspellings people search for; the name checks skip that one line.
+const withoutAltNames = (src) => src.replace(/^\s*"alternateName":.*$/gm, "");
 const html = read(join(root, "index.html"));
 const visible = html
   .replace(/<script[\s\S]*?<\/script>/g, " ")
@@ -31,7 +33,7 @@ const blockers = [];
 const spelling = [/SaltIT/, /Salt Dean/i, /Salt-dean/i, /Southend/i, /01x{3}/i];
 for (const f of files) {
   const src = read(f);
-  for (const re of spelling) if (re.test(src)) errors.push(`${f.replace(root, "")}: forbidden "${re.source}"`);
+  for (const re of spelling) if (re.test(withoutAltNames(src))) errors.push(`${f.replace(root, "")}: forbidden "${re.source}"`);
   const visibleSrc = src.replace(/<!--[\s\S]*?-->/g, " ");
   if (/\bAI\b/.test(visibleSrc)) errors.push(`${f.replace(root, "")}: forbidden "AI" in visible text`);
 }
@@ -52,7 +54,7 @@ for (const [p, want] of phrases) {
 for (const banned of ["before I visit", "before travelling", "before the visit"]) {
   if (visible.toLowerCase().includes(banned.toLowerCase())) errors.push(`Banned price timing phrase "${banned}" is still visible`);
 }
-if (/Salt IT(?!\.)/.test(html)) errors.push('Customer-facing name must be "Salt I.T."');
+if (/Salt IT(?!\.)/.test(withoutAltNames(html))) errors.push('Customer-facing name must be "Salt I.T."');
 if (/aggregateRating|reviewCount/.test(html)) errors.push("Do not publish ratings or review counts");
 for (const area of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Brighton & Hove"]) {
   if (!count(area)) errors.push(`Area "${area}" missing from visible copy`);
@@ -158,7 +160,7 @@ for (const slug of servicePages) {
   const at = `/${slug}/`;
   if ((page.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${at}: must have exactly one <h1>`);
   if (!page.includes(`<link rel="canonical" href="https://saltit.co.uk/${slug}/">`)) errors.push(`${at}: canonical URL is wrong`);
-  if (/Salt IT(?!\.)/.test(page)) errors.push(`${at}: customer-facing name must be "Salt I.T."`);
+  if (/Salt IT(?!\.)/.test(withoutAltNames(page))) errors.push(`${at}: customer-facing name must be "Salt I.T."`);
   if (/aggregateRating|reviewCount/.test(page)) errors.push(`${at}: do not publish ratings or review counts`);
   if (/(?:src|href)="(?!\/|#|https?:|tel:|mailto:)/.test(page)) errors.push(`${at}: relative link or asset path (use root-absolute paths)`);
   if (/style="/.test(page)) errors.push(`${at}: inline style attribute is blocked by the CSP`);

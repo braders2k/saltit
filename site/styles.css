@@ -660,7 +660,8 @@ strong { font-weight: 600; }
   column-gap: 18px;
   align-items: center;
 }
-.simon-head .idx, .simon-head .lead { grid-column: 1 / -1; }
+.simon-head .idx, .simon-head .lead, .simon-head .about-note { grid-column: 1 / -1; }
+.about-note { max-width: 58ch; margin-top: 14px; color: var(--fg-mute); font-size: 1rem; line-height: 1.55; }
 .simon-head .portrait { grid-column: 1; grid-row: 2; }
 .simon-head h2 { grid-column: 2; grid-row: 2; }
 .portrait { width: 96px; }
@@ -984,6 +985,7 @@ strong { font-weight: 600; }
 }
 .ftr-in { display: grid; gap: 32px; }
 .ftr address { font-style: normal; line-height: 1.75; }
+.ftr-note { margin-top: 12px; font-size: 0.875rem; line-height: 1.6; }
 .ftr-logo { display: block; margin-bottom: 14px; }
 .ftr a { color: var(--salt); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
 .ftr a:hover { color: var(--lido-ink); }
@@ -1094,6 +1096,7 @@ strong { font-weight: 600; }
   .simon-head .idx { grid-column: 2; grid-row: 1; margin-bottom: 12px; }
   .simon-head h2 { grid-column: 2; grid-row: 2; }
   .simon-head .lead { grid-column: 2; grid-row: 3; }
+  .simon-head .about-note { grid-column: 2; grid-row: 4; }
   .simon-head .portrait {
     grid-column: 1;
     grid-row: 1 / span 3;
@@ -1242,6 +1245,7 @@ strong { font-weight: 600; }
     margin-top: 4rem;
   }
   .simon-head .lead { grid-column: 2; grid-row: 2; }
+  .simon-head .about-note { grid-column: 2; grid-row: 3; }
 
   .rows, .relative, .modes, .steps, .ready, .hours, .price-grid, .promises, .area-grid, .faq, .empty {
     margin-left: calc((100% - 48px) * 3 / 12 + 48px);
