@@ -117,7 +117,7 @@ a { color: inherit; }
 .mini,
 .tag,
 .nav a,
-.ftr-nav a,
+.ftr-label,
 .specs dt,
 .step-n,
 .pc,
@@ -989,9 +989,24 @@ strong { font-weight: 600; }
 .ftr-logo { display: block; margin-bottom: 14px; }
 .ftr a { color: var(--salt); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
 .ftr a:hover { color: var(--lido-ink); }
-.ftr-end { display: grid; gap: 6px; }
-.ftr-nav { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 12px; }
-.ftr-nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--salt); text-decoration: none; }
+.ftr-end { display: grid; gap: 28px; }
+/* Labelled link groups: 2-column grid on phones, three columns from 760px */
+.ftr-cols { display: grid; gap: 24px; }
+.ftr-group { padding-top: 14px; border-top: 1px solid var(--line); }
+.ftr-label { margin: 0 0 4px; color: var(--lido-ink); }
+.ftr-nav { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+.ftr-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--salt);
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.ftr-nav a:hover { color: var(--lido-ink); text-decoration: underline; }
+.ftr-nav a[aria-current="page"] { color: var(--lido-ink); font-weight: 600; }
+.ftr-copy { margin: 0; font-size: 0.875rem; }
 /* ---------- Sticky mobile call bar ---------- */
 .callbar {
   position: fixed;
@@ -1118,8 +1133,10 @@ strong { font-weight: 600; }
   .form .btn { width: auto; }
   .callbar { display: none; }
   .ftr { padding-bottom: 56px; }
-  .ftr-in { grid-template-columns: 1fr auto; align-items: end; }
-  .ftr-end { justify-items: end; text-align: right; }
+  .ftr-in { gap: 40px; }
+  .ftr-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .ftr-nav { grid-template-columns: 1fr; }
+  .ftr-nav a { min-height: 34px; }
 }
 
 /* ---------- Wide: split hero ---------- */
@@ -1181,6 +1198,8 @@ strong { font-weight: 600; }
 
 /* ---------- Desktop ---------- */
 @media (min-width: 1100px) {
+  .ftr-in { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 64px; align-items: start; }
+  .ftr-cols { column-gap: 40px; }
   .nav {
     display: flex;
     gap: 4px;
