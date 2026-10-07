@@ -198,6 +198,17 @@ if (sectionNums.join(",") !== expectedNums.join(",")) {
   errors.push(`Section numbers ${sectionNums.join(", ") || "(none)"} (want ${expectedNums.join(", ")})`);
 }
 
+// CSS/JS are cached for a year (immutable), so every reference must carry the current content hash.
+const { versioned, hashOf, refPattern } = await import("./version-assets.mjs");
+for (const name of versioned) {
+  const want = `?v=${hashOf(name)}"`;
+  for (const f of files.filter((p) => /\.(html|js)$/.test(p))) {
+    for (const [ref] of read(f).matchAll(refPattern(name))) {
+      if (!ref.endsWith(want)) errors.push(`${f.replace(root, "")}: ${name} reference is not stamped ${want.slice(0, -1)} (run node scripts/version-assets.mjs)`);
+    }
+  }
+}
+
 for (const e of errors) console.error(`ERROR    ${e}`);
 for (const b of blockers) console.warn(`BLOCKER  ${b}`);
 if (!errors.length && !blockers.length) console.log("All checks passed. Ready for launch.");

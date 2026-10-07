@@ -30,6 +30,7 @@ site/                 ← the deployable site (publish this folder)
     fonts/            Barlow 400 and 600, Latin subset (woff2), plus the OFL licence
 scripts/
   check.mjs           pre-launch checks (spelling, SEO phrases, prices, phone, section numbers)
+  version-assets.mjs  stamps ?v=<hash> on styles.css / script.js / consent.js / ga4.js references
   logo.py             source for assets/logo.svg and icon.svg (outlined from Barlow 600)
   og-image.html       source for assets/og-image.jpg (screenshot at 1200×630, JPEG ~80%)
 api/
@@ -51,6 +52,11 @@ Run the checks before every deploy:
 ```sh
 node scripts/check.mjs
 ```
+
+`styles.css`, `script.js`, `consent.js` and `ga4.js` are served with a one-year immutable cache
+(`vercel.json`), so after editing any of them run `node scripts/version-assets.mjs` to refresh the
+`?v=` hash on every reference. `check.mjs` fails if a hash is stale. Fonts are also immutable; other
+`assets/` files cache for 30 days, so give a replaced image a new name or `?v=` (as `logo.svg?v=it` does).
 
 Live contact details (keep identical on the site, Google Business Profile, Nextdoor, Bing and Apple):
 
