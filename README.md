@@ -80,7 +80,8 @@ Still open with Brad:
 Hosted on Vercel, project **saltit** (team "Si's projects"), connected to this repo. Every push to
 `main` deploys to production at https://saltit.co.uk; other branches get preview URLs.
 No build command; output directory `site` (set in `vercel.json`, which also carries the security
-headers and a `noindex` header for `*.vercel.app` hosts only).
+headers and a `noindex` header for `*.vercel.app` hosts only). The page CSP and Permissions-Policy
+apply to `/` and `/index.html` only, so `/sitemap.xml` and `/robots.txt` are not sent the HTML policy.
 
 DNS is on Cloudflare (DNS only, not proxied): `CNAME @` and `CNAME www` →
 `35594c3e1ad992d0.vercel-dns-017.com`. `www.saltit.co.uk` 308-redirects to `saltit.co.uk` in Vercel.

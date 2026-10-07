@@ -3,6 +3,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, extname } from "node:path";
 
 const root = new URL("../site/", import.meta.url).pathname;
+const repoRoot = new URL("../", import.meta.url).pathname;
 const textExt = new Set([".html", ".css", ".js", ".txt", ".xml", ".svg"]);
 
 const files = [];
@@ -38,11 +39,11 @@ for (const f of files) {
 const count = (needle) => visible.split(needle).length - 1;
 const phrases = [
   "HOME IT SUPPORT — SALTDEAN & NEARBY",
-  "Computer repair in Saltdean",
-  "computer help in Peacehaven",
-  "PC repair in Rottingdean",
-  "computer repair in Woodingdean",
-  "Wi-Fi help across Brighton",
+  "computer repair Saltdean",
+  "computer help Peacehaven",
+  "PC repair Rottingdean",
+  "home visit computer repair Woodingdean",
+  "Wi-Fi help Brighton",
 ];
 for (const p of phrases) {
   const n = count(p);
@@ -99,8 +100,23 @@ const phText = (html.match(/Add phone before launch/g) || []).length;
 if (phText) blockers.push(`Phone: ${phText} × "Add phone before launch" (visible number)`);
 for (const m of html.matchAll(/data-todo[^>]*>([^<]+)</g)) blockers.push(m[1].trim());
 
+const sitemap = read(join(root, "sitemap.xml"));
+if (!sitemap.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap.xml is missing the homepage loc");
+const vercel = JSON.parse(read(join(repoRoot, "vercel.json")));
+const documentOnly = new Set(["Content-Security-Policy", "Permissions-Policy"]);
+const htmlSources = new Set(["/", "/index.html"]);
+let homepageCsp = false;
+for (const rule of vercel.headers || []) {
+  for (const header of rule.headers || []) {
+    if (!documentOnly.has(header.key)) continue;
+    if (!htmlSources.has(rule.source)) errors.push(`${header.key} is not limited to HTML (source ${rule.source})`);
+    if (header.key === "Content-Security-Policy" && rule.source === "/") homepageCsp = true;
+  }
+}
+if (!homepageCsp) errors.push("Homepage is missing Content-Security-Policy");
+
 const sectionNums = [...html.matchAll(/<p class="idx"><span>(\d{2})<\/span>/g)].map((m) => m[1]);
-const expectedNums = ["01", "02", "03", "04", "05", "06", "07"];
+const expectedNums = ["01", "02", "03", "04", "05", "06"];
 if (sectionNums.join(",") !== expectedNums.join(",")) {
   errors.push(`Section numbers ${sectionNums.join(", ") || "(none)"} (want ${expectedNums.join(", ")})`);
 }
