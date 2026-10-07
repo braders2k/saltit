@@ -38,20 +38,22 @@ for (const f of files) {
 
 const count = (needle) => visible.split(needle).length - 1;
 const phrases = [
-  "HOME IT SUPPORT — SALTDEAN & NEARBY",
-  "computer repair Saltdean",
-  "computer help Peacehaven",
-  "PC repair Rottingdean",
-  "home visit computer repair Woodingdean",
-  "Wi-Fi help Brighton",
+  ["HOME IT SUPPORT — SALTDEAN & NEARBY", 1],
+  ["computer repair in Saltdean", 2],
+  ["computer help in Peacehaven", 1],
+  ["PC repair in Rottingdean", 1],
+  ["home visit computer repair in Woodingdean", 1],
+  ["Wi-Fi help in Brighton", 1],
 ];
-for (const p of phrases) {
+for (const [p, want] of phrases) {
   const n = count(p);
-  if (n !== 1) errors.push(`SEO phrase "${p}" appears ${n} times (want 1)`);
+  if (n !== want) errors.push(`SEO phrase "${p}" appears ${n} times (want ${want})`);
 }
-for (const banned of ["before I travel", "before I visit", "before travelling", "before the visit"]) {
+for (const banned of ["before I visit", "before travelling", "before the visit"]) {
   if (visible.toLowerCase().includes(banned.toLowerCase())) errors.push(`Banned price timing phrase "${banned}" is still visible`);
 }
+if (/Salt IT(?!\.)/.test(html)) errors.push('Customer-facing name must be "Salt I.T."');
+if (/aggregateRating|reviewCount/.test(html)) errors.push("Do not publish ratings or review counts");
 for (const area of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Brighton & Hove"]) {
   if (!count(area)) errors.push(`Area "${area}" missing from visible copy`);
 }
@@ -70,13 +72,23 @@ const og = html.match(/<meta property="og:description" content="([^"]+)"/);
 if (!og?.[1].includes("First hour £35")) errors.push("Open Graph description should publish first hour £35");
 try {
   const ld = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  if (ld.name !== "Salt IT" || ld.areaServed.length !== 5 || ld.priceRange !== "£15–£130") errors.push("JSON-LD fields incomplete");
-  if (!/^\+44\d{10}$/.test(ld.telephone)) errors.push(`JSON-LD telephone "${ld.telephone}" is not E.164`);
+  const graph = ld["@graph"] || [ld];
+  const biz = graph.find((node) => node["@type"] === "LocalBusiness");
+  const faq = graph.find((node) => node["@type"] === "FAQPage");
+  const areaNames = (biz?.areaServed || []).map((area) => area.name);
+  if (!biz || biz.name !== "Salt I.T." || areaNames.length !== 5 || biz.priceRange !== "£35+") errors.push("JSON-LD fields incomplete");
+  if (biz?.address?.streetAddress) errors.push("JSON-LD must not invent a street address");
+  if (biz?.aggregateRating || biz?.review) errors.push("JSON-LD must not invent ratings or reviews");
+  for (const name of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Brighton and Hove"]) {
+    if (!areaNames.includes(name)) errors.push(`JSON-LD areaServed missing ${name}`);
+  }
+  if (!faq || faq.mainEntity?.length !== 8) errors.push("FAQPage JSON-LD should list eight questions");
+  if (!/^\+44\d{10}$/.test(biz?.telephone || "")) errors.push(`JSON-LD telephone "${biz?.telephone}" is not E.164`);
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
-    if (tel !== ld.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
+    if (tel !== biz.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
   }
   const waText = "Hi Simon, I need help with...";
-  const expectedWa = `https://wa.me/${ld.telephone.replace("+", "")}?text=${encodeURIComponent(waText)}`;
+  const expectedWa = `https://wa.me/${biz.telephone.replace("+", "")}?text=${encodeURIComponent(waText)}`;
   const waLinks = [...html.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
   if (waLinks.length < 5) errors.push(`WhatsApp links: ${waLinks.length} (want at least 5)`);
   const parsedWa = new URL(expectedWa);
@@ -114,9 +126,23 @@ for (const rule of vercel.headers || []) {
   }
 }
 if (!homepageCsp) errors.push("Homepage is missing Content-Security-Policy");
+const rewriteSources = (vercel.rewrites || []).filter((rule) => rule.destination === "/api/sitemap").map((rule) => rule.source);
+for (const source of ["/sitemap.xml", "/sitemap"]) {
+  if (!rewriteSources.includes(source)) errors.push(`vercel.json is missing a rewrite from ${source} to /api/sitemap`);
+}
+const ignore = read(join(repoRoot, ".vercelignore"));
+if (!ignore.includes("site/sitemap.xml")) errors.push("site/sitemap.xml must stay out of the Vercel upload");
+const { default: sitemapHandler } = await import("../api/sitemap.mjs");
+const sitemapRes = await sitemapHandler();
+const sitemapType = sitemapRes.headers.get("content-type") || "";
+const sitemapBody = await sitemapRes.text();
+if (sitemapRes.status !== 200) errors.push(`sitemap handler status ${sitemapRes.status}`);
+if (!/^text\/xml;\s*charset=utf-8$/i.test(sitemapType)) errors.push(`sitemap content-type "${sitemapType}"`);
+if (sitemapRes.headers.has("content-disposition")) errors.push("sitemap handler must not set Content-Disposition");
+if (!sitemapBody.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap handler is missing the homepage loc");
 
 const sectionNums = [...html.matchAll(/<p class="idx"><span>(\d{2})<\/span>/g)].map((m) => m[1]);
-const expectedNums = ["01", "02", "03", "04", "05", "06"];
+const expectedNums = ["01", "02", "03", "04", "05", "06", "07", "08"];
 if (sectionNums.join(",") !== expectedNums.join(",")) {
   errors.push(`Section numbers ${sectionNums.join(", ") || "(none)"} (want ${expectedNums.join(", ")})`);
 }
