@@ -1383,3 +1383,33 @@ strong { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Analytics consent bar (site/consent.js) ---------- */
+/* Sits above the mobile callbar; Accept and Reject share one button style on purpose. */
+.consent {
+  position: fixed;
+  inset: auto 0 calc(67px + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: grid;
+  gap: 10px;
+  padding: 12px var(--gutter);
+  border-top: 3px solid var(--lido);
+  background: var(--deep-2);
+  color: var(--ink);
+  box-shadow: 0 -6px 20px rgba(18, 32, 40, 0.12);
+}
+.consent-text { font-size: 0.9375rem; line-height: 1.45; }
+.consent-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.consent-btn { min-height: 44px; padding: 0 14px; }
+.consent-btn:focus-visible { outline: 3px solid var(--lido); outline-offset: 2px; }
+
+@media (min-width: 760px) {
+  .consent {
+    bottom: env(safe-area-inset-bottom);
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+  .consent-actions { grid-template-columns: auto auto; }
+  .consent-btn { min-width: 120px; }
+}
