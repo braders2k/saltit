@@ -120,7 +120,9 @@ if (!sitemap.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap.
 const vercel = JSON.parse(read(join(repoRoot, "vercel.json")));
 const documentOnly = new Set(["Content-Security-Policy", "Permissions-Policy"]);
 const servicePagesSource = `/:service(${servicePages.join("|")})(/|/index\\.html)?`;
-const htmlSources = new Set(["/", "/index.html", servicePagesSource]);
+// Missing URLs get 404.html under the requested path, so this rule covers every path except the API and static assets.
+const notFoundSource = "/((?!api/|assets/|styles\\.css|script\\.js|consent\\.js|ga4\\.js|robots\\.txt|sitemap).*)";
+const htmlSources = new Set(["/", "/index.html", servicePagesSource, notFoundSource]);
 let homepageCsp = false;
 let servicePagesCsp = false;
 for (const rule of vercel.headers || []) {

@@ -280,7 +280,7 @@ h1 {
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  gap: 0;
+  gap: 0 0.4em;
   padding-inline: 10px;
   line-height: 1.15;
 }
@@ -652,6 +652,17 @@ strong { font-weight: 600; }
   width: 12px; height: 2px;
   background: var(--lido-ink);
 }
+
+/* ---------- Privacy notice and 404 ---------- */
+.legal { max-width: 68ch; }
+.legal h2 { max-width: none; margin-top: 56px; font-size: clamp(1.625rem, 4.4vw, 2.25rem); }
+.legal h2:first-child { margin-top: 0; }
+.legal h3 { margin-top: 32px; }
+.legal p { margin-top: 16px; color: var(--fg-mute); }
+.legal .fine { margin-top: 12px; font-size: inherit; }
+.legal a { text-underline-offset: 0.2em; }
+.legal a:hover { color: var(--lido-ink); }
+.updated { margin-top: 20px; color: var(--mute); font-size: 1rem; }
 
 /* ---------- 04 Who you'll get ---------- */
 .simon-head {
@@ -1051,7 +1062,7 @@ strong { font-weight: 600; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
   .hero-cta > .btn-primary {
     flex-wrap: nowrap;
-    gap: 0;
+    gap: 0 0.4em;
     padding: 0 30px;
     font-size: 0.9375rem;
     letter-spacing: 0.14em;
@@ -1419,6 +1430,7 @@ strong { font-weight: 600; }
   box-shadow: 0 -6px 20px rgba(18, 32, 40, 0.12);
 }
 .consent-text { font-size: 0.9375rem; line-height: 1.45; }
+.consent-text a { text-underline-offset: 0.2em; }
 .consent-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .consent-btn { min-height: 44px; padding: 0 14px; }
 .consent-btn:focus-visible { outline: 3px solid var(--lido); outline-offset: 2px; }
