@@ -12,6 +12,10 @@ Web3Forms rejects the server call, the page submits the same note from the brows
 ```text
 site/                 ← the deployable site (publish this folder)
   index.html          all content, meta, Open Graph and LocalBusiness JSON-LD
+  wifi-help/, virus-scam-cleanup/, laptop-pc-repair/, printer-setup/, help-for-parents/
+                      one service page each (index.html): same chrome, prices and NAP as the homepage,
+                      LocalBusiness + Service + BreadcrumbList + FAQPage JSON-LD. One job per page,
+                      towns only in the areas block: no town doorway pages.
   styles.css          mobile-first styles (breakpoints 760px and 1100px)
   script.js           contact form (on-site post, browser Web3Forms handoff, mailto fallback), footer year, sticky call-bar toggle
   robots.txt, sitemap.xml
@@ -81,7 +85,7 @@ Hosted on Vercel, project **saltit** (team "Si's projects"), connected to this r
 `main` deploys to production at https://saltit.co.uk; other branches get preview URLs.
 No build command; output directory `site` (set in `vercel.json`, which also carries the security
 headers and a `noindex` header for `*.vercel.app` hosts only). The page CSP and Permissions-Policy
-apply to `/` and `/index.html` only, so `/sitemap.xml` and `/robots.txt` are not sent the HTML policy.
+apply to `/`, `/index.html` and the five service pages only, so `/sitemap.xml` and `/robots.txt` are not sent the HTML policy.
 `/sitemap.xml` (and `/sitemap`) rewrite to `api/sitemap.mjs`, which answers `text/xml; charset=utf-8`
 without a download disposition. `site/sitemap.xml` stays in the repo for local preview and is listed in
 `.vercelignore` so the static file does not shadow that rewrite.
