@@ -27,7 +27,7 @@
       ]
     },
     {
-      "source": "/:service(wifi-help|virus-scam-cleanup|laptop-pc-repair|printer-setup|help-for-parents)(/|/index\\.html)?",
+      "source": "/:service(wifi-help|virus-scam-cleanup|laptop-pc-repair|printer-setup|help-for-parents|rottingdean|woodingdean|telscombe-cliffs|ovingdean|peacehaven)(/|/index\\.html)?",
       "headers": [
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
         { "key": "Content-Security-Policy", "value": "default-src 'self'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; style-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://www.googletagmanager.com; connect-src 'self' https://api.web3forms.com https://cloudflareinsights.com https://*.cloudflareinsights.com https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://www.googletagmanager.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'" }
