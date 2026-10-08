@@ -185,8 +185,10 @@ for (const slug of servicePages) {
     if (!biz || biz.name !== "Salt I.T." || biz.telephone !== "+447843468904" || biz.priceRange !== "£35+") errors.push(`${at}: LocalBusiness JSON-LD incomplete`);
     if (biz?.address?.streetAddress) errors.push(`${at}: JSON-LD must not invent a street address`);
     if (biz?.aggregateRating || biz?.review) errors.push(`${at}: JSON-LD must not invent ratings or reviews`);
-    const unescape = (t) => t.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
-    const shownQ = [...page.matchAll(/<summary><h3>([\s\S]*?)<\/h3><\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => [unescape(m[1]), unescape(m[2])]);
+    const unescape = (t) => t.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, "\u00a0").replace(/&amp;/g, "&");
+    // Compare text only: presentational markup such as <span class="nowrap"> isn't part of the schema text.
+    const text = (t) => unescape(t.replace(/<[^>]+>/g, ""));
+    const shownQ = [...page.matchAll(/<summary><h3>([\s\S]*?)<\/h3><\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => [text(m[1]), text(m[2])]);
     const ldQ = (faq?.mainEntity || []).map((q) => [q.name, q.acceptedAnswer?.text]);
     if (!shownQ.length || JSON.stringify(shownQ) !== JSON.stringify(ldQ)) errors.push(`${at}: FAQPage JSON-LD does not match the visible FAQ`);
   } catch {
