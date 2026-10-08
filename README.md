@@ -62,8 +62,13 @@ node scripts/check.mjs
 
 `site/636f216699f9aebffffbfadee9c9971c.txt` is the IndexNow key file. It proves to Bing and the other
 IndexNow search engines that we own saltit.co.uk. Don't delete or rename it, or edit what's inside.
-After a push that changes pages, wait until the deploy is live and then run `node scripts/indexnow.mjs`.
-The script submits every URL in the sitemap. Add `--dry-run` to see the payload without sending it.
+IndexNow is for changed URLs only, so the script never submits anything by default (no arguments just
+prints usage). After a squash merge that changes pages has gone live, run
+`node scripts/indexnow.mjs --since HEAD~1`: it submits the pages changed in that commit that are in the
+sitemap (CSS/JS and other non-page files are ignored). Use `--since <sha>` of the previous production
+commit to cover several merges, or pass URLs/paths directly (`node scripts/indexnow.mjs /wifi-help/`).
+`--all` resubmits every sitemap URL; use it only for a full resubmit. Add `--dry-run` to any of these to
+preview the payload without sending it.
 
 Live contact details (keep identical on the site, Google Business Profile, Nextdoor, Bing and Apple):
 
