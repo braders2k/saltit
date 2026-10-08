@@ -1,7 +1,8 @@
 (() => {
   const d = document;
 
-  // Logo intro: any tap or key skips it; drop it from the page once it lifts.
+  // Logo intro: any tap or key skips it. Once it lifts it stays in the page,
+  // hidden, because the hero's timing in styles.css keys on html:has(.intro).
   const intro = d.querySelector("[data-intro]");
   if (intro) {
     const skip = () => d.documentElement.classList.add("intro-skip");
@@ -9,7 +10,6 @@
     d.addEventListener("keydown", skip, { once: true });
     intro.addEventListener("animationend", (e) => {
       if (e.target !== intro) return;
-      intro.remove();
       d.removeEventListener("keydown", skip);
     });
   }
