@@ -192,6 +192,40 @@ a { color: inherit; }
 .hdr-call { white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
 .hdr-call:hover { border-color: var(--ink); }
 
+/* Phone/tablet menu (script.js). Below 1100px the section links drop down
+   under the header when the Menu button is pressed; from 1100px it's hidden. */
+.hdr-menu { margin-left: auto; white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
+.hdr-menu[hidden] { display: none; }
+.hdr-menu[aria-expanded="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+@media (max-width: 1099.98px) {
+  .hdr.is-menu-open { border-bottom-color: var(--line); background: var(--deep-2); }
+  .hdr.is-menu-open .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: grid;
+    padding: 4px var(--gutter) 16px;
+    border-bottom: 1px solid var(--line-2);
+    background: var(--deep-2);
+    box-shadow: 0 12px 24px rgba(18, 32, 40, 0.12);
+  }
+  .hdr.is-menu-open .nav a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .hdr.is-menu-open .nav a:first-child { border-top: 0; }
+  .hdr.is-menu-open .nav a:hover { color: var(--lido-ink); text-decoration: underline; }
+}
+@media (max-width: 420px) {
+  .hdr-in { gap: 8px; }
+  .hdr-in .btn-sm { gap: 8px; padding: 0 12px; }
+}
+
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
@@ -1019,6 +1053,20 @@ strong { font-weight: 600; }
 .ftr-nav a:hover { color: var(--lido-ink); text-decoration: underline; }
 .ftr-nav a[aria-current="page"] { color: var(--lido-ink); font-weight: 600; }
 .ftr-copy { margin: 0; font-size: 0.875rem; }
+.ftr-credit { margin-top: -16px; font-size: 0.8125rem; line-height: 1.6; }
+/* A <button> that looks like the footer links (reopens the consent bar). */
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--salt);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--lido-ink); }
 /* ---------- Sticky mobile call bar ---------- */
 .callbar {
   position: fixed;
@@ -1212,6 +1260,7 @@ strong { font-weight: 600; }
 @media (min-width: 1100px) {
   .ftr-in { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 64px; align-items: start; }
   .ftr-cols { column-gap: 40px; }
+  .hdr-menu { display: none; }
   .nav {
     display: flex;
     gap: 4px;
@@ -1296,7 +1345,9 @@ strong { font-weight: 600; }
 /* ---------- Logo intro ----------
    Plays on every page load. Pure CSS: the cover fades itself out, so the page
    never waits on script and renders underneath the whole time.
-   Tap, click or any key skips it (script.js adds .intro-skip to <html>). */
+   Kept short: the cover has lifted and the hero call button is in by about 0.85s.
+   Tap, click or any key skips it (script.js adds .intro-skip to <html>).
+   With reduced motion there is no intro at all. */
 .intro {
   position: fixed;
   inset: 0;
@@ -1308,7 +1359,7 @@ strong { font-weight: 600; }
   gap: 22px;
   background: var(--paper);
   cursor: pointer;
-  animation: intro-out 450ms var(--ease) 1500ms both;
+  animation: intro-out 280ms var(--ease) 560ms both;
 }
 .intro-skip .intro { animation: intro-out 220ms ease-out both; }
 .intro-logo { width: min(68vw, 360px); height: auto; overflow: visible; }
@@ -1321,42 +1372,43 @@ strong { font-weight: 600; }
 @media (prefers-reduced-motion: no-preference) {
   .intro-letters path,
   .intro-grain { transform-box: fill-box; transform-origin: 50% 100%; }
-  .intro-letters path { animation: intro-rise 520ms var(--ease) both; }
-  .intro-letters path:nth-child(1) { animation-delay: 80ms; }
-  .intro-letters path:nth-child(2) { animation-delay: 135ms; }
-  .intro-letters path:nth-child(3) { animation-delay: 190ms; }
-  .intro-letters path:nth-child(4) { animation-delay: 245ms; }
-  .intro-letters path:nth-child(5) { animation-delay: 330ms; }
-  .intro-letters path:nth-child(6) { animation-delay: 385ms; }
-  .intro-letters path:nth-child(7) { animation-delay: 440ms; }
-  .intro-letters path:nth-child(8) { animation-delay: 495ms; }
+  .intro-letters path { animation: intro-rise 340ms var(--ease) both; }
+  .intro-letters path:nth-child(1) { animation-delay: 20ms; }
+  .intro-letters path:nth-child(2) { animation-delay: 50ms; }
+  .intro-letters path:nth-child(3) { animation-delay: 80ms; }
+  .intro-letters path:nth-child(4) { animation-delay: 110ms; }
+  .intro-letters path:nth-child(5) { animation-delay: 160ms; }
+  .intro-letters path:nth-child(6) { animation-delay: 190ms; }
+  .intro-letters path:nth-child(7) { animation-delay: 220ms; }
+  .intro-letters path:nth-child(8) { animation-delay: 250ms; }
   /* The turquoise grain in the A drops in last, like a pinch of salt. */
-  .intro-grain { animation: intro-drop 560ms cubic-bezier(0.3, 0, 0.3, 1) 720ms both; }
+  .intro-grain { animation: intro-drop 340ms cubic-bezier(0.3, 0, 0.3, 1) 270ms both; }
   .intro-line {
     transform-origin: 0 50%;
-    animation: intro-sweep 520ms var(--ease) 900ms both;
+    animation: intro-sweep 300ms var(--ease) 300ms both;
   }
 
-  /* Hold the hero's own entrance until the intro has lifted. */
+  /* The hero's own entrance plays under the lifting cover and is finished by
+     ~850ms, as script.js removes the intro (which resets these delays). */
   html .hero-media img,
-  html .hero-in > * { animation-delay: 1500ms; }
-  html .hero-in > :nth-child(2) { animation-delay: 1580ms; }
-  html .hero-in > :nth-child(3) { animation-delay: 1660ms; }
-  html .hero-in > :nth-child(4) { animation-delay: 1740ms; }
-  html .hero-in > :nth-child(5) { animation-delay: 1820ms; }
-  html .hero-in > :nth-child(6) { animation-delay: 1900ms; }
+  html .hero-in > * { animation-delay: 240ms; }
+  html:has(.intro) .hero-media img,
+  html:has(.intro) .hero-in > * { animation-duration: 460ms; }
+  html .hero-in > :nth-child(2) { animation-delay: 270ms; }
+  html .hero-in > :nth-child(3) { animation-delay: 300ms; }
+  html .hero-in > :nth-child(4) { animation-delay: 330ms; }
+  html .hero-in > :nth-child(5) { animation-delay: 360ms; }
+  html .hero-in > :nth-child(6) { animation-delay: 390ms; }
   html.intro-skip .hero-media img,
   html.intro-skip .hero-in > * { animation-delay: 0ms; }
-  /* Service pages have no logo intro — don't hold the cliffs for 1.5s. */
+  /* Service pages have no logo intro — don't hold the cliffs at all. */
   html:not(:has(.intro)) .hero-media img,
   html:not(:has(.intro)) .hero-in > * { animation-delay: 0ms; }
 }
 
-/* Reduced motion: the logo shows still and the cover only fades, which the
-   blanket "animation: none" rule further down would otherwise remove. */
+/* Reduced motion: no intro cover at all, so the page is there straight away. */
 @media (prefers-reduced-motion: reduce) {
-  html .intro { animation: intro-out 450ms ease-out 1200ms both !important; }
-  html.intro-skip .intro { animation: intro-out 150ms ease-out both !important; }
+  .intro { display: none; }
 }
 
 @keyframes intro-rise {
@@ -1445,4 +1497,10 @@ strong { font-weight: 600; }
   }
   .consent-actions { grid-template-columns: auto auto; }
   .consent-btn { min-width: 120px; }
+}
+
+/* While the bar is up, let the footer scroll clear of it (the photo credit is the last line). */
+.has-consent-bar .ftr { padding-bottom: calc(260px + env(safe-area-inset-bottom)); }
+@media (min-width: 760px) {
+  .has-consent-bar .ftr { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
 }

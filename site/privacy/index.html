@@ -27,9 +27,9 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=f828dfef">
-  <script src="/script.js?v=c05f46ab" defer></script>
-  <script src="/consent.js?v=c5301a84" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=203102d5">
+  <script src="/script.js?v=5d04aff5" defer></script>
+  <script src="/consent.js?v=e87c04db" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -39,7 +39,11 @@
       <a class="brand" href="/" aria-label="Salt I.T. home page">
         <img class="logo" src="/assets/logo.svg?v=it" width="155" height="24" alt="Salt I.T.">
       </a>
-      <nav class="nav" aria-label="Sections">
+      <button class="btn btn-line btn-sm hdr-menu" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-btn hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg>
+        Menu
+      </button>
+      <nav class="nav" id="site-menu" aria-label="Sections">
         <a href="/#fix">What I fix</a>
         <a href="/#how">How it works</a>
         <a href="/#prices">Prices</a>
@@ -132,7 +136,7 @@
         <p>To use any of these rights, email <a href="mailto:support@saltit.co.uk">support@saltit.co.uk</a> or call <a href="tel:+447843468904">07843 468904</a>.</p>
 
         <h2>Changing your cookie choice</h2>
-        <p>Your browser remembers whether you clicked Accept or Reject. There isn't a button on the site to reopen the banner, so to change your mind, clear the cookies and site data for saltit.co.uk in your browser's settings. That also removes any Google Analytics cookies, and the banner will ask again on your next visit.</p>
+        <p>Your browser remembers whether you clicked Accept or Reject. To change your mind, use the <button class="link-btn" type="button" data-consent-open>Cookie settings</button> link at the bottom of any page. It opens the banner again so you can choose Accept or Reject. If you switch to Reject, Google Analytics is switched off straight away and the site deletes the Google Analytics cookies it set.</p>
 
         <h2>Making a complaint</h2>
         <p>If you're unhappy with how I've used your details, please tell me first and I'll try to put it right. You also have the right to complain to the Information Commissioner's Office (ICO), the UK's data protection regulator:</p>
@@ -153,7 +157,7 @@
           <a href="tel:+447843468904" aria-label="Call Salt I.T. on 07843 468904">07843 468904</a> · <a href="https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...">WhatsApp</a> · <a href="mailto:support@saltit.co.uk">support@saltit.co.uk</a><br>
           Home visits in Saltdean, Rottingdean, Telscombe Cliffs, Ovingdean, Peacehaven, Woodingdean and Brighton & Hove
         </address>
-        <p class="ftr-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, Wi-Fi and scam help. Not affiliated with any salt-pipe or wellness products.</p>
+        <p class="ftr-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, <span class="nowrap">Wi-Fi</span> and scam help. Not affiliated with any salt-pipe or wellness products.</p>
       </div>
       <div class="ftr-end">
         <div class="ftr-cols">
@@ -188,7 +192,8 @@
             </nav>
           </div>
         </div>
-        <p class="ftr-copy">© <span data-year>2026</span> Salt I.T. · <a href="/privacy/">Privacy notice</a></p>
+        <p class="ftr-copy">© <span data-year>2026</span> Salt I.T. · <a href="/privacy/">Privacy notice</a><span data-consent-settings hidden> · <button class="link-btn" type="button" data-consent-open>Cookie settings</button></span></p>
+        <p class="ftr-credit">Photo: <a href="https://www.geograph.org.uk/photo/3792351">“Beaches and Undercliff - Saltdean”</a> © Paul Gillett, <a href="https://creativecommons.org/licenses/by-sa/2.0/" rel="license">CC BY-SA 2.0</a>, via Geograph (cropped).</p>
       </div>
     </div>
   </footer>
