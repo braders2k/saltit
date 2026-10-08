@@ -375,6 +375,16 @@ h1 {
 .crumbs a { color: var(--ink); text-underline-offset: 3px; }
 .crumbs a:hover { color: var(--lido-ink); }
 
+/* Phones: shorter photo band (cropped to keep the cliffs in view) and tighter stacking so the hero CTA clears the consent bar. */
+@media (max-width: 759.98px) {
+  .page-hero .hero-media { aspect-ratio: 2 / 1; }
+  .page-hero .hero-media img { object-position: 42% 90%; }
+  .page-hero .crumbs { margin-bottom: 8px; }
+  .page-hero .eyebrow { margin-bottom: 10px; }
+  .page-hero .hero-sub { font-size: 1.125rem; line-height: 1.45; margin-top: 12px; }
+  .page-hero .hero-sub + .hero-sub { margin-top: 10px; }
+  .page-hero .hero-cta { margin-top: 18px; }
+}
 
 .nowrap { white-space: nowrap; }
 
@@ -1574,3 +1584,9 @@ strong { font-weight: 600; }
   .has-consent-bar .ftr { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
 }
 
+/* Phones: slimmer bar (same text and buttons) so the hero CTA clears it on a first visit; the footer padding follows the bar. */
+@media (max-width: 759.98px) {
+  .consent { gap: 6px; padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom)); }
+  .consent-text { font-size: 0.8125rem; line-height: 1.35; }
+  .has-consent-bar .ftr { padding-bottom: calc(230px + env(safe-area-inset-bottom)); }
+}
