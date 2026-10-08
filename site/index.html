@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=f828dfef">
+  <link rel="stylesheet" href="styles.css?v=203102d5">
 
   <script type="application/ld+json">
   {
@@ -108,10 +108,10 @@
           },
           {
             "@type": "Question",
-            "name": "Can you provide Wi-Fi help in Brighton and Hove?",
+            "name": "Do you do Wi-Fi help in Brighton and Hove too?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Dead spots, dropouts and routers in the wrong corner are common call-outs. Rates for Brighton & Hove are the same as Saltdean; I'll confirm any travel charge on the phone before booking. Smart TVs and streaming sticks often come back online once the Wi-Fi is sorted."
+              "text": "Yes. Dead spots, dropouts and routers in the wrong corner are common call-outs. Rates for Brighton & Hove are the same as Saltdean, with no travel charge. Smart TVs and streaming sticks often come back online once the Wi-Fi is sorted."
             }
           },
           {
@@ -132,7 +132,7 @@
           },
           {
             "@type": "Question",
-            "name": "Is Salt I.T. a monthly contract?",
+            "name": "Do I have to sign up to a monthly contract?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "No. Households pay per visit. First hour £35; remote £30/hour; no monthly fee. If the same problem comes back within 14 days, that return is on me."
@@ -143,8 +143,8 @@
     ]
   }
   </script>
-  <script src="script.js?v=c05f46ab" defer></script>
-  <script src="/consent.js?v=c5301a84" defer></script>
+  <script src="script.js?v=5d04aff5" defer></script>
+  <script src="/consent.js?v=e87c04db" defer></script>
 </head>
 <body>
   <div class="intro" data-intro aria-hidden="true">
@@ -170,7 +170,11 @@
       <a class="brand" href="#top" aria-label="Salt I.T., back to top">
         <img class="logo" src="assets/logo.svg?v=it" width="155" height="24" alt="Salt I.T.">
       </a>
-      <nav class="nav" aria-label="Sections">
+      <button class="btn btn-line btn-sm hdr-menu" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-btn hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg>
+        Menu
+      </button>
+      <nav class="nav" id="site-menu" aria-label="Sections">
         <a href="#fix">What I fix</a>
         <a href="#how">How it works</a>
         <a href="#prices">Prices</a>
@@ -229,7 +233,7 @@
           <li>
             <span class="num" aria-hidden="true">01</span>
             <h3><span class="nowrap">Wi-Fi</span> that dies in the back room.</h3>
-            <p>Dead spots, dropouts, or a router in the wrong corner. I find where the signal fails and fix it, and get the smart TV and streaming stick back online while I'm there. <a href="/wifi-help/">More on Wi-Fi help</a></p>
+            <p>Dead spots, dropouts, or a router in the wrong corner. I find where the signal fails and fix it, and get the smart TV and streaming stick back online while I'm there. <a href="/wifi-help/">More on <span class="nowrap">Wi-Fi</span> help</a></p>
           </li>
           <li>
             <span class="num" aria-hidden="true">02</span>
@@ -249,7 +253,7 @@
           <li>
             <span class="num" aria-hidden="true">05</span>
             <h3>“I think I've been scammed.”</h3>
-            <p>A pop-up, a call “from Microsoft” or “BT”, or someone was on your computer. Turn off the Wi-Fi or unplug the cable, stop using the computer, and call me. I'll check it, clean it up, and help you secure your accounts. If bank details were involved, call your bank first. <a href="/virus-scam-cleanup/">What to do after a scam</a></p>
+            <p>A pop-up, a call “from Microsoft” or “BT”, or someone was on your computer. Turn off the <span class="nowrap">Wi-Fi</span> or unplug the cable, stop using the computer, and call me. I'll check it, clean it up, and help you secure your accounts. If bank details were involved, call your bank first. <a href="/virus-scam-cleanup/">What to do after a scam</a></p>
           </li>
         </ol>
         <p class="relative"><strong>Booking for Mum or Dad?</strong> I'll visit them, go at their pace, fix it, and leave simple written steps. If you like, I'll ring you afterwards to say what I did. <a href="/help-for-parents/">How booking for a parent works</a></p>
@@ -261,7 +265,7 @@
         <div class="sec-head">
           <p class="idx"><span>02</span>How it works</p>
           <h2 id="how-h">I come to you. Remote when it's simpler.</h2>
-          <p class="lead">Most jobs are best done at your home, in the room where the problem is: Wi-Fi and router placement, printers, a new device set up with you there, anything for an older relative, and anything after a scam. If your internet works and it's something quick, like a slow PC or email settings, I can fix it remotely. You start the session and can end it at any time. <strong>I will never call you out of the blue asking to connect.</strong></p>
+          <p class="lead">Most jobs are best done at your home, in the room where the problem is: <span class="nowrap">Wi-Fi</span> and router placement, printers, a new device set up with you there, anything for an older relative, and anything after a scam. If your internet works and it's something quick, like a slow PC or email settings, I can fix it remotely. You start the session and can end it at any time. <strong>I will never call you out of the blue asking to connect.</strong></p>
         </div>
       </div>
     </section>
@@ -290,7 +294,7 @@
               <caption class="mini">Typical jobs</caption>
               <thead><tr><th scope="col">Job</th><th scope="col">Usually</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Wi-Fi dead spot fixed, or printer back on the network</th><td>£35–£65 <span>(one to two hours)</span></td></tr>
+                <tr><th scope="row"><span class="nowrap">Wi-Fi</span> dead spot fixed, or printer back on the network</th><td>£35–£65 <span>(one to two hours)</span></td></tr>
                 <tr><th scope="row">Scam or virus clean-up, including “someone was on my computer”</th><td>£65–£95 <span>(two to three hours)</span></td></tr>
                 <tr><th scope="row">New laptop set up, files and email moved across <span>Much of that is waiting for updates and files to copy.</span></th><td>£65–£125 <span>(two to four hours)</span></td></tr>
               </tbody>
@@ -299,7 +303,7 @@
 
             <ul class="fine">
               <li>Parts, if needed, are quoted before I buy anything.</li>
-              <li>Elsewhere in Brighton &amp; Hove: same rates. I'll tell you any travel charge on the phone before booking.</li>
+              <li>Elsewhere in Brighton &amp; Hove: same rates, no travel charge.</li>
               <li>Home office or small business? Your first visit is on the same rates.</li>
             </ul>
           </div>
@@ -316,7 +320,7 @@
             <img src="assets/simon-portrait.webp" width="560" height="560" alt="Simon, Salt I.T. — based in Saltdean" decoding="async" loading="lazy">
           </figure>
           <p class="lead">I live in Saltdean and I do home IT support for neighbours around here — Wi-Fi, laptops, printers, email, and the awkward “I think I've been scammed” moments. I've worked in IT for more than twenty years, including years keeping shop and restaurant systems running, so I'm used to turning up, fixing it, and explaining what I did in plain English. If something's broken at home, call me — I'm usually only a few minutes down the road.</p>
-          <p class="about-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, Wi-Fi and scam help. Not affiliated with any salt-pipe or wellness products.</p>
+          <p class="about-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, <span class="nowrap">Wi-Fi</span> and scam help.</p>
         </div>
         <ul class="promises">
           <li><span class="num" aria-hidden="true">01</span><h3>Price first.</h3><p>You'll hear the likely cost up front.</p></li>
@@ -375,7 +379,7 @@
               <li><span class="area-n"><a href="/ovingdean/">Ovingdean</a></span><span class="pc">BN2</span></li>
               <li><span class="area-n"><a href="/peacehaven/">Peacehaven</a></span><span class="pc">BN10</span></li>
               <li><span class="area-n"><a href="/woodingdean/">Woodingdean</a></span><span class="pc">BN2</span></li>
-              <li class="area-out"><span class="area-n">Brighton &amp; Hove</span><span class="pc">Wider area · same rates · travel confirmed on the phone</span></li>
+              <li class="area-out"><span class="area-n">Brighton &amp; Hove</span><span class="pc">Wider area · same rates · no travel charge</span></li>
             </ul>
             <p class="lead">I'm based in Saltdean, so home visits in Rottingdean, Telscombe Cliffs, Ovingdean, Woodingdean and Peacehaven are only a few minutes away. Further into Brighton &amp; Hove, the rates are the same.</p>
           </div>
@@ -403,7 +407,7 @@
           <li>
             <span class="num" aria-hidden="true">03</span>
             <h3>Home visit or remote.</h3>
-            <p>I come to you for Wi-Fi, printers, new devices and older relatives; remote when it's simpler and you're comfortable.</p>
+            <p>I come to you for <span class="nowrap">Wi-Fi</span>, printers, new devices and older relatives; remote when it's simpler and you're comfortable.</p>
           </li>
           <li>
             <span class="num" aria-hidden="true">04</span>
@@ -423,7 +427,7 @@
         <div class="faq">
           <details>
             <summary><h3>Do you offer computer repair in Saltdean, or only remote help?</h3></summary>
-            <p>Both. Most computer repair in Saltdean is a home visit — Wi-Fi, printers, new laptops and anything for an older relative are easier in the room where the problem is. If your internet works and it's a quick software or email fix, I can do it remotely for £30/hour. You're in control of the session and can end it any time. I never call out of the blue asking to connect.</p>
+            <p>Both. Most computer repair in Saltdean is a home visit — <span class="nowrap">Wi-Fi</span>, printers, new laptops and anything for an older relative are easier in the room where the problem is. If your internet works and it's a quick software or email fix, I can do it remotely for £30/hour. You're in control of the session and can end it any time. I never call out of the blue asking to connect.</p>
           </details>
           <details>
             <summary><h3>Do you do computer help in Peacehaven?</h3></summary>
@@ -438,19 +442,19 @@
             <p>Yes. Woodingdean is BN2 and close to Saltdean, so travel is short. I'll come to you, fix what I can on the visit, and leave simple written steps if you want them. Evening or weekend visits are £60 for the first hour when I'm free, then £15 per extra half hour. Weekends are by arrangement only, so get in touch first to book one.</p>
           </details>
           <details>
-            <summary><h3>Can you provide <span class="nowrap">Wi-Fi</span> help in Brighton and Hove?</h3></summary>
-            <p>Yes. Dead spots, dropouts and routers in the wrong corner are common call-outs. Rates for Brighton &amp; Hove are the same as Saltdean; I'll confirm any travel charge on the phone before booking. Smart TVs and streaming sticks often come back online once the Wi-Fi is sorted.</p>
+            <summary><h3>Do you do <span class="nowrap">Wi-Fi</span> help in Brighton and Hove too?</h3></summary>
+            <p>Yes. Dead spots, dropouts and routers in the wrong corner are common call-outs. Rates for Brighton &amp; Hove are the same as Saltdean, with no travel charge. Smart TVs and streaming sticks often come back online once the <span class="nowrap">Wi-Fi</span> is sorted.</p>
           </details>
           <details>
             <summary><h3>What if I think I've been scammed or “Microsoft” called me?</h3></summary>
-            <p>Turn off the Wi-Fi or unplug the cable, stop using the computer, and call me. If bank details were involved, call your bank first. I'll check the machine, clean it up, and help you secure email and accounts. Scam clean-ups usually come to about £65–£95 (two to three hours) depending on how far it went — I'll give you a likely band before I start.</p>
+            <p>Turn off the <span class="nowrap">Wi-Fi</span> or unplug the cable, stop using the computer, and call me. If bank details were involved, call your bank first. I'll check the machine, clean it up, and help you secure email and accounts. Scam clean-ups usually come to about £65–£95 (two to three hours) depending on how far it went — I'll give you a likely band before I start.</p>
           </details>
           <details>
             <summary><h3>I'm booking for Mum or Dad — will you go gently?</h3></summary>
             <p>Yes. I'll visit them, go at their pace, explain in plain English, and leave written steps. If you like, I'll ring you afterwards to say what I did. No jargon, and no making anyone feel daft for asking.</p>
           </details>
           <details>
-            <summary><h3>Is Salt I.T. a monthly contract?</h3></summary>
+            <summary><h3>Do I have to sign up to a monthly contract?</h3></summary>
             <p>No. Households pay per visit. First hour £35; remote £30/hour; no monthly fee. If the same problem comes back within 14 days, that return is on me.</p>
           </details>
         </div>
@@ -540,7 +544,7 @@
           <a href="tel:+447843468904" aria-label="Call Salt I.T. on 07843 468904">07843 468904</a> · <a href="https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...">WhatsApp</a> · <a href="mailto:support@saltit.co.uk">support@saltit.co.uk</a><br>
           Home visits in Saltdean, Rottingdean, Telscombe Cliffs, Ovingdean, Peacehaven, Woodingdean and Brighton &amp; Hove
         </address>
-        <p class="ftr-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, Wi-Fi and scam help. Not affiliated with any salt-pipe or wellness products.</p>
+        <p class="ftr-note">Salt&nbsp;I.T. is Simon's home IT service in Saltdean — computer, <span class="nowrap">Wi-Fi</span> and scam help. Not affiliated with any salt-pipe or wellness products.</p>
       </div>
       <div class="ftr-end">
         <div class="ftr-cols">
@@ -575,7 +579,8 @@
             </nav>
           </div>
         </div>
-        <p class="ftr-copy">© <span data-year>2026</span> Salt I.T. · <a href="/privacy/">Privacy notice</a></p>
+        <p class="ftr-copy">© <span data-year>2026</span> Salt I.T. · <a href="/privacy/">Privacy notice</a><span data-consent-settings hidden> · <button class="link-btn" type="button" data-consent-open>Cookie settings</button></span></p>
+        <p class="ftr-credit">Photo: <a href="https://www.geograph.org.uk/photo/3792351">“Beaches and Undercliff - Saltdean”</a> © Paul Gillett, <a href="https://creativecommons.org/licenses/by-sa/2.0/" rel="license">CC BY-SA 2.0</a>, via Geograph (cropped).</p>
       </div>
     </div>
   </footer>

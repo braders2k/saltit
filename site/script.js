@@ -24,6 +24,43 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  // Phone/tablet menu: the section links sit behind a "Menu" button below 1100px.
+  // Escape closes it and returns focus to the button; picking a link closes it.
+  const menuBtn = d.querySelector("[data-menu-btn]");
+  const menu = menuBtn && d.getElementById(menuBtn.getAttribute("aria-controls"));
+  if (menuBtn && menu && hdr) {
+    const wide = window.matchMedia("(min-width: 1100px)");
+    const setOpen = (open) => {
+      menuBtn.setAttribute("aria-expanded", String(open));
+      hdr.classList.toggle("is-menu-open", open);
+    };
+    const isOpen = () => menuBtn.getAttribute("aria-expanded") === "true";
+    menuBtn.hidden = false;
+    menuBtn.addEventListener("click", () => {
+      const open = !isOpen();
+      setOpen(open);
+      if (open) {
+        const first = menu.querySelector("a");
+        if (first) first.focus();
+      }
+    });
+    menu.addEventListener("click", (e) => {
+      if (e.target.closest("a") && isOpen()) setOpen(false);
+    });
+    d.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape" || !isOpen()) return;
+      setOpen(false);
+      menuBtn.focus();
+    });
+    d.addEventListener("click", (e) => {
+      if (isOpen() && !menu.contains(e.target) && !menuBtn.contains(e.target)) setOpen(false);
+    });
+    hdr.addEventListener("focusout", (e) => {
+      if (isOpen() && e.relatedTarget && !menu.contains(e.relatedTarget) && e.relatedTarget !== menuBtn) setOpen(false);
+    });
+    wide.addEventListener("change", () => setOpen(false));
+  }
+
   const bar = d.querySelector("[data-callbar]");
   const heroCall = d.querySelector("[data-hero-call]");
   if (bar && heroCall && "IntersectionObserver" in window) {
