@@ -1345,7 +1345,8 @@ strong { font-weight: 600; }
 /* ---------- Logo intro ----------
    Plays on every page load. Pure CSS: the cover fades itself out, so the page
    never waits on script and renders underneath the whole time.
-   Kept short: the cover has lifted and the hero call button is in by about 0.85s.
+   The logo holds fully for 1s so visitors see it, then the cover fades and is
+   gone by about 1.28s.
    Tap, click or any key skips it (script.js adds .intro-skip to <html>).
    With reduced motion there is no intro at all. */
 .intro {
@@ -1359,7 +1360,7 @@ strong { font-weight: 600; }
   gap: 22px;
   background: var(--paper);
   cursor: pointer;
-  animation: intro-out 280ms var(--ease) 560ms both;
+  animation: intro-out 280ms var(--ease) 1000ms both;
 }
 .intro-skip .intro { animation: intro-out 220ms ease-out both; }
 .intro-logo { width: min(68vw, 360px); height: auto; overflow: visible; }
@@ -1388,17 +1389,19 @@ strong { font-weight: 600; }
     animation: intro-sweep 300ms var(--ease) 300ms both;
   }
 
-  /* The hero's own entrance plays under the lifting cover and is finished by
-     ~850ms, as script.js removes the intro (which resets these delays). */
+  /* The hero's own entrance starts as the cover starts to lift at 1s, so
+     visitors watch it come in while the cover fades; it is finished by ~1.61s.
+     The faded intro stays in the page (hidden, aria-hidden) so these rules keep
+     matching and the hero never jumps when the cover finishes. */
   html .hero-media img,
-  html .hero-in > * { animation-delay: 240ms; }
+  html .hero-in > * { animation-delay: 1000ms; }
   html:has(.intro) .hero-media img,
   html:has(.intro) .hero-in > * { animation-duration: 460ms; }
-  html .hero-in > :nth-child(2) { animation-delay: 270ms; }
-  html .hero-in > :nth-child(3) { animation-delay: 300ms; }
-  html .hero-in > :nth-child(4) { animation-delay: 330ms; }
-  html .hero-in > :nth-child(5) { animation-delay: 360ms; }
-  html .hero-in > :nth-child(6) { animation-delay: 390ms; }
+  html .hero-in > :nth-child(2) { animation-delay: 1030ms; }
+  html .hero-in > :nth-child(3) { animation-delay: 1060ms; }
+  html .hero-in > :nth-child(4) { animation-delay: 1090ms; }
+  html .hero-in > :nth-child(5) { animation-delay: 1120ms; }
+  html .hero-in > :nth-child(6) { animation-delay: 1150ms; }
   html.intro-skip .hero-media img,
   html.intro-skip .hero-in > * { animation-delay: 0ms; }
   /* Service pages have no logo intro — don't hold the cliffs at all. */
