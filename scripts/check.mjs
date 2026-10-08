@@ -40,7 +40,7 @@ for (const f of files) {
 
 const count = (needle) => visible.split(needle).length - 1;
 const phrases = [
-  ["HOME IT SUPPORT — SALTDEAN & NEARBY", 1],
+  ["Home IT Support &amp; Computer Repair — Saltdean &amp; Nearby", 1],
   ["computer repair in Saltdean", 2],
   ["computer help in Peacehaven", 1],
   ["PC repair in Rottingdean", 1],
