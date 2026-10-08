@@ -1345,7 +1345,8 @@ strong { font-weight: 600; }
 /* ---------- Logo intro ----------
    Plays on every page load. Pure CSS: the cover fades itself out, so the page
    never waits on script and renders underneath the whole time.
-   Kept short: the cover has lifted and the hero call button is in by about 0.85s.
+   The logo holds fully for 1s so visitors see it, then the cover fades and is
+   gone by about 1.28s.
    Tap, click or any key skips it (script.js adds .intro-skip to <html>).
    With reduced motion there is no intro at all. */
 .intro {
@@ -1359,7 +1360,7 @@ strong { font-weight: 600; }
   gap: 22px;
   background: var(--paper);
   cursor: pointer;
-  animation: intro-out 280ms var(--ease) 560ms both;
+  animation: intro-out 280ms var(--ease) 1000ms both;
 }
 .intro-skip .intro { animation: intro-out 220ms ease-out both; }
 .intro-logo { width: min(68vw, 360px); height: auto; overflow: visible; }
@@ -1388,8 +1389,9 @@ strong { font-weight: 600; }
     animation: intro-sweep 300ms var(--ease) 300ms both;
   }
 
-  /* The hero's own entrance plays under the lifting cover and is finished by
-     ~850ms, as script.js removes the intro (which resets these delays). */
+  /* The hero's own entrance plays under the cover and is finished by ~850ms,
+     before the cover starts to lift at 1s. script.js removes the intro once it
+     has faded (~1.28s), which resets these delays. */
   html .hero-media img,
   html .hero-in > * { animation-delay: 240ms; }
   html:has(.intro) .hero-media img,
