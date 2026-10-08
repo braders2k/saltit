@@ -58,6 +58,13 @@ node scripts/check.mjs
 `?v=` hash on every reference. `check.mjs` fails if a hash is stale. Fonts are also immutable; other
 `assets/` files cache for 30 days, so give a replaced image a new name or `?v=` (as `logo.svg?v=it` does).
 
+## IndexNow
+
+`site/636f216699f9aebffffbfadee9c9971c.txt` is the IndexNow key file. It proves to Bing and the other
+IndexNow search engines that we own saltit.co.uk. Don't delete or rename it, or edit what's inside.
+After a push that changes pages, wait until the deploy is live and then run `node scripts/indexnow.mjs`.
+The script submits every URL in the sitemap. Add `--dry-run` to see the payload without sending it.
+
 Live contact details (keep identical on the site, Google Business Profile, Nextdoor, Bing and Apple):
 
 | Item | Value |
