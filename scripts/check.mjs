@@ -196,6 +196,35 @@ for (const slug of servicePages) {
   }
 }
 
+// /book/: the visit request form. Not a service page (no prices, FAQ or service schema), but the same chrome and CSP rules.
+{
+  const at = "/book/";
+  const loc = "<loc>https://saltit.co.uk/book/</loc>";
+  if (!sitemap.includes(loc)) errors.push(`sitemap.xml is missing ${loc}`);
+  if (!sitemapBody.includes(loc)) errors.push(`sitemap handler is missing ${loc}`);
+  if (!html.includes('href="/book/"')) errors.push("Homepage does not link to /book/");
+  let page = "";
+  try { page = read(join(root, "book", "index.html")); } catch { errors.push(`${at}index.html is missing`); }
+  if (page) {
+    if ((page.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${at}: must have exactly one <h1>`);
+    if (!page.includes('<link rel="canonical" href="https://saltit.co.uk/book/">')) errors.push(`${at}: canonical URL is wrong`);
+    if (/Salt IT(?!\.)/.test(withoutAltNames(page))) errors.push(`${at}: customer-facing name must be "Salt I.T."`);
+    if (/aggregateRating|reviewCount|"FAQPage"/.test(page)) errors.push(`${at}: no ratings, reviews or FAQ schema`);
+    if (/(?:src|href)="(?!\/|#|https?:|tel:|mailto:)/.test(page)) errors.push(`${at}: relative link or asset path (use root-absolute paths)`);
+    if (/style="/.test(page)) errors.push(`${at}: inline style attribute is blocked by the CSP`);
+    if (/£/.test(page.replace(/<script[\s\S]*?<\/script>/g, ""))) errors.push(`${at}: no prices on the request page (link to /#prices instead)`);
+    const pageDesc = page.match(/<meta name="description" content="([^"]+)"/);
+    if (!pageDesc || pageDesc[1].length >= 160) errors.push(`${at}: meta description missing or 160+ characters`);
+    if (!page.includes("data-booking")) errors.push(`${at}: booking form missing`);
+    for (const [, tel] of page.matchAll(/href="tel:([^"]*)"/g)) {
+      if (tel !== "+447843468904") errors.push(`${at}: tel: link "${tel}" is wrong`);
+    }
+    for (const [, href] of page.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
+      if (href !== "https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...") errors.push(`${at}: WhatsApp link "${href}" is wrong`);
+    }
+  }
+}
+
 const sectionNums = [...html.matchAll(/<p class="idx"><span>(\d{2})<\/span>/g)].map((m) => m[1]);
 const expectedNums = ["01", "02", "03", "04", "05", "06", "07", "08"];
 if (sectionNums.join(",") !== expectedNums.join(",")) {
