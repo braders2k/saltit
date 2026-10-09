@@ -1,4 +1,5 @@
-/* Salt IT: light comparison palette. Mobile first; breakpoints 760px and 1100px.
+/* Salt IT: light comparison palette. Mobile first; breakpoints 760px and 1100px
+   (the full header nav waits until 1240px).
    Warm chalk paper, Lido turquoise kept. Layout matches the night theme on main. */
 
 @font-face {
@@ -192,13 +193,15 @@ a { color: inherit; }
 .hdr-call { white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
 .hdr-call:hover { border-color: var(--ink); }
 
-/* Phone/tablet menu (script.js). Below 1100px the section links drop down
-   under the header when the Menu button is pressed; from 1100px it's hidden. */
+/* Phone/tablet menu (script.js). Below 1240px the section links drop down
+   under the header when the Menu button is pressed; from 1240px it's hidden.
+   Between 1100px and 1240px the header is fixed, so an open menu also keeps
+   its solid bar over the scrolled state. */
 .hdr-menu { margin-left: auto; white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
 .hdr-menu[hidden] { display: none; }
 .hdr-menu[aria-expanded="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
-@media (max-width: 1099.98px) {
-  .hdr.is-menu-open { border-bottom-color: var(--line); background: var(--deep-2); }
+@media (max-width: 1239.98px) {
+  .hdr.is-menu-open, .hdr.is-menu-open.is-scrolled { border-bottom-color: var(--line); background: var(--deep-2); }
   .hdr.is-menu-open .nav {
     position: absolute;
     top: 100%;
@@ -1344,37 +1347,6 @@ strong { font-weight: 600; }
 @media (min-width: 1100px) {
   .ftr-in { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 64px; align-items: start; }
   .ftr-cols { column-gap: 40px; }
-  .hdr-menu { display: none; }
-  .nav {
-    display: flex;
-    gap: 4px;
-    margin-left: auto;
-    margin-right: 12px;
-  }
-  .nav a {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    min-height: 48px;
-    padding: 0 14px;
-    color: var(--salt);
-    text-decoration: none;
-    opacity: 0.82;
-    transition: opacity 160ms ease;
-  }
-  .nav a::after {
-    content: "";
-    position: absolute;
-    left: 14px; right: 14px; bottom: 10px;
-    height: 1px;
-    background: var(--lido-ink);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 240ms var(--ease);
-  }
-  .nav a:hover { opacity: 1; }
-  .nav a:hover::after { transform: scaleX(1); }
-
   .hdr { position: fixed; }
   .hdr.is-scrolled {
     border-bottom-color: var(--line);
@@ -1421,8 +1393,42 @@ strong { font-weight: 600; }
 
   .contact-grid { grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: start; }
 }
+/* Full header nav. Below 1240px the seven labels don't fit on one line each
+   beside the logo and phone number, so the Menu button stays until here. */
+@media (min-width: 1240px) {
+  .hdr-menu { display: none; }
+  .nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+  .nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 14px;
+    color: var(--salt);
+    text-decoration: none;
+    opacity: 0.82;
+    transition: opacity 160ms ease;
+  }
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 14px; right: 14px; bottom: 10px;
+    height: 1px;
+    background: var(--lido-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 240ms var(--ease);
+  }
+  .nav a:hover { opacity: 1; }
+  .nav a:hover::after { transform: scaleX(1); }
+}
 /* "Ask a question" is long: slightly tighter nav links until the header has room. */
-@media (min-width: 1100px) and (max-width: 1439.98px) {
+@media (min-width: 1240px) and (max-width: 1439.98px) {
   .nav a { padding: 0 9px; }
   .nav a::after { left: 9px; right: 9px; }
 }
