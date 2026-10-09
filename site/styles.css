@@ -327,7 +327,7 @@ h1 {
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
-.hero-cta > a[href="#contact"] {
+.hero-cta > a[href="/book/"] {
   grid-column: 1 / -1;
 }
 .hero-price {
@@ -374,6 +374,21 @@ h1 {
 }
 .crumbs a { color: var(--ink); text-underline-offset: 3px; }
 .crumbs a:hover { color: var(--lido-ink); }
+
+/* Phones: shorter photo band (cropped to keep the cliffs in view) and tighter stacking so the hero CTA clears the consent bar. */
+@media (max-width: 759.98px) {
+  .page-hero .hero-media { aspect-ratio: 2 / 1; }
+  .page-hero .hero-media img { object-position: 42% 90%; }
+  .page-hero .crumbs { margin-bottom: 8px; }
+  .page-hero .eyebrow { margin-bottom: 10px; }
+  .page-hero .hero-sub { font-size: 1.125rem; line-height: 1.45; margin-top: 12px; }
+  .page-hero .hero-sub + .hero-sub { margin-top: 10px; }
+  .page-hero .hero-cta { margin-top: 18px; }
+  /* Homepage hero: a little tighter too, so its CTA row sits clear of the consent bar. */
+  .hero:not(.page-hero) .eyebrow { margin-bottom: 12px; }
+  .hero:not(.page-hero) .hero-sub { margin-top: 14px; }
+  .hero:not(.page-hero) .hero-cta { margin-top: 20px; }
+}
 
 .nowrap { white-space: nowrap; }
 
@@ -1020,6 +1035,66 @@ strong { font-weight: 600; }
 .form-done .done-urgent .btn span { white-space: nowrap; }
 .form-done > .btn { margin-top: 28px; }
 
+/* ---------- Book a visit (/book/): day and time checkboxes, hints and errors ---------- */
+
+/* Field groups (days, times): reset the fieldset box; legend matches .field label. */
+.form fieldset {
+  min-width: 0;
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+.form legend {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+/* Checkbox grid: 2 columns at phone width, 3 from 760px. */
+.checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+@media (min-width: 760px) {
+  .checks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.checks > .field-hint { grid-column: 1 / -1; }
+.checks .check { margin-bottom: 0; }
+.check-wide { grid-column: 1 / -1; }
+
+/* .field also styles every label and input inside it. Undo that for the checkboxes. */
+.checks .check label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  font-weight: 400;
+}
+.checks .check input[type="checkbox"] {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  transition: none;
+}
+
+/* Hint and error under a field. Don't set display here: it would override [hidden]. */
+.field-hint {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 1rem;
+}
+.field-error {
+  margin-top: 6px;
+  color: #a3361c;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 /* ---------- Footer ---------- */
 .ftr {
   /* Clear sticky .callbar on phones (--bar is the header; callbar is ~66px + safe-area) */
@@ -1511,4 +1586,11 @@ strong { font-weight: 600; }
 .has-consent-bar .ftr { padding-bottom: calc(260px + env(safe-area-inset-bottom)); }
 @media (min-width: 760px) {
   .has-consent-bar .ftr { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
+}
+
+/* Phones: slimmer bar (same text and buttons) so the hero CTA clears it on a first visit; the footer padding follows the bar. */
+@media (max-width: 759.98px) {
+  .consent { gap: 6px; padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom)); }
+  .consent-text { font-size: 0.8125rem; line-height: 1.35; }
+  .has-consent-bar .ftr { padding-bottom: calc(230px + env(safe-area-inset-bottom)); }
 }
