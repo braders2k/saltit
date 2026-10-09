@@ -24,12 +24,12 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Phone/tablet menu: the section links sit behind a "Menu" button below 1100px.
+  // Phone/tablet menu: the section links sit behind a "Menu" button below 1240px.
   // Escape closes it and returns focus to the button; picking a link closes it.
   const menuBtn = d.querySelector("[data-menu-btn]");
   const menu = menuBtn && d.getElementById(menuBtn.getAttribute("aria-controls"));
   if (menuBtn && menu && hdr) {
-    const wide = window.matchMedia("(min-width: 1100px)");
+    const wide = window.matchMedia("(min-width: 1240px)");
     const setOpen = (open) => {
       menuBtn.setAttribute("aria-expanded", String(open));
       hdr.classList.toggle("is-menu-open", open);
