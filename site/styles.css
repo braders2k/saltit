@@ -384,6 +384,10 @@ h1 {
   .page-hero .hero-sub { font-size: 1.125rem; line-height: 1.45; margin-top: 12px; }
   .page-hero .hero-sub + .hero-sub { margin-top: 10px; }
   .page-hero .hero-cta { margin-top: 18px; }
+  /* Homepage hero: a little tighter too, so its CTA row sits clear of the consent bar. */
+  .hero:not(.page-hero) .eyebrow { margin-bottom: 12px; }
+  .hero:not(.page-hero) .hero-sub { margin-top: 14px; }
+  .hero:not(.page-hero) .hero-cta { margin-top: 20px; }
 }
 
 .nowrap { white-space: nowrap; }
