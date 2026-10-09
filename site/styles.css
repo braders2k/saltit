@@ -623,6 +623,10 @@ strong { font-weight: 600; }
 .sec-light ::selection { background: var(--ink); color: var(--deco); }
 .sec-light .idx::after { opacity: 0.35; }
 .price-grid { display: grid; gap: 56px; }
+/* Below the two-column price layout, a narrow screen scrolls the table sideways instead of widening the page. */
+@media (max-width: 1099.98px) {
+  .table-scroll { max-width: 100%; overflow-x: auto; }
+}
 .ptable {
   width: 100%;
   border-collapse: collapse;
