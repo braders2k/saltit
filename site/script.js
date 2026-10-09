@@ -102,6 +102,219 @@
     }
   }
 
+  // Booking page (/book/): a request form with its own handling. This block does
+  // nothing unless [data-booking] exists, so the contact form below is unaffected.
+  {
+    const booking = d.querySelector("[data-booking]");
+    if (booking) {
+      const bookStatus = booking.querySelector("[data-status]");
+      const bookSend = booking.querySelector("[type=submit]");
+      const bookTitle = booking.querySelector("h3");
+      const bookStarted = booking.querySelector("[data-started]");
+      const bookWrap = d.querySelector("[data-booking-wrap]");
+      const bookDone = d.querySelector("[data-booking-done]");
+      const bookDoneTitle = bookDone.querySelector("[data-done-title]");
+      const bookDonePhone = bookDone.querySelector("[data-done-phone]");
+      const bookDonePhoneLine = bookDone.querySelector("[data-done-phone-line]");
+      const bookAgain = bookDone.querySelector("[data-booking-again]");
+      const field = (name) => booking.elements.namedItem(name);
+      const ticked = (name) => Array.from(booking.querySelectorAll(`input[name="${name}"]:checked`), (el) => el.value);
+      // Each required field, then email (optional, but must be valid if given).
+      const rules = [
+        ["b-name", "Please enter your name."],
+        ["b-phone", "Please enter a phone number."],
+        ["b-email", "Please enter a valid email, or leave it blank."],
+        ["b-area", "Please choose where you are."],
+        ["b-type", "Please choose what you need help with."],
+        ["b-desc", "Please say briefly what's gone wrong."],
+      ];
+      const isValid = (el) => {
+        const value = el.value.trim();
+        if (el.type === "email") return value === "" || el.checkValidity();
+        return value !== "" && el.checkValidity();
+      };
+      // Status text is built from DOM nodes. The phone link is made here, never from input.
+      const say = (...parts) => {
+        bookStatus.textContent = "";
+        bookStatus.append(...parts);
+      };
+      const phoneLink = () => {
+        const a = d.createElement("a");
+        a.href = "tel:+447843468904";
+        a.textContent = "call 07843 468904";
+        return a;
+      };
+      const startClock = () => {
+        bookStarted.value = String(Date.now());
+      };
+      const clearErrors = () => {
+        for (const el of booking.querySelectorAll("[aria-invalid]")) el.removeAttribute("aria-invalid");
+        for (const err of booking.querySelectorAll(".field-error")) {
+          err.hidden = true;
+          err.textContent = "";
+        }
+      };
+      const showDone = (sentPhone) => {
+        booking.reset();
+        clearErrors();
+        say();
+        bookDonePhone.textContent = sentPhone;
+        bookDonePhoneLine.hidden = false;
+        booking.hidden = true;
+        booking.setAttribute("inert", "");
+        bookDone.hidden = false;
+        if (bookWrap.getBoundingClientRect().top < 8) bookWrap.scrollIntoView({ block: "start" });
+        bookDoneTitle.focus({ preventScroll: true });
+      };
+      // Email app fallback: the same details as a labelled draft to support@saltit.co.uk.
+      const mailtoFallback = (f) => {
+        const subject = `Visit request — ${f.area} — ${f.name}`;
+        const body = [
+          `Name: ${f.name}`,
+          `Phone: ${f.phone}`,
+          `Email: ${f.email || "Not given"}`,
+          `Area: ${f.area}`,
+          `Help with: ${f.problemType}`,
+          `Preferred days: ${f.days.join(", ") || "No preference"}`,
+          `Preferred times: ${f.times.join(", ") || "No preference"}`,
+          "",
+          "What's gone wrong:",
+          f.description,
+          "",
+          "This is a request. Nothing is booked until Simon calls or texts to confirm.",
+        ].join("\n");
+        say("Your email app should open with the request ready to send. If it doesn't, ", phoneLink(), ".");
+        window.location.href =
+          `mailto:support@saltit.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      };
+      // Web3Forms, called from the page when the server asks for it (fallback "client").
+      const handoff = async (data, local) => {
+        const sub = data.submission && typeof data.submission === "object" ? data.submission : {};
+        const s = { ...local, ...sub };
+        const days = Array.isArray(s.days) ? s.days : [];
+        const times = Array.isArray(s.times) ? s.times : [];
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: data.accessKey,
+            subject: `Visit request — ${s.area} — ${s.name}`,
+            from_name: s.name,
+            request: "Visit request (not confirmed until Simon calls or texts)",
+            name: s.name,
+            phone: s.phone,
+            customer_email: s.email || "Not given",
+            area: s.area,
+            problem_type: s.problemType,
+            preferred_days: days.join(", ") || "No preference",
+            preferred_times: times.join(", ") || "No preference",
+            message: s.description,
+          }),
+        });
+        let out = {};
+        try { out = (await res.json()) || {}; } catch { out = {}; }
+        return res.ok && out.success === true;
+      };
+
+      booking.hidden = false;
+      startClock();
+      bookTitle.tabIndex = -1;
+      bookAgain.addEventListener("click", () => {
+        say();
+        bookDone.hidden = true;
+        booking.hidden = false;
+        booking.removeAttribute("inert");
+        startClock();
+        bookTitle.focus();
+      });
+
+      booking.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        let first = null;
+        for (const [id, message] of rules) {
+          const el = booking.querySelector(`#${id}`);
+          const err = booking.querySelector(`#${id}-err`);
+          const ok = isValid(el);
+          el.setAttribute("aria-invalid", ok ? "false" : "true");
+          err.textContent = ok ? "" : message;
+          err.hidden = ok;
+          if (!ok && !first) first = el;
+        }
+        if (first) {
+          say("Please check the highlighted fields.");
+          first.focus();
+          return;
+        }
+
+        const local = {
+          name: field("name").value.trim(),
+          phone: field("phone").value.trim(),
+          email: field("email").value.trim(),
+          area: field("area").value,
+          problemType: field("problem_type").value,
+          days: ticked("days"),
+          times: ticked("times"),
+          description: field("description").value.trim(),
+        };
+
+        // Honeypot filled: show the success panel and send nothing, as the contact form does.
+        if (field("hp_field").value.trim() !== "") {
+          showDone(local.phone);
+          return;
+        }
+
+        bookSend.disabled = true;
+        say("Sending.");
+        try {
+          const res = await fetch("/api/enquiry", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({
+              kind: "booking",
+              name: local.name,
+              phone: local.phone,
+              email: local.email,
+              area: local.area,
+              problem_type: local.problemType,
+              description: local.description,
+              days: local.days,
+              times: local.times,
+              elapsed_ms: Date.now() - Number(bookStarted.value),
+              hp_field: "",
+            }),
+          });
+          let data = {};
+          try { data = (await res.json()) || {}; } catch { data = {}; }
+          if (res.ok && data.ok) {
+            showDone(local.phone);
+            return;
+          }
+          if (data.fallback === "client" && data.accessKey) {
+            if (await handoff(data, local)) {
+              showDone(local.phone);
+            } else {
+              mailtoFallback(local);
+            }
+            return;
+          }
+          if (res.status === 429) {
+            say("Too many requests. Please wait a few minutes, or ", phoneLink(), ".");
+            return;
+          }
+          if (res.status === 400) {
+            say("Please check the form and try again, or ", phoneLink(), ".");
+            return;
+          }
+          mailtoFallback(local);
+        } catch {
+          mailtoFallback(local);
+        } finally {
+          bookSend.disabled = false;
+        }
+      });
+    }
+  }
+
   const form = d.querySelector("[data-enquiry]");
   if (!form) return;
   form.hidden = false;
