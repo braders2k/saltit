@@ -151,6 +151,9 @@ if (sitemapRes.headers.has("content-disposition")) errors.push("sitemap handler 
 if (!sitemapBody.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("sitemap handler is missing the homepage loc");
 
 // Service pages: one job each, not town doorways. Same chrome, NAP and schema rules as the homepage.
+// batch1Pages are checked the same way, against the live evening/weekend price row.
+// The original five keep the stale "Saturday visit" row check so that known error list does not shrink.
+const batch1Pages = ["remote-support", "email-help", "brighton"];
 for (const slug of servicePages) {
   const loc = `<loc>https://saltit.co.uk/${slug}/</loc>`;
   if (!sitemap.includes(loc)) errors.push(`sitemap.xml is missing ${loc}`);
@@ -187,6 +190,50 @@ for (const slug of servicePages) {
     if (biz?.aggregateRating || biz?.review) errors.push(`${at}: JSON-LD must not invent ratings or reviews`);
     const unescape = (t) => t.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, "\u00a0").replace(/&amp;/g, "&");
     // Compare text only: presentational markup such as <span class="nowrap"> isn't part of the schema text.
+    const text = (t) => unescape(t.replace(/<[^>]+>/g, ""));
+    const shownQ = [...page.matchAll(/<summary><h3>([\s\S]*?)<\/h3><\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => [text(m[1]), text(m[2])]);
+    const ldQ = (faq?.mainEntity || []).map((q) => [q.name, q.acceptedAnswer?.text]);
+    if (!shownQ.length || JSON.stringify(shownQ) !== JSON.stringify(ldQ)) errors.push(`${at}: FAQPage JSON-LD does not match the visible FAQ`);
+  } catch {
+    errors.push(`${at}: JSON-LD missing or invalid`);
+  }
+}
+
+for (const slug of batch1Pages) {
+  const loc = `<loc>https://saltit.co.uk/${slug}/</loc>`;
+  if (!sitemap.includes(loc)) errors.push(`sitemap.xml is missing ${loc}`);
+  if (!sitemapBody.includes(loc)) errors.push(`sitemap handler is missing ${loc}`);
+  if (!html.includes(`href="/${slug}/"`)) errors.push(`Homepage does not link to /${slug}/`);
+
+  let page;
+  try { page = read(join(root, slug, "index.html")); } catch { errors.push(`/${slug}/index.html is missing`); continue; }
+  const at = `/${slug}/`;
+  if ((page.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${at}: must have exactly one <h1>`);
+  if (!page.includes(`<link rel="canonical" href="https://saltit.co.uk/${slug}/">`)) errors.push(`${at}: canonical URL is wrong`);
+  if (/Salt IT(?!\.)/.test(withoutAltNames(page))) errors.push(`${at}: customer-facing name must be "Salt I.T."`);
+  if (/aggregateRating|reviewCount/.test(page)) errors.push(`${at}: do not publish ratings or review counts`);
+  if (/(?:src|href)="(?!\/|#|https?:|tel:|mailto:)/.test(page)) errors.push(`${at}: relative link or asset path (use root-absolute paths)`);
+  if (/style="/.test(page)) errors.push(`${at}: inline style attribute is blocked by the CSP`);
+  const pageDesc = page.match(/<meta name="description" content="([^"]+)"/);
+  if (!pageDesc || pageDesc[1].length >= 160) errors.push(`${at}: meta description missing or 160+ characters`);
+  for (const price of ["Home visit, first hour</th><td>£35", "Each extra half hour</th><td>£15", "Remote support, per hour</th><td>£30", "Evening (after 6pm) or weekend visit (Sat/Sun, by arrangement), first hour</th><td>£60"]) {
+    if (!page.includes(price)) errors.push(`${at}: price row "${price.replace(/<[^>]+>/g, " ")}" missing`);
+  }
+  for (const [, tel] of page.matchAll(/href="tel:([^"]*)"/g)) {
+    if (tel !== "+447843468904") errors.push(`${at}: tel: link "${tel}" is wrong`);
+  }
+  for (const [, href] of page.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)) {
+    if (href !== "https://wa.me/447843468904?text=Hi%20Simon%2C%20I%20need%20help%20with...") errors.push(`${at}: WhatsApp link "${href}" is wrong`);
+  }
+  try {
+    const ld = JSON.parse(page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+    const graph = ld["@graph"] || [ld];
+    const biz = graph.find((node) => node["@type"] === "LocalBusiness");
+    const faq = graph.find((node) => node["@type"] === "FAQPage");
+    if (!biz || biz.name !== "Salt I.T." || biz.telephone !== "+447843468904" || biz.priceRange !== "£35+") errors.push(`${at}: LocalBusiness JSON-LD incomplete`);
+    if (biz?.address?.streetAddress) errors.push(`${at}: JSON-LD must not invent a street address`);
+    if (biz?.aggregateRating || biz?.review) errors.push(`${at}: JSON-LD must not invent ratings or reviews`);
+    const unescape = (t) => t.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, "\u00a0").replace(/&amp;/g, "&");
     const text = (t) => unescape(t.replace(/<[^>]+>/g, ""));
     const shownQ = [...page.matchAll(/<summary><h3>([\s\S]*?)<\/h3><\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => [text(m[1]), text(m[2])]);
     const ldQ = (faq?.mainEntity || []).map((q) => [q.name, q.acceptedAnswer?.text]);
