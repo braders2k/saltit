@@ -40,6 +40,15 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
     <loc>https://saltit.co.uk/peacehaven/</loc>
   </url>
   <url>
+    <loc>https://saltit.co.uk/remote-support/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/email-help/</loc>
+  </url>
+  <url>
+    <loc>https://saltit.co.uk/brighton/</loc>
+  </url>
+  <url>
     <loc>https://saltit.co.uk/book/</loc>
   </url>
   <url>
