@@ -84,7 +84,7 @@ try {
   for (const name of ["Saltdean", "Rottingdean", "Peacehaven", "Woodingdean", "Brighton and Hove"]) {
     if (!areaNames.includes(name)) errors.push(`JSON-LD areaServed missing ${name}`);
   }
-  if (!faq || faq.mainEntity?.length !== 8) errors.push("FAQPage JSON-LD should list eight questions");
+  if (!faq || faq.mainEntity?.length !== 9) errors.push("FAQPage JSON-LD should list nine questions");
   if (!/^\+44\d{10}$/.test(biz?.telephone || "")) errors.push(`JSON-LD telephone "${biz?.telephone}" is not E.164`);
   for (const [, tel] of html.matchAll(/href="tel:([^"]*)"/g)) {
     if (tel !== biz.telephone) errors.push(`tel: link "${tel}" does not match JSON-LD telephone`);
