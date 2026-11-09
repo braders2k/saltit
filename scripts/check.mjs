@@ -153,7 +153,7 @@ if (!sitemapBody.includes("<loc>https://saltit.co.uk/</loc>")) errors.push("site
 // Service pages: one job each, not town doorways. Same chrome, NAP and schema rules as the homepage.
 // batch1Pages are checked the same way, against the live evening/weekend price row.
 // The original five keep the stale "Saturday visit" row check so that known error list does not shrink.
-const batch1Pages = ["remote-support", "email-help", "brighton"];
+const batch1Pages = ["remote-support", "email-help", "brighton", "computer-repair-saltdean"];
 for (const slug of servicePages) {
   const loc = `<loc>https://saltit.co.uk/${slug}/</loc>`;
   if (!sitemap.includes(loc)) errors.push(`sitemap.xml is missing ${loc}`);

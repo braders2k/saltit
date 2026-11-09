@@ -19,6 +19,9 @@ const XML = `<?xml version="1.0" encoding="UTF-8"?>
     <loc>https://saltit.co.uk/laptop-pc-repair/</loc>
   </url>
   <url>
+    <loc>https://saltit.co.uk/computer-repair-saltdean/</loc>
+  </url>
+  <url>
     <loc>https://saltit.co.uk/printer-setup/</loc>
   </url>
   <url>
