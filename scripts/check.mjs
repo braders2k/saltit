@@ -44,7 +44,7 @@ const phrases = [
   ["computer repair in Saltdean", 2],
   ["computer help in Peacehaven", 1],
   ["PC repair in Rottingdean", 1],
-  ["home visit computer repair in Woodingdean", 1],
+  ["computer repair in Woodingdean", 1], // FAQ: "Can you come to my home for computer repair in Woodingdean?"
   ["Wi-Fi help in Brighton", 1],
 ];
 for (const [p, want] of phrases) {
