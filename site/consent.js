@@ -87,9 +87,17 @@
 
     var text = d.createElement("p");
     text.className = "consent-text";
-    text.textContent =
+    // Phones get the short wording (CSS swaps them) so the bar stays slim and the hero buttons stay in view.
+    var longText = d.createElement("span");
+    longText.className = "consent-long";
+    longText.textContent =
       "Salt I.T. would like to use Google Analytics, which sets cookies, to see how the site is used and improve it. " +
       "Cloudflare’s cookie-free, privacy-friendly visit counts stay on either way. ";
+    var shortText = d.createElement("span");
+    shortText.className = "consent-short";
+    shortText.textContent = "Can Salt I.T. use Google Analytics cookies to see how the site is used? ";
+    text.appendChild(longText);
+    text.appendChild(shortText);
     var current = read();
     if (current === "accepted" || current === "rejected") {
       text.appendChild(d.createTextNode("Your current choice: " + (current === "accepted" ? "Accept" : "Reject") + ". "));

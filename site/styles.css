@@ -195,8 +195,8 @@ a { color: inherit; }
 
 /* Phone/tablet menu (script.js). Below 1240px the section links drop down
    under the header when the Menu button is pressed; from 1240px it's hidden.
-   Between 1100px and 1240px the header is fixed, so an open menu also keeps
-   its solid bar over the scrolled state. */
+   From 760px the header is fixed, so an open menu also keeps its solid bar
+   over the scrolled state. */
 .hdr-menu { margin-left: auto; white-space: nowrap; border-color: rgba(18, 32, 40, 0.45); }
 .hdr-menu[hidden] { display: none; }
 .hdr-menu[aria-expanded="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
@@ -391,6 +391,16 @@ h1 {
   .hero:not(.page-hero) .eyebrow { margin-bottom: 12px; }
   .hero:not(.page-hero) .hero-sub { margin-top: 14px; }
   .hero:not(.page-hero) .hero-cta { margin-top: 20px; }
+}
+/* Short phones (667px tall and under, e.g. 375x667, 360x640): a shallower photo band so all three
+   hero buttons sit above the first-visit consent bar. Taller phones keep the full photo. */
+@media (max-width: 759.98px) and (max-height: 740px) {
+  .hero:not(.page-hero) .hero-media { aspect-ratio: 3 / 1; }
+  .hero:not(.page-hero) .hero-media img { object-position: 42% 40%; }
+  .page-hero .hero-media { aspect-ratio: 5 / 2; }
+  .hero:not(.page-hero) .hero-sub { margin-top: 10px; }
+  .hero:not(.page-hero) .eyebrow { margin-bottom: 10px; }
+  .hero:not(.page-hero) .hero-cta { margin-top: 16px; }
 }
 
 .nowrap { white-space: nowrap; }
@@ -791,6 +801,8 @@ strong { font-weight: 600; }
 }
 .map-label-home { fill: var(--lido-ink); }
 .map-label-out { fill: var(--mute); }
+/* Telscombe Cliffs sits on land just above its dot; on phones (bigger labels) it shrinks so it clears Peacehaven. */
+@media (max-width: 759.98px) { .map-label-tc { font-size: 28px; } }
 .map-note {
   fill: var(--mute);
   font-size: 28px;
@@ -1136,6 +1148,7 @@ strong { font-weight: 600; }
 .ftr-nav a[aria-current="page"] { color: var(--lido-ink); font-weight: 600; }
 .ftr-copy { margin: 0; font-size: 0.875rem; }
 .ftr-credit { margin-top: -16px; font-size: 0.8125rem; line-height: 1.6; }
+.ftr-credit a[rel="license"] { white-space: nowrap; } /* keeps "CC BY-SA 2.0" on one line */
 /* A <button> that looks like the footer links (reopens the consent bar). */
 .link-btn {
   padding: 0;
@@ -1273,6 +1286,14 @@ strong { font-weight: 600; }
   .form { padding: 40px 40px 44px; }
   .form-done { padding-block: 48px 52px; }
   .form .btn { width: auto; }
+  /* The phone call bar stops at 760px, so from here the header stays on screen instead (Menu + Call). */
+  .hdr { position: fixed; }
+  .hdr.is-scrolled {
+    border-bottom-color: var(--line);
+    background: rgba(246, 241, 232, 0.9);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
   .callbar { display: none; }
   .ftr { padding-bottom: 56px; }
   .ftr-in { gap: 40px; }
@@ -1347,13 +1368,6 @@ strong { font-weight: 600; }
 @media (min-width: 1100px) {
   .ftr-in { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 64px; align-items: start; }
   .ftr-cols { column-gap: 40px; }
-  .hdr { position: fixed; }
-  .hdr.is-scrolled {
-    border-bottom-color: var(--line);
-    background: rgba(246, 241, 232, 0.9);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-  }
 
   .sec { padding-block: 136px; }
   .sec-head {
@@ -1603,9 +1617,14 @@ strong { font-weight: 600; }
   .has-consent-bar .ftr { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
 }
 
-/* Phones: slimmer bar (same text and buttons) so the hero CTA clears it on a first visit; the footer padding follows the bar. */
+/* Short wording on phones, full wording from 760px (consent.js writes both). */
+.consent-short { display: none; }
+
+/* Phones: slim bar with the short wording so the hero CTA clears it on a first visit; the footer padding follows the bar. */
 @media (max-width: 759.98px) {
   .consent { gap: 6px; padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom)); }
   .consent-text { font-size: 0.8125rem; line-height: 1.35; }
-  .has-consent-bar .ftr { padding-bottom: calc(230px + env(safe-area-inset-bottom)); }
+  .consent-long { display: none; }
+  .consent-short { display: inline; }
+  .has-consent-bar .ftr { padding-bottom: calc(180px + env(safe-area-inset-bottom)); }
 }
