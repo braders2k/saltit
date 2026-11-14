@@ -392,16 +392,6 @@ h1 {
   .hero:not(.page-hero) .hero-sub { margin-top: 14px; }
   .hero:not(.page-hero) .hero-cta { margin-top: 20px; }
 }
-/* Short phones (667px tall and under, e.g. 375x667, 360x640): a shallower photo band so all three
-   hero buttons sit above the first-visit consent bar. Taller phones keep the full photo. */
-@media (max-width: 759.98px) and (max-height: 740px) {
-  .hero:not(.page-hero) .hero-media { aspect-ratio: 3 / 1; }
-  .hero:not(.page-hero) .hero-media img { object-position: 42% 40%; }
-  .page-hero .hero-media { aspect-ratio: 5 / 2; }
-  .hero:not(.page-hero) .hero-sub { margin-top: 10px; }
-  .hero:not(.page-hero) .eyebrow { margin-bottom: 10px; }
-  .hero:not(.page-hero) .hero-cta { margin-top: 16px; }
-}
 
 .nowrap { white-space: nowrap; }
 
